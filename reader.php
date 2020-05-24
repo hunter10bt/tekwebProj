@@ -26,7 +26,7 @@
         </li>
         <li class="nav-item">
           <?php
-            if(isset($_SESSION["uname"]))
+            if(!isset($_SESSION["uname"]))
               echo '<a class="nav-link" href="signin.php?prevPage=reader.php">Sign In</a>';
             else
               echo '<a class="nav-link" href="signout.php?prevPage=reader.php">Sign Out</a>';

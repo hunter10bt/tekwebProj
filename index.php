@@ -25,10 +25,12 @@
         </li>
         <li class="nav-item">
           <?php
-            if(isset($_SESSION["uname"]))
+            if(!isset($_SESSION["uname"])){
               echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
-            else
+            }
+            else{
               echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            }
           ?>
         </li>
         <li class="nav-item dropdown">
@@ -46,7 +48,9 @@
     </div>
   </nav>
   <div class="container-fluid"id="container">
-    
+    <?php
+      echo $_SESSION["uname"];
+    ?>
   </div>
 </body>
 </html>

@@ -25,14 +25,14 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-        <?php
-          if(isset($_GET["prevPage"])){
-            echo '<input type="hidden" class="form-control" name="prevPage" id="prevPage" placeholder="" value="'.$_GET["prevPage"].'">';
-          }
-          else{
-            echo '<input type="hidden" class="form-control" name="prevPage" id="prevPage" placeholder="">';
-          }
-        ?>
+          <?php
+            if(!isset($_SESSION["uname"])){
+              echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            }
+            else{
+              echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            }
+          ?>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
