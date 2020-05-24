@@ -25,7 +25,12 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="signin.php">Log In</a>
+          <?php
+            if(isset($_SESSION["uname"]))
+              echo '<a class="nav-link" href="signin.php?prevPage=story.php">Sign In</a>';
+            else
+              echo '<a class="nav-link" href="signout.php?prevPage=story.php">Sign Out</a>';
+          ?>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>

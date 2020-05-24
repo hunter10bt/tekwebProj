@@ -44,7 +44,14 @@
     <form action="authenticate.php" method="post">
       <div class="form-group">
         <label class="sr-only" for="prevPage">Previous URL</label>
-        <input type="text" class="form-control" name="prevPage" id="prevPage" placeholder="">
+        <?php
+          if(isset($_GET["prevPage"])){
+            echo '<input type="hidden" class="form-control" name="prevPage" id="prevPage" placeholder="" value="'.$_GET["prevPage"].'">';
+          }
+          else{
+            echo '<input type="hidden" class="form-control" name="prevPage" id="prevPage" placeholder="">';
+          }
+        ?>
       </div>
       <div class="form-group">
         <label for="uname">Username</label>

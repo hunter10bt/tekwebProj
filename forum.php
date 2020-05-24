@@ -25,7 +25,14 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="signin.php">Log In</a>
+        <?php
+          if(isset($_GET["prevPage"])){
+            echo '<input type="hidden" class="form-control" name="prevPage" id="prevPage" placeholder="" value="'.$_GET["prevPage"].'">';
+          }
+          else{
+            echo '<input type="hidden" class="form-control" name="prevPage" id="prevPage" placeholder="">';
+          }
+        ?>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
