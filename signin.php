@@ -14,7 +14,7 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-light bg-light navbar-fixed-top"  id="navbar">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="index.php">ReadHere</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
         aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#">Sign Up<span class="sr-only">(current)</span></a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -32,7 +32,17 @@
     </div>
   </nav>
   <div class="container-fluid"id="container">
-    
+    <form action="authenticate.php" method="post">
+      <div class="form-group">
+        <label for="uname">Username</label>
+        <input type="text" class="form-control" name="uname" id="uname" aria-describedby="helpId" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
   </div>
 </body>
 </html>
