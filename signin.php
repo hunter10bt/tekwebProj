@@ -1,5 +1,14 @@
 <?php
   session_start();
+
+  if (isset($_SESSION["uname"])) {
+    # code...
+    if (isset($_GET["prevPage"])){
+      header("location:"+$_GET["prevPage"]);
+    }
+    else
+      header("location:index.php");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +42,10 @@
   </nav>
   <div class="container-fluid"id="container">
     <form action="authenticate.php" method="post">
+      <div class="form-group">
+        <label class="sr-only" for="prevPage">Previous URL</label>
+        <input type="text" class="form-control" name="prevPage" id="prevPage" placeholder="">
+      </div>
       <div class="form-group">
         <label for="uname">Username</label>
         <input type="text" class="form-control" name="uname" id="uname" aria-describedby="helpId" placeholder="Username">
