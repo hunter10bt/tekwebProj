@@ -23,23 +23,23 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <?php
-            if(!isset($_SESSION["uname"])){
-              echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
-            }
-            else{
-              echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
-            }
-          ?>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu" aria-labelledby="dropdownId">
-            <a class="dropdown-item" href="#">Action 1</a>
-            <a class="dropdown-item" href="#">Action 2</a>
-          </div>
-        </li>
+        <?php
+          if(!isset($_SESSION["uname"])){
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo '</li>';
+          }
+          else {
+
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="#">New Story</a>';
+            echo '</li>';
+          }
+        ?>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
