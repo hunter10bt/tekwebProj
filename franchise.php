@@ -49,7 +49,30 @@
     </div>
   </nav>
   <div class="container-fluid"id="container">
-    
+    <div class="row align-items-start"></div>
+    <div class="row">
+      <div class="col-9"></div>
+      <div class="col-6 col-xl-3">
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Information</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="">Sum</a></th>
+              </tr>
+              <tr>
+                <th scope="row"><a href="">Genre</a></th>
+              </tr>
+              <tr>
+                <th scope="row"><a href="">Tags</a></th>
+              </tr>
+            </tbody>
+          </table>
+      </div>
   </div>
+</div>
 </body>
 </html>
