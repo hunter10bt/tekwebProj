@@ -28,6 +28,10 @@
             echo '<li class="nav-item">';
             echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
             echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo '</li>';
           }
           else {
 
