@@ -1,4 +1,5 @@
 <?php
+  include "connectdb.php";
   session_start();
 
   $uname = $_POST["uname"];
