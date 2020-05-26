@@ -41,7 +41,7 @@
     </div>
   </nav>
   <div class="container-fluid">
-    <form action="" method="post">
+    <form action="register.php" method="post">
       <div class="form-group">
         <label for="user">Username</label>
         <input type="text" class="form-control" name="user" id="user" aria-describedby="helpId" placeholder="Username...">
