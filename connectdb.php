@@ -2,7 +2,7 @@
   $host = 'localhost';
   $user = 'root';
   $pass = '';
-  $db = 'tekweb';
+  $db = 'readhere';
   $con = mysqli_connect(
     $host,$user,$pass,$db
   );
