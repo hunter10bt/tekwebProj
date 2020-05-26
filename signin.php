@@ -59,7 +59,17 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" aria-describedby="passHelp">
+        <small id="passHelp" class="text-muted">
+          <?php
+            if(isset($_GET["registered"])){
+              echo "Username not registered";
+            }
+            elseif (isset($_GET["pass"])) {
+              echo "Incorrect password.";
+            }
+          ?>
+        </small>
       </div>
       <button type="submit" class="btn btn-primary">Log In</button>
     </form>
