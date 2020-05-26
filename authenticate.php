@@ -5,9 +5,9 @@
   $uname = $_POST["uname"];
   $pass = $_POST["password"];
 
-  $query = "SELECT password WHERE username='%s' AND readable=1;";
-  $passCheck = mysqli_query($con, sprintf($query, $uname));
-
+  $query = "SELECT password FROM user WHERE username='%s' AND readable=1;";
+  $passCheck = mysqli_fetch_array(mysqli_query($con, sprintf($query, $uname)))[0];
+  
   if ($passCheck != FALSE){
     if ($passCheck == $pass){
       $_SESSION["uname"] = $uname;
