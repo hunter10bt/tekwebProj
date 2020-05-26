@@ -5,9 +5,10 @@
   $uname = $_POST["uname"];
   $pass = $_POST["password"];
 
-  $passCheck = "root";
+  $query = "SELECT password WHERE username='%s' AND readable=1;";
+  $passCheck = mysqli_query($con, sprintf($query, $uname));
 
-  if (isset($passCheck)){
+  if ($passCheck != FALSE){
     if ($passCheck == $pass){
       $_SESSION["uname"] = $uname;
       if (isset($_POST["prevPage"]))
@@ -16,7 +17,10 @@
         header("location: index.php");
     }
     else{
-      header("location: signin.php?prevPage=".$_POST["prevPage"]);
+      header("location: signin.php?prevPage=".$_POST["prevPage"]."&pass=false");
     }
+  }
+  else{
+    header("location: signin.php?prevPage=".$_POST["prevPage"]."&registered=false");
   }
 ?>
