@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2020 at 02:56 AM
+-- Generation Time: May 26, 2020 at 06:51 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `adminName` varchar(32) NOT NULL,
   `adminPass` varchar(32) NOT NULL,
-  `exists` tinyint(1) NOT NULL DEFAULT 1
+  `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -46,7 +46,7 @@ CREATE TABLE `chapter` (
   `storyID` bigint(11) NOT NULL,
   `summary` varchar(128) NOT NULL,
   `category` varchar(64) NOT NULL,
-  `exists` tinyint(1) NOT NULL DEFAULT 1
+  `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -60,7 +60,7 @@ CREATE TABLE `comment` (
   `comment` varchar(100) NOT NULL,
   `discussionID` bigint(11) NOT NULL,
   `user` varchar(32) NOT NULL,
-  `exists` tinyint(1) NOT NULL DEFAULT 1
+  `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -77,7 +77,7 @@ CREATE TABLE `discussion` (
   `storyID` bigint(11) NOT NULL,
   `franchiseID` varchar(64) NOT NULL,
   `content` varchar(256) NOT NULL,
-  `exists` tinyint(1) NOT NULL DEFAULT 1
+  `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -90,7 +90,7 @@ CREATE TABLE `franchise` (
   `franchiseIDName` varchar(64) NOT NULL,
   `Franchise Name` varchar(128) NOT NULL,
   `Summary` varchar(100) NOT NULL,
-  `exists` tinyint(1) NOT NULL DEFAULT 1
+  `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -104,7 +104,7 @@ CREATE TABLE `story` (
   `title` varchar(32) NOT NULL,
   `author` varchar(32) NOT NULL,
   `summary` varchar(256) NOT NULL,
-  `exists` tinyint(1) NOT NULL DEFAULT 1
+  `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -116,8 +116,15 @@ CREATE TABLE `story` (
 CREATE TABLE `user` (
   `username` varchar(32) NOT NULL,
   `password` varchar(25) NOT NULL,
-  `exists` tinyint(1) NOT NULL DEFAULT 1
+  `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`username`, `password`, `readable`) VALUES
+('hunter10bt', 'August150800', 1);
 
 --
 -- Indexes for dumped tables
