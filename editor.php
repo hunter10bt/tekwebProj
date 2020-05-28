@@ -49,7 +49,14 @@
     </div>
   </nav>
   <div class="container-fluid" id="container">
-    
+    <div class="row">
+      <div class="col-xl-2" id="sidebar">
+        
+      </div>
+      <div class="col-xl-10">
+        
+      </div>
+    </div>
   </div>
 </body>
 </html>

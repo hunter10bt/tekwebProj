@@ -45,10 +45,16 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
-  </nav>
-  
+  </nav>  
   <div class="container-fluid"id="container">
-    
+    <div class="row">
+      <div class="col-xl-2" id="sidebar">
+        ul
+      </div>
+      <div class="col-xl-10">
+        
+      </div>
+    </div>
   </div>
 </body>
 </html>
