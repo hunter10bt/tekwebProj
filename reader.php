@@ -49,7 +49,9 @@
   <div class="container-fluid"id="container">
     <div class="row">
       <div class="col-xl-2" id="sidebar">
-        ul
+        <button type="button" class="btn btn-primary">Next</button>
+        <button type="button" class="btn btn-primary">Previous</button>
+        <a name="return" id="exit" class="btn btn-danger" href="#" role="button">Back to Story Page</a>
       </div>
       <div class="col-xl-10">
         
