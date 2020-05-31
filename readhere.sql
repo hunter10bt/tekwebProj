@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2020 at 01:11 PM
+-- Generation Time: May 31, 2020 at 04:09 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -58,7 +58,8 @@ CREATE TABLE `chapter` (
 CREATE TABLE `comment` (
   `commentID` bigint(11) NOT NULL,
   `comment` varchar(100) NOT NULL,
-  `discussionID` bigint(11) NOT NULL,
+  `discussionID` bigint(11) DEFAULT NULL,
+  `targetCommentID` bigint(20) DEFAULT NULL,
   `user` varchar(32) NOT NULL,
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -91,6 +92,25 @@ CREATE TABLE `franchise` (
   `Franchise Name` varchar(128) NOT NULL,
   `Summary` varchar(100) NOT NULL,
   `readable` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `reportID` bigint(20) NOT NULL,
+  `submitter` varchar(32) NOT NULL,
+  `userTgtID` varchar(32) DEFAULT NULL,
+  `storyID` bigint(20) DEFAULT NULL,
+  `franchiseIDName` varchar(64) DEFAULT NULL,
+  `discussionID` bigint(20) DEFAULT NULL,
+  `commentID` bigint(20) DEFAULT NULL,
+  `title` varchar(32) NOT NULL,
+  `detail` varchar(256) NOT NULL,
+  `resolved` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -164,6 +184,12 @@ ALTER TABLE `franchise`
   ADD PRIMARY KEY (`franchiseIDName`);
 
 --
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`reportID`);
+
+--
 -- Indexes for table `story`
 --
 ALTER TABLE `story`
@@ -196,6 +222,12 @@ ALTER TABLE `comment`
 --
 ALTER TABLE `discussion`
   MODIFY `discussionID` bigint(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `reportID` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `story`
