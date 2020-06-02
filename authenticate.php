@@ -13,15 +13,15 @@
     if ($passCheck == $pass){
       $_SESSION["uname"] = $uname;
       if (isset($_POST["prevPage"]))
-        header("location: ".$_POST["prevPage"]);
+        header("location: {$_POST["prevPage"]}");
       else
         header("location: index.php");
     }
     else{
-      header("location: signin.php?prevPage=".$_POST["prevPage"]."&pass=false");
+      header("location: signin.php?prevPage={$_POST["prevPage"]}&pass=false");
     }
   }
   else{
-    header("location: signin.php?prevPage=".$_POST["prevPage"]."&registered=false");
+    header("location: signin.php?prevPage={$_POST["prevPage"]}&registered=false");
   }
 ?>
