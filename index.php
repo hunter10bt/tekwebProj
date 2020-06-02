@@ -1,5 +1,6 @@
 <?php
   session_start();
+  include "connectdb.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,8 +53,40 @@
     </div>
   </nav>
   <div class="container-fluid"id="container">
+    <div class="jumbotron">
+      <h1 class="display-3">Welcome to ReadHere</h1>
+      <!--<p class="lead">Jumbo helper text</p>-->
+      <hr class="my-2">
+      <p>
+        <?php 
+          if(isset($_SESSION["uname"])){
+            echo "Welcome back, {$_SESSION["uname"]}!";
+          }
+          else {
+            echo "Currently Not logged in.";
+          }
+        ?>
+      </p>
+      <!--<p class="lead">
+        <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo action name</a>
+      </p>-->
+    </div>
     <?php
-      echo $_SESSION["uname"];
+      $query = "SELECT `Franchise Name` from `franchise` WHERE readable = 1";
+      $result = mysqli_query($con, $query);
+
+      echo '<ul class="list-group">';
+
+      if($result){
+        foreach (mysqli_fetch_array($result) as $entry){
+          echo '<a href="#" class="list-group-item list-group-item-action">{$entry[0]}</a>';
+        }
+      }
+      else {
+        echo '<li class="list-group-item">Unable to execute query</li>';
+      }
+
+      echo "</ul>";
     ?>
   </div>
 </body>
