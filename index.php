@@ -71,23 +71,23 @@
         <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo action name</a>
       </p>-->
     </div>
-    <?php
+    <h2>Franchise List</h2>
+    <div class="list-group">
+      <?php
       $query = "SELECT `Franchise Name` from `franchise` WHERE readable = 1";
       $result = mysqli_query($con, $query);
 
-      echo '<ul class="list-group">';
-
       if($result){
-        foreach (mysqli_fetch_array($result) as $entry){
-          echo '<a href="#" class="list-group-item list-group-item-action">{$entry[0]}</a>';
+        while ($row = mysqli_fetch_array($result)){
+          echo '<a href="#" class="list-group-item list-group-item-action list-group-item-primary">'.$row[0].'</a>';
         }
       }
       else {
         echo '<li class="list-group-item">Unable to execute query</li>';
       }
 
-      echo "</ul>";
     ?>
+    </div>
   </div>
 </body>
 </html>
