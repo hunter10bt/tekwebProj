@@ -14,9 +14,8 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-light bg-light navbar-fixed-top" id="navbar">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-        aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="index.php">ReadHere</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -24,14 +23,27 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <?php
-            if(!isset($_SESSION["uname"]))
-              echo '<a class="nav-link" href="signin.php?prevPage=story.php">Sign In</a>';
-            else
-              echo '<a class="nav-link" href="signout.php?prevPage=story.php">Sign Out</a>';
-          ?>
-        </li>
+        <?php
+          if(!isset($_SESSION["uname"])){
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo '</li>';
+          }
+          else {
+
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="#">New Story</a>';
+            echo '</li>';
+          }
+        ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu" aria-labelledby="dropdownId">
