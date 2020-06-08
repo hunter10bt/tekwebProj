@@ -105,9 +105,9 @@
       </div>
       <div class="col-xl-2">
         <div class="list-group" id="list-tab" role="tablist">
-          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="home">About this Story</a>
-          <a class="list-group-item list-group-item-action" id="list-chapters-list" data-toggle="list" href="#list-chapters" role="tab" aria-controls="profile">Chapters</a>
-          <a class="list-group-item list-group-item-action" id="list-discussions-list" data-toggle="list" href="#list-discussions" role="tab" aria-controls="messages">Discussions</a>
+          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About this Story</a>
+          <a class="list-group-item list-group-item-action" id="list-chapters-list" data-toggle="list" href="#list-chapters" role="tab" aria-controls="chapters">Chapters</a>
+          <a class="list-group-item list-group-item-action" id="list-discussions-list" data-toggle="list" href="#list-discussions" role="tab" aria-controls="discussions">Discussions</a>
         </div>
       </div>
     </div>
