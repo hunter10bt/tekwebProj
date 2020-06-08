@@ -74,12 +74,12 @@
     <h2>Franchise List</h2>
     <div class="list-group">
       <?php
-      $query = "SELECT `Franchise Name` from `franchise` WHERE readable = 1";
+      $query = "SELECT `Franchise Name`,`franchiseIDName` from `franchise` WHERE readable = 1";
       $result = mysqli_query($con, $query);
 
       if($result){
         while ($row = mysqli_fetch_array($result)){
-          echo '<a href="#" class="list-group-item list-group-item-action list-group-item-primary">'.$row[0].'</a>';
+          echo '<a href="franchise.php?id='.$row[1].'" class="list-group-item list-group-item-action list-group-item-primary">'.$row[0].'</a>';
         }
       }
       else {

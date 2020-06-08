@@ -1,5 +1,22 @@
 <?php
   session_start();
+  include "connectdb.php";
+  if(!isset($_GET['id'])){
+    header("location: index.php");
+  }
+  else {
+    $franchiseID = $_GET["id"];
+    $info = mysqli_query($con, "SELECT `Franchise Name`, `Summary` FROM franchise WHERE franchiseIDName='$franchiseID' AND readable=1");
+
+    $row = mysqli_fetch_array($info);
+    if($row == null){
+      header("location: index.php");
+    }
+    else {    
+      $name = $row[0];
+      $summary = $row[1];
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
