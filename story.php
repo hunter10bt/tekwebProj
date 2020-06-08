@@ -1,5 +1,23 @@
 <?php
-  session_start()
+  session_start();
+  include "connectdb.php";
+  if(!isset($_GET['id'])){
+    header("location: index.php");
+  }
+  else {
+    $storyID = $_GET["id"];
+    $info = mysqli_query($con, "SELECT `title`, `summary`, `author` FROM story WHERE storyID='$storyID' AND readable=1");
+
+    $row = mysqli_fetch_array($info);
+    if($row == null){
+      header("location: index.php");
+    }
+    else {    
+      $name = $row[0];
+      $summary = $row[1];
+      $authorID = $row[2];
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,19 +82,32 @@
         <div class="row">
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
+              <?php
+                echo "<h2>$name</h2>";
+                echo "<p>$summary</p>";
+                echo "<p>By $authorID</p>";
+              ?>
             </div>
-            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-            <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-            <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+            <div class="tab-pane fade" id="list-chapters" role="tabpanel" aria-labelledby="list-chapters-list">
+              <h2>List of Chapters</h2>
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">Item</a>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
+              <h2>List of Discussions</h2>
+              <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">Item</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-xl-2">
         <div class="list-group" id="list-tab" role="tablist">
-          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="home">About Franchise</a>
-          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="home">About this Story</a>
+          <a class="list-group-item list-group-item-action" id="list-chapters-list" data-toggle="list" href="#list-chapters" role="tab" aria-controls="profile">Chapters</a>
+          <a class="list-group-item list-group-item-action" id="list-discussions-list" data-toggle="list" href="#list-discussions" role="tab" aria-controls="messages">Discussions</a>
         </div>
       </div>
     </div>
