@@ -77,27 +77,35 @@
   </nav>
   <div class="container-fluid"id="container">
     <div class="row">
-      <div class="col-xl-10">
+      <div class="col-xl-10" style="padding-left: 2.5%; padding-right: 2.5%;">
         <div class="row">
-          <div class="tab-content" id="nav-tabContent">
+          <div class="tab-content" id="nav-tabContent" style="width: max-content; ">
             <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
               <?php
                 echo "<h1>$name</h1>";
                 echo "$summary";
               ?>
             </div>
-            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-            <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-            <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+            <div class="tab-pane fade" id="list-story" role="tabpanel" aria-labelledby="list-story-list">
+              <h2>List of Stories</h2>
+              <div class="list-group" id="story-list">
+                <a href="#" class="list-group-item list-group-item-action">Item</a>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
+              <h2>List of Discussions</h2>
+              <div class="list-group" id="discussion-list">
+                <a href="#" class="list-group-item list-group-item-action">Item</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-xl-2">
         <div class="list-group" id="list-tab" role="tablist">
           <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="home">About</a>
-          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+          <a class="list-group-item list-group-item-action" id="list-story-list" data-toggle="list" href="#list-story" role="tab" aria-controls="profile">List of Stories</a>
+          <a class="list-group-item list-group-item-action" id="list-discussions-list" data-toggle="list" href="#list-discussions" role="tab" aria-controls="messages">List of Discussions</a>
         </div>
       </div>
     </div>
