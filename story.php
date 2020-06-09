@@ -17,6 +17,13 @@
       $summary = $row[1];
       $authorID = $row[2];
     }
+
+    if($authorID == $_SESSION["uname"]){
+      $isAuthor = true;
+    }
+    else {
+      $isAuthor = false;
+    }
   }
 ?>
 <!DOCTYPE html>
@@ -91,13 +98,53 @@
             <div class="tab-pane fade" id="list-chapters" role="tabpanel" aria-labelledby="list-chapters-list">
               <h2>List of Chapters</h2>
               <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">Item</a>
+                <?php
+                  $query = "SELECT chapterID,title,category,summary FROM chapter WHERE readable = 1 AND storyID = '$storyID'";
+                  $chapterRes = mysqli_query($con, $query);
+
+                  if ($chapterRes){
+                    while ($row = mysqli_fetch_array(($chapterRes))) {
+                      echo "
+                      <a href='reader.php?id=$row[0]' class='list-group-item list-group-item-action'>
+                        <div class='d-flex w-100 justify-content-between'>
+                          <h4 class='mb-1'>$row[1]</h5>
+                          <!--<small>3 days ago</small>-->
+                        </div>
+                        <p class='mb-1'>$row[3]</p>
+                        <small>By $row[2]</small>
+                      </a>";
+                    }
+                  }
+                  else {
+                    echo "There are currently no chapters.";
+                  }
+                ?>
               </div>
             </div>
             <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
               <h2>List of Discussions</h2>
-              <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">Item</a>
+              <div class="list-group" id="discussion-list">
+                <?php
+                  $query = "SELECT discussionID,title,user,summary FROM discussion WHERE readable = 1 AND storyID = '$storyID'";
+                  $discussionRes = mysqli_query($con, $query);
+
+                  if ($discussionRes) {
+                    while($row = mysqli_fetch_array($discussionRes)){
+                      echo "
+                      <a href='forum.php?id=$row[0]' class='list-group-item list-group-item-action'>
+                        <div class='d-flex w-100 justify-content-between'>
+                          <h4 class='mb-1'>$row[1]</h5>
+                          <!--<small>3 days ago</small>-->
+                        </div>
+                        <p class='mb-1'>$row[3]</p>
+                        <small>By $row[2]</small>
+                      </a>";
+                    }
+                  }
+                  else {
+                    echo "No discussions.";
+                  }
+                ?>
               </div>
             </div>
           </div>
