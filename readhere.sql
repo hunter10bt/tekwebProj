@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2020 at 04:09 PM
+-- Generation Time: Jun 09, 2020 at 04:00 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -72,7 +72,7 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `discussion` (
   `discussionID` bigint(11) NOT NULL,
-  `dateCreated` date NOT NULL,
+  `dateCreated` date DEFAULT curdate(),
   `title` varchar(64) NOT NULL,
   `user` varchar(32) NOT NULL,
   `storyID` bigint(11) NOT NULL,
@@ -93,6 +93,14 @@ CREATE TABLE `franchise` (
   `Summary` varchar(100) NOT NULL,
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `franchise`
+--
+
+INSERT INTO `franchise` (`franchiseIDName`, `Franchise Name`, `Summary`, `readable`) VALUES
+('asdfdasds', 'fasdfdsa', 'fds', 1),
+('asfdsa', 'asfdfdsafds', 'asdfdfsadasf', 1);
 
 -- --------------------------------------------------------
 
@@ -124,8 +132,40 @@ CREATE TABLE `story` (
   `title` varchar(32) NOT NULL,
   `author` varchar(32) NOT NULL,
   `summary` varchar(256) NOT NULL,
+  `dateAdded` date DEFAULT curdate(),
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `story`
+--
+
+INSERT INTO `story` (`storyID`, `title`, `author`, `summary`, `dateAdded`, `readable`) VALUES
+(1, 'Something', 'hunter10bt', 'dsasfsafsafsafsafsafsafsaf', '2020-06-09', 1),
+(2, 'Ho Ho', 'bob', 'asfddasdfsdfsdfsda', '2020-06-09', 1),
+(3, 'asfdffsda', 'nick', 'asfsdafsdafsdafsad', '2020-06-09', 1),
+(4, 'asdfdsa', 'regan', 'safdsadfsafsdfsa', '2020-06-09', 1),
+(5, 'fsdafasdfsad', 'hunter10bt', 'asdffsafsafsdafas', '2020-06-09', 1),
+(6, 'Hahaha', 'hunter10bt', 'wfafdsafdsafsadfdsa', '2020-06-08', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tagdetails`
+--
+
+CREATE TABLE `tagdetails` (
+  `franchiseID` varchar(64) NOT NULL,
+  `storyID` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tagdetails`
+--
+
+INSERT INTO `tagdetails` (`franchiseID`, `storyID`) VALUES
+('asdfdasds', 1),
+('asfdsa', 1);
 
 -- --------------------------------------------------------
 
@@ -196,6 +236,12 @@ ALTER TABLE `story`
   ADD PRIMARY KEY (`storyID`);
 
 --
+-- Indexes for table `tagdetails`
+--
+ALTER TABLE `tagdetails`
+  ADD PRIMARY KEY (`franchiseID`,`storyID`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -233,7 +279,7 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `story`
 --
 ALTER TABLE `story`
-  MODIFY `storyID` bigint(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `storyID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
