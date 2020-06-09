@@ -117,10 +117,10 @@
               <div class="list-group" id="discussion-list">
               <?php
                   $query = "SELECT discussionID,title,user,summary FROM discussion WHERE readable = 1 AND franchiseID = '$franchiseID'";
-                  $storyRes = mysqli_query($con, $query);
+                  $discussionRes = mysqli_query($con, $query);
 
-                  if ($storyRes) {
-                    while($row = mysqli_fetch_array($storyRes)){
+                  if ($discussionRes) {
+                    while($row = mysqli_fetch_array($discussionRes)){
                       echo "
                       <a href='story.php?id=$row[0]' class='list-group-item list-group-item-action'>
                         <div class='d-flex w-100 justify-content-between'>
