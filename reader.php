@@ -1,5 +1,29 @@
 <?php
-  session_start()
+  session_start();
+  include "connectdb.php";
+  if(!isset($_GET["id"])){
+    header("location: index.php");
+  }
+  else{
+    $chapterID = $_GET["id"];
+    $query = "SELECT author, storyID FROM story WHERE storyID = ANY(SELECT storyID FROM chapter WHERE chapterID = $chapterID)";
+    $authorResult = mysqli_query($con, $query);
+    if($authorResult){
+      $row = mysqli_fetch_array($authorResult);
+      $authorID = $row[0];
+      $storyID = $row[1];
+
+      if($_SESSION["uname"] == $authorID){
+        $isEditor = true;
+      }
+      else {
+        $isEditor = false;
+      }
+    }
+    else {
+
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +87,13 @@
       <div class="col-xl-2" id="sidebar">
         <button type="button" class="btn btn-primary">Next</button>
         <button type="button" class="btn btn-primary">Previous</button>
-        <a name="return" id="exit" class="btn btn-danger" href="#" role="button">Back to Story Page</a>
+
+        <a name="return" id="exit" class="btn btn-danger" href="story.php?id=<?php echo $storyID;?>" role="button">Back to Story Page</a>
+        <?php
+          if ($isEditor == true){
+            echo "currently an editor of this chapter";
+          }
+        ?>
       </div>
       <div class="col-xl-10">
         
