@@ -122,7 +122,7 @@
                   if ($discussionRes) {
                     while($row = mysqli_fetch_array($discussionRes)){
                       echo "
-                      <a href='story.php?id=$row[0]' class='list-group-item list-group-item-action'>
+                      <a href='forum.php?id=$row[0]' class='list-group-item list-group-item-action'>
                         <div class='d-flex w-100 justify-content-between'>
                           <h4 class='mb-1'>$row[1]</h5>
                           <!--<small>3 days ago</small>-->
