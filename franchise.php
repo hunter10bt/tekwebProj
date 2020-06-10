@@ -194,7 +194,7 @@
             type : "POST",
             async : true,
             data : {
-              id : v_id,
+              franchiseID : v_id,
               updateDiscussionList : true,
             },
             success : function(result){
