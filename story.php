@@ -28,7 +28,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <head>
@@ -97,54 +97,12 @@
             </div>
             <div class="tab-pane fade" id="list-chapters" role="tabpanel" aria-labelledby="list-chapters-list">
               <h2>List of Chapters</h2>
-              <div class="list-group">
-                <?php
-                  $query = "SELECT chapterID,title,category,summary FROM chapter WHERE readable = 1 AND storyID = '$storyID'";
-                  $chapterRes = mysqli_query($con, $query);
-
-                  if ($chapterRes){
-                    while ($row = mysqli_fetch_array(($chapterRes))) {
-                      echo "
-                      <a href='reader.php?id=$row[0]' class='list-group-item list-group-item-action'>
-                        <div class='d-flex w-100 justify-content-between'>
-                          <h4 class='mb-1'>$row[1]</h5>
-                          <!--<small>3 days ago</small>-->
-                        </div>
-                        <p class='mb-1'>$row[3]</p>
-                        <small>By $row[2]</small>
-                      </a>";
-                    }
-                  }
-                  else {
-                    echo "There are currently no chapters.";
-                  }
-                ?>
+              <div class="list-group" id="list-group-chapters">
               </div>
             </div>
             <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
               <h2>List of Discussions</h2>
               <div class="list-group" id="discussion-list">
-                <?php
-                  $query = "SELECT discussionID,title,user,summary FROM discussion WHERE readable = 1 AND storyID = '$storyID'";
-                  $discussionRes = mysqli_query($con, $query);
-
-                  if ($discussionRes) {
-                    while($row = mysqli_fetch_array($discussionRes)){
-                      echo "
-                      <a href='forum.php?id=$row[0]' class='list-group-item list-group-item-action'>
-                        <div class='d-flex w-100 justify-content-between'>
-                          <h4 class='mb-1'>$row[1]</h5>
-                          <!--<small>3 days ago</small>-->
-                        </div>
-                        <p class='mb-1'>$row[3]</p>
-                        <small>By $row[2]</small>
-                      </a>";
-                    }
-                  }
-                  else {
-                    echo "No discussions.";
-                  }
-                ?>
               </div>
             </div>
           </div>
@@ -153,11 +111,58 @@
       <div class="col-xl-2">
         <div class="list-group" id="list-tab" role="tablist">
           <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About this Story</a>
-          <a class="list-group-item list-group-item-action" id="list-chapters-list" data-toggle="list" href="#list-chapters" role="tab" aria-controls="chapters">Chapters</a>
-          <a class="list-group-item list-group-item-action" id="list-discussions-list" data-toggle="list" href="#list-discussions" role="tab" aria-controls="discussions">Discussions</a>
+          <?php
+            echo "<a class='list-group-item list-group-item-action' id='list-chapters-list' data-toggle='list' href='#list-chapters' role='tab' aria-controls='chapters' storyID='$storyID'>List of Chapters</a>";
+            echo "<a class='list-group-item list-group-item-action' id='list-discussions-list' data-toggle='list' href='#list-discussions' role='tab' aria-controls='discussions' storyID='$storyID'> Discussions </a>";
+          ?>
         </div>
       </div>
     </div>
   </div>
 </body>
+<script>
+  $(
+    function(){
+      $("#list-chapters-list").click(
+        function(){
+          var s_id = $(this).attr("storyID");
+          $.ajax(
+            {
+              url: "loadChapterList.php",
+              type: "POST",
+              async: true,
+              data:{
+                storyID: s_id,
+                loadChapters: true,
+              },
+              success: function(result){
+                $("#list-group-chapters").html(result);
+              }
+            }
+          );
+        }
+      );
+
+      $("list-discussions-list").click(
+        function(){
+          var s_id = $(this).attr("storyID");
+          $.ajax(
+            {
+              url: "loadDiscussionList.php",
+              type: "POST",
+              async: true,
+              data:{
+                storyID: s_id,
+                updateDiscussionList: true,
+              },
+              success: function(result){
+                $("#discussion-list").html(result);
+              }
+            }
+          );
+        }
+      );
+    }
+  );
+</script>
 </html>

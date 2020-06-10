@@ -20,14 +20,18 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="jquery-3.5.1.js"></script>
+<!-- <script src="popper.min.js"></script>
+<script src="bootstrap.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Franchise - ReadHere</title>
+  <!-- <link rel="stylesheet" href="bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-light bg-light navbar-fixed-top" id="navbar">
@@ -51,7 +55,6 @@
             echo '</li>';
           }
           else {
-
             echo '<li class="nav-item">';
             echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
             echo '</li>';
@@ -89,53 +92,11 @@
             <div class="tab-pane fade" id="list-story" role="tabpanel" aria-labelledby="list-story-list">
               <h2>List of Stories</h2>
               <div class="list-group" id="story-list">
-                <?php
-                  $query = "SELECT storyID,title,author,summary FROM story WHERE readable = 1 AND storyID=any(SELECT storyID FROM tagdetails WHERE franchiseID = '$franchiseID') ORDER BY storyID desc";
-                  $storyRes = mysqli_query($con, $query);
-
-                  if ($storyRes) {
-                    while($row = mysqli_fetch_array($storyRes)){
-                      echo "
-                      <a href='story.php?id=$row[0]' class='list-group-item list-group-item-action'>
-                        <div class='d-flex w-100 justify-content-between'>
-                          <h4 class='mb-1'>$row[1]</h5>
-                          <!--<small>3 days ago</small>-->
-                        </div>
-                        <p class='mb-1'>$row[3]</p>
-                        <small>By $row[2]</small>
-                      </a>";
-                    }
-                  }
-                  else {
-                    echo "There are currently no stories for this franchise";
-                  }
-                ?>
               </div>
             </div>
             <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
               <h2>List of Discussions</h2>
               <div class="list-group" id="discussion-list">
-              <?php
-                  $query = "SELECT discussionID,title,user,summary FROM discussion WHERE readable = 1 AND franchiseID = '$franchiseID'";
-                  $discussionRes = mysqli_query($con, $query);
-
-                  if ($discussionRes) {
-                    while($row = mysqli_fetch_array($discussionRes)){
-                      echo "
-                      <a href='forum.php?id=$row[0]' class='list-group-item list-group-item-action'>
-                        <div class='d-flex w-100 justify-content-between'>
-                          <h4 class='mb-1'>$row[1]</h5>
-                          <!--<small>3 days ago</small>-->
-                        </div>
-                        <p class='mb-1'>$row[3]</p>
-                        <small>By $row[2]</small>
-                      </a>";
-                    }
-                  }
-                  else {
-                    echo "No discussions.";
-                  }
-                ?>
               </div>
             </div>
           </div>
@@ -143,13 +104,58 @@
       </div>
       <div class="col-xl-2">
         <div class="list-group" id="list-tab" role="tablist">
-          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About</a>
-          <a class="list-group-item list-group-item-action" id="list-story-list" data-toggle="list" href="#list-story" role="tab" aria-controls="story">List of Stories</a>
-          <a class="list-group-item list-group-item-action" id="list-discussions-list" data-toggle="list" href="#list-discussions" role="tab" aria-controls="discussions">List of Discussions</a>
+          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About</a>          
+          <?php
+            echo "<a class='list-group-item list-group-item-action' id='list-story-list' data-toggle='list' href='#list-story' role='tab' aria-controls='story' franchiseID='$franchiseID'>List of Stories</a>";
+            echo "<a class='list-group-item list-group-item-action' id='list-discussions-list' data-toggle='list' href='#list-discussions' role='tab' aria-controls='discussions' franchiseID= '$franchiseID'>List of Discussions</a>";
+          ?>
         </div>
       </div>
     </div>
   </div>
 </div>
 </body>
+<script type="text/javascript">
+  $(function(){
+    $("#list-story-list").click(
+      function(){
+        var v_id = $(this).attr('franchiseID');
+        $.ajax(
+          {
+            url : "loadStoryList.php",
+            type : "POST",
+            async : true,
+            data : {
+              id : v_id,
+              updateStoryList : true,
+            },
+            success : function(result){
+              $("#story-list").html(result);
+            }
+          }
+        );
+      }
+    );
+    
+    $("#list-discussions-list").click(
+      function(){
+        var v_id = $(this).attr('franchiseID');
+        $.ajax(
+          {
+            url : "loadDiscussionList.php",
+            type : "POST",
+            async : true,
+            data : {
+              franchiseID : v_id,
+              updateDiscussionList : true,
+            },
+            success : function(result){
+              $("#discussion-list").html(result);
+            }
+          }
+        );
+      }
+    );
+  });
+</script>
 </html>
