@@ -1,5 +1,6 @@
 <?php
   session_start();
+  include "connectdb.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-light bg-light navbar-fixed-top" id="navbar">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="index.php">ReadHere</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -44,6 +45,13 @@
             echo '</li>';
           }
         ?>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownId">
+            <a class="dropdown-item" href="#">Action 1</a>
+            <a class="dropdown-item" href="#">Action 2</a>
+          </div>
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -52,9 +60,41 @@
     </div>
   </nav>
   <div class="container-fluid"id="container">
-    <?php
-      echo $_SESSION["uname"];
+    <div class="jumbotron">
+      <h1 class="display-3">Welcome to ReadHere</h1>
+      <!--<p class="lead">Jumbo helper text</p>-->
+      <hr class="my-2">
+      <p>
+        <?php 
+          if(isset($_SESSION["uname"])){
+            echo "Welcome back, {$_SESSION["uname"]}!";
+          }
+          else {
+            echo "Currently Not logged in.";
+          }
+        ?>
+      </p>
+      <!--<p class="lead">
+        <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo action name</a>
+      </p>-->
+    </div>
+    <h2>Franchise List</h2>
+    <div class="list-group">
+      <?php
+      $query = "SELECT `Franchise Name`,`franchiseIDName` from `franchise` WHERE readable = 1";
+      $result = mysqli_query($con, $query);
+
+      if($result){
+        while ($row = mysqli_fetch_array($result)){
+          echo '<a href="franchise.php?id='.$row[1].'" class="list-group-item list-group-item-action list-group-item-primary">'.$row[0].'</a>';
+        }
+      }
+      else {
+        echo '<li class="list-group-item">Unable to execute query</li>';
+      }
+
     ?>
+    </div>
   </div>
 </body>
 </html>

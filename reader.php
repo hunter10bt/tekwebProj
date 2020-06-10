@@ -1,5 +1,29 @@
 <?php
-  session_start()
+  session_start();
+  include "connectdb.php";
+  if(!isset($_GET["id"])){
+    header("location: index.php");
+  }
+  else{
+    $chapterID = $_GET["id"];
+    $query = "SELECT author, storyID FROM story WHERE storyID = ANY(SELECT storyID FROM chapter WHERE chapterID = $chapterID)";
+    $authorResult = mysqli_query($con, $query);
+    if($authorResult){
+      $row = mysqli_fetch_array($authorResult);
+      $authorID = $row[0];
+      $storyID = $row[1];
+
+      if($_SESSION["uname"] == $authorID){
+        $isEditor = true;
+      }
+      else {
+        $isEditor = false;
+      }
+    }
+    else {
+
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +38,8 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-light bg-light navbar-fixed-top" id="navbar">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-        aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="index.php">ReadHere</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -24,14 +47,27 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <?php
-            if(!isset($_SESSION["uname"]))
-              echo '<a class="nav-link" href="signin.php?prevPage=reader.php">Sign In</a>';
-            else
-              echo '<a class="nav-link" href="signout.php?prevPage=reader.php">Sign Out</a>';
-          ?>
-        </li>
+        <?php
+          if(!isset($_SESSION["uname"])){
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo '</li>';
+          }
+          else {
+
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="#">New Story</a>';
+            echo '</li>';
+          }
+        ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu" aria-labelledby="dropdownId">
@@ -45,13 +81,19 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
-  </nav>  
+  </nav>
   <div class="container-fluid"id="container">
     <div class="row">
       <div class="col-xl-2" id="sidebar">
         <button type="button" class="btn btn-primary">Next</button>
         <button type="button" class="btn btn-primary">Previous</button>
-        <a name="return" id="exit" class="btn btn-danger" href="#" role="button">Back to Story Page</a>
+
+        <a name="return" id="exit" class="btn btn-danger" href="story.php?id=<?php echo $storyID;?>" role="button">Back to Story Page</a>
+        <?php
+          if ($isEditor == true){
+            echo "currently an editor of this chapter";
+          }
+        ?>
       </div>
       <div class="col-xl-10">
         
