@@ -21,13 +21,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="jquery-3.5.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="popper.min.js"></script>
+<script src="bootstrap.min.js"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Franchise - ReadHere</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="bootstrap.min.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-light bg-light navbar-fixed-top" id="navbar">
@@ -100,12 +100,10 @@
       </div>
       <div class="col-xl-2">
         <div class="list-group" id="list-tab" role="tablist">
-          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About</a>
-
-          
+          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About</a>          
           <?php
             echo "<a class='list-group-item list-group-item-action' id='list-story-list' data-toggle='list' href='#list-story' role='tab' aria-controls='story' franchiseID='$franchiseID'>List of Stories</a>";
-            echo "<a class='list-group-item list-group-item-action' id='list-discussions-list' data-toggle='list' href='#list-discussions' role='tab' aria-controls='discussions' franchiseID= '$franchiseID'>List of Discussions</a>"
+            echo "<a class='list-group-item list-group-item-action' id='list-discussions-list' data-toggle='list' href='#list-discussions' role='tab' aria-controls='discussions' franchiseID= '$franchiseID'>List of Discussions</a>";
           ?>
         </div>
       </div>
@@ -128,7 +126,6 @@
               updateStoryList : true,
             },
             success : function(result){
-              alert(result);
               $("#story-list").html(result);
             }
           }
@@ -136,7 +133,7 @@
       }
     );
     
-    $("#list-discussion-list").click(
+    $("#list-discussions-list").click(
       function(){
         var v_id = $(this).attr('franchiseID');
         $.ajax(
@@ -149,7 +146,6 @@
               updateDiscussionList : true,
             },
             success : function(result){
-              alert(result);
               $("#discussion-list").html(result);
             }
           }
