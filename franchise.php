@@ -51,7 +51,6 @@
             echo '</li>';
           }
           else {
-
             echo '<li class="nav-item">';
             echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
             echo '</li>';
@@ -89,59 +88,11 @@
             <div class="tab-pane fade" id="list-story" role="tabpanel" aria-labelledby="list-story-list">
               <h2>List of Stories</h2>
               <div class="list-group" id="story-list">
-                <?php
-                  // if(isset($_POST["updateStoryList"])){
-                  //   $query = "SELECT storyID,title,author,summary FROM story WHERE readable = 1 AND storyID=any(SELECT storyID FROM tagdetails WHERE franchiseID = '$franchiseID') ORDER BY storyID desc";
-                  //   $storyRes = mysqli_query($con, $query);
-  
-                  //   if ($storyRes) {
-                  //     while($row = mysqli_fetch_array($storyRes)){
-                  //       echo "
-                  //       <a href='story.php?id=$row[0]' class='list-group-item list-group-item-action'>
-                  //         <div class='d-flex w-100 justify-content-between'>
-                  //           <h4 class='mb-1'>$row[1]</h5>
-                  //           <!--<small>3 days ago</small>-->
-                  //         </div>
-                  //         <p class='mb-1'>$row[3]</p>
-                  //         <small>By $row[2]</small>
-                  //       </a>";
-                  //     }
-                  //   }
-                  //   else {
-                  //     echo "There are currently no stories for this franchise";
-                  //   }
-                  //   exit();
-                  // }
-                ?>
               </div>
             </div>
             <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
               <h2>List of Discussions</h2>
               <div class="list-group" id="discussion-list">
-                <?php
-                  // if(isset($_POST["updateDiscussionList"])){
-                  //   $query = "SELECT discussionID,title,user,summary FROM discussion WHERE readable = 1 AND franchiseID = '$franchiseID'";
-                  //   $discussionRes = mysqli_query($con, $query);
-  
-                  //   if ($discussionRes) {
-                  //     while($row = mysqli_fetch_array($discussionRes)){
-                  //       echo "
-                  //       <a href='forum.php?id=$row[0]' class='list-group-item list-group-item-action'>
-                  //         <div class='d-flex w-100 justify-content-between'>
-                  //           <h4 class='mb-1'>$row[1]</h5>
-                  //           <!--<small>3 days ago</small>-->
-                  //         </div>
-                  //         <p class='mb-1'>$row[3]</p>
-                  //         <small>By $row[2]</small>
-                  //       </a>";
-                  //     }
-                  //   }
-                  //   else {
-                  //     echo "No discussions.";
-                  //   }
-                  //   exit();
-                  // }
-                ?>
               </div>
             </div>
           </div>
