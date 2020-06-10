@@ -3,7 +3,7 @@
   
   if(isset($_POST["updateDiscussionList"])){
     if(isset($_POST["franchiseID"])){
-      $query = "SELECT discussionID,title,user,summary FROM discussion WHERE readable = 1 AND franchiseID = '{$_POST["franchiseID"]}'";
+      $query = "SELECT discussionID,title,user FROM discussion WHERE readable = 1 AND franchiseID = '{$_POST["franchiseID"]}'";
       $discussionRes = mysqli_query($con, $query);
 
       if ($discussionRes) {
@@ -14,7 +14,6 @@
               <h4 class='mb-1'>$row[1]</h5>
               <!--<small>3 days ago</small>-->
             </div>
-            <p class='mb-1'>$row[3]</p>
             <small>By $row[2]</small>
           </a>";
         }
