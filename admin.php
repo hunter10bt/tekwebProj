@@ -24,16 +24,27 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <?php
-            if(!isset($_SESSION["uname"])){
-              echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
-            }
-            else{
-              echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
-            }
-          ?>
-        </li>
+        <?php
+          if(!isset($_SESSION["uname"])){
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo '</li>';
+          }
+          else {
+
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo '</li>';
+            
+            echo '<li class="nav-item">';
+            echo '<a class="nav-link" href="#">New Story</a>';
+            echo '</li>';
+          }
+        ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu" aria-labelledby="dropdownId">
@@ -48,6 +59,21 @@
       </form>
     </div>
   </nav>
+  <div class="container-fluid"id="container">
+    <div class="jumbotron">
+      <h1 class="display-3">Welcome Admin to ReadHere</h1>
+      <hr class="my-2">
+      <p>
+        <?php 
+          if(isset($_SESSION["uname"])){
+            echo "Welcome back, {$_SESSION["uname"]}!";
+          }
+          else {
+            echo "Currently Not logged in.";
+          }
+        ?>
+      </p>
+    </div>
   <div class="container-fluid" id="container">
     <div class="row">
       <div class="col-xl-2" id="sidebar">
