@@ -3,7 +3,7 @@
 
   if(isset($_POST["loadChapters"])){
     
-    $query = "SELECT chapterID,title,category,summary FROM chapter WHERE readable = 1 AND storyID = '{$_POST["$storyID"]}'";
+    $query = "SELECT chapterID,title,category,summary FROM chapter WHERE readable = 1 AND storyID = '{$_POST["storyID"]}'";
     $chapterRes = mysqli_query($con, $query);
 
     if ($chapterRes){
