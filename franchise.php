@@ -116,8 +116,8 @@
           <?php
             if (isset($_SESSION["uname"])) {
               # code...
-              echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal'>New Discussion</button>";
-              echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addStoryModal'>New Story</button>";
+              echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal' franchiseID= '$franchiseID' id='trigger-new-discussion'>New Discussion</button>";
+              echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addStoryModal'franchiseID= '$franchiseID' id='trigger-new-story'>New Story</button>";
             }
           ?>
         </div>
@@ -143,7 +143,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="adddiscussion">Add Discussion</button>
+                <button type="button" class="btn btn-primary" id="adddiscussion" data-dismiss="modal">Add Discussion</button>
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="addStory">Add Story</button>
+                <button type="button" class="btn btn-primary" id="addStory"  data-dismiss="modal">Add Story</button>
               </div>
             </div>
           </div>
@@ -215,6 +215,70 @@
             },
             success : function(result){
               $("#discussion-list").html(result);
+            }
+          }
+        );
+      }
+    );
+
+    $("#addStory").click(
+      function(){
+        var title = $("#storyTitleInput").val();
+        var details = $("#summaryInput").val();
+        var initiator = $("#unameDisplay").text();
+        var franchiseID = $("#trigger-new-discussion").attr('franchiseID');
+        // alert(title);
+        // alert(details);
+        // alert(initiator);
+        // alert(franchiseID);
+        $("#storyTitleInput").val('');
+        $("#summaryInput").val('');
+
+        $.ajax(
+          {
+            url: "addStory.php",
+            type: "POST",
+            async: true,
+            data: {
+              title: title,
+              details: details,
+              franchiseID: franchiseID,
+              newStory: true,
+            },
+            success: function(show){
+              alert(show);
+            }
+          }
+        );
+      }
+    );
+
+    $("#adddiscussion").click(
+      function(){
+        var title = $("#discussionTitleInput").val();
+        var details = $("#discussionDetailsInput").val();
+        var initiator = $("#unameDisplay").text();
+        var franchiseID = $("#trigger-new-discussion").attr('franchiseID');
+        // alert(title);
+        // alert(details);
+        // alert(initiator);
+        // alert(franchiseID);
+        $("#discussionTitleInput").val('');
+        $("#discussionDetailsInput").val('');
+
+        $.ajax(
+          {
+            url: "addDiscussion.php",
+            type: "POST",
+            async: true,
+            data: {
+              title: title,
+              details: details,
+              franchiseID: franchiseID,
+              newDiscussion: true,
+            },
+            success: function(show){
+              alert(show);
             }
           }
         );
