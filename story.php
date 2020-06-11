@@ -45,9 +45,11 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
+        <?php
+          if(isset($_SESSION["uname"])){
+            echo "<li class='nav-item'><a class='nav-link' href='#' id='unameDisplay'>{$_SESSION["uname"]}</a></li>";
+          }
+        ?>
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
@@ -115,6 +117,68 @@
             echo "<a class='list-group-item list-group-item-action' id='list-chapters-list' data-toggle='list' href='#list-chapters' role='tab' aria-controls='chapters' storyID='$storyID'>List of Chapters</a>";
             echo "<a class='list-group-item list-group-item-action' id='list-discussions-list' data-toggle='list' href='#list-discussions' role='tab' aria-controls='discussions' storyID='$storyID'> Discussions </a>";
           ?>
+          <div class="list-group">
+            <?php
+              if (isset($_SESSION["uname"])) {
+                # code...
+                echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal'>New Discussion</button>";
+                echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addChapterModal'>New Story</button>";
+              }
+            ?>
+          </div>
+          <div class="modal fade" id="addDiscussionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Discussion</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="discussionTitleInput">Discussion Title</label>
+                    <input type="text" class="form-control" name="discussionTitleInput" id="discussionTitleInput" aria-describedby="discussionTitleHelp" placeholder="Insert title here..." maxlength="64">
+                    <small id="discussionTitleHelp" class="form-text text-muted">Inser discussion title here</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="discussionDetailsInput">Details</label>
+                    <textarea class="form-control" name="discussionDetailsInput" id="discussionDetailsInput" rows="5" maxlength="256"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" id="adddiscussion">Add Discussion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="addChapterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Chapter</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="chapterTitleInput">Chapter Title</label>
+                    <input type="text" class="form-control" name="chapterTitleInput" id="chapterTitleInput" placeholder="Insert title here..." maxlength="64">
+                  </div>
+                  <div class="form-group">
+                    <label for="summaryInput">Summary</label>
+                    <textarea class="form-control" name="summaryInput" id="summaryInput" rows="5" maxlength="128"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" id="addStory">Add Story</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
