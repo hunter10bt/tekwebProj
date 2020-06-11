@@ -148,7 +148,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" id="adddiscussion">Add Discussion</button>
+                  <button type="button" class="btn btn-primary" id="adddiscussion" data-dismiss="modal">Add Discussion</button>
                 </div>
               </div>
             </div>
@@ -174,7 +174,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" id="addStory">Add Story</button>
+                  <button type="button" class="btn btn-primary" id="addChapter" data-dismiss="modal">Add Story</button>
                 </div>
               </div>
             </div>
@@ -207,7 +207,7 @@
         }
       );
 
-      $("list-discussions-list").click(
+      $("#list-discussions-list").click(
         function(){
           var s_id = $(this).attr("storyID");
           $.ajax(
@@ -226,6 +226,38 @@
           );
         }
       );
+
+      $("#adddiscussion").click(
+      function(){
+        var title = $("#discussionTitleInput").val();
+        var details = $("#discussionDetailsInput").val();
+        var initiator = $("#unameDisplay").text();
+        var storyID = $("#list-discussions-list").attr('storyID');
+        // alert(title);
+        // alert(details);
+        // alert(initiator);
+        // alert(storyID);
+        $("#discussionTitleInput").val('');
+        $("#discussionDetailsInput").val('');
+
+        $.ajax(
+          {
+            url: "addDiscussion.php",
+            type: "POST",
+            async: true,
+            data: {
+              title: title,
+              details: details,
+              storyID: storyID,
+              newDiscussion: true,
+            },
+            success: function(show){
+              alert(show);
+            }
+          }
+        );
+      }
+    );
     }
   );
 </script>
