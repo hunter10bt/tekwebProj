@@ -228,36 +228,61 @@
       );
 
       $("#adddiscussion").click(
-      function(){
-        var title = $("#discussionTitleInput").val();
-        var details = $("#discussionDetailsInput").val();
-        var initiator = $("#unameDisplay").text();
-        var storyID = $("#list-discussions-list").attr('storyID');
-        // alert(title);
-        // alert(details);
-        // alert(initiator);
-        // alert(storyID);
-        $("#discussionTitleInput").val('');
-        $("#discussionDetailsInput").val('');
+        function(){
+          var title = $("#discussionTitleInput").val();
+          var details = $("#discussionDetailsInput").val();
+          var initiator = $("#unameDisplay").text();
+          var storyID = $("#list-discussions-list").attr('storyID');
+          // alert(title);
+          // alert(details);
+          // alert(initiator);
+          // alert(storyID);
+          $("#discussionTitleInput").val('');
+          $("#discussionDetailsInput").val('');
 
-        $.ajax(
-          {
-            url: "addDiscussion.php",
-            type: "POST",
-            async: true,
-            data: {
-              title: title,
-              details: details,
-              storyID: storyID,
-              newDiscussion: true,
-            },
-            success: function(show){
-              alert(show);
+          $.ajax(
+            {
+              url: "addDiscussion.php",
+              type: "POST",
+              async: true,
+              data: {
+                title: title,
+                details: details,
+                storyID: storyID,
+                newDiscussion: true,
+              },
+              success: function(show){
+                alert(show);
+              }
             }
-          }
-        );
-      }
-    );
+          );
+        }
+      );
+
+      //Menambahkan chapter - IN PROGRESS
+      $("#addChapter").click(
+        function(){
+          var title = $("#chapterTitleInput").val();
+          var summary = $("#summaryInput").val();
+          var storyID = $("#list-chapters-list").attr('storyID');
+
+          $.ajax(
+            {
+              url: "addChapter.php",
+              type: "POST",
+              data: {
+                addChapter: true,
+                title: title,
+                storyID: storyID,
+                summary: summary,
+              },
+              success: function(result){
+                alert(result);
+              }
+            }
+          );
+        }
+      );
     }
   );
 </script>
