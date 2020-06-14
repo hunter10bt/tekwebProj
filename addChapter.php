@@ -18,10 +18,9 @@
         $id = mysqli_fetch_array($res)[0];
 
         if ($id){        //Creates file
-          $filename = "./chapters/$id.txt";
+          $filename = "./chapters/$id.json";
           // $file = fopen();
-          
-          $result = true;
+          $result = file_put_contents($filename, json_encode (json_decode ("{}")));
         }
         else{
           $result = false;
