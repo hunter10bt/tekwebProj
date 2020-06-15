@@ -1,9 +1,28 @@
 <?php
   session_start();
+  include "connectdb.php";
+  if(!isset($_GET["id"])){
+    header("location: index.php");
+  }
+  $query = "SELECT title, user, content, dateCreated FROM discussion WHERE discussionID={$_GET["id"]} AND readable = 1";
+  $result = mysqli_query($con, $query);
+
+  if(!$result){
+    header("location: index.php");
+  }
+  else {
+    $row = mysqli_fetch_array($result);
+
+    $id=$_GET["id"];
+    $title=$row[0];
+    $user=$row[1];
+    $content=$row[2];
+    $date=$row[3];
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <head>
@@ -60,23 +79,210 @@
   </nav>
   <div class="container-fluid"id="container">
     <div class="row">
-      <div class="col-xl-10">
-        <div class="tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
-          <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-          <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-          <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+      <div class="col-xl-10" style="padding-left: 2.5%; padding-right: 2.5%;">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-3">
+              <?php echo $title; ?>
+            </h1>
+            <p class="lead">By <?php echo $user; ?></p>
+            <hr class="my-2">
+            <p><?php echo $content; ?></p>
+          </div>
         </div>
+        <div id="commentList"></div>
       </div>
-      <div class="col-xl-2">
-        <div class="list-group" id="list-tab" role="tablist">
-          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Home</a>
-          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-          <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+      <div class="col-xl-2" style="word-wrap: break-word;">
+        <h1><?php echo $title; ?></h1>
+        <p>By <?php echo $user; ?></p>
+        <p><?php echo $content; ?></p>
+        <?php
+          if (isset($_SESSION["uname"])) {
+            echo "<div class='list-group'>";
+            echo "<button class='list-group-item list-group-item-success btn-add-comment' targettype='discussion' targetDiscussionID='$id' id='addCommentToDiscussion' data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
+            echo "<button class='list-group-item list-group-item-danger btn-report' targettype='discussion' targetDiscussionID='$id' id='reportDiscussion' data-toggle='modal' data-target='#reportModal'>Report</button>";
+            echo "</div>";
+          }
+        ?>        
+        <!-- Add Comment Modal -->
+        <div class='modal fade' id='addCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Add Comment</h5>
+                  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                  </button>
+              </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <div class='form-group'>
+                    <label for='commentInput'>Comment:</label>
+                    <textarea class='form-control' name='commentInput' id='commentInput' rows='5'></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalComment">Add Comment</button>
+              </div>
+            </div>
+          </div>
         </div>
+
+        
+        <!-- Report Modal -->
+        <div class='modal fade' id='reportModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Report</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <div class='form-group'>
+                    <label for='reportTitleInput'>Report Title</label>
+                    <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
+                  </div>
+                  <div class='form-group'>
+                    <label for='detailInput'>Detail:</label>
+                    <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalReport">Report</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
 </body>
+<script>
+  function loadComments() {
+    //Trigger ajax script here
+    var targetDiscussionID = $("#addCommentToDiscussion").attr('targetDiscussionID');
+    $.ajax(
+      {
+        url: "loadCommentList.php",
+        type: "POST",
+        data: {
+          loadComment: true,
+          discussionID: targetDiscussionID
+        },
+        success: function (result) {
+          $("#commentList").html(result);
+        }
+      }
+    )
+  }
+
+  function addComment(){
+    var targettype = $("#modalComment").attr('targettype');
+    var targetDiscussionID = $("#modalComment").attr('targetDiscussionID');
+    var targetcommentid = $("#modalComment").attr('targetcommentid');
+    var comment = $("#commentInput").val();
+    alert("Target type: "+targettype);
+    alert("Target discussion ID: "+targetDiscussionID);
+    alert("Target comment ID: "+targetcommentid);
+    alert("Comment: "+comment);
+
+    $.ajax(
+      {
+        url: "addComment.php",
+        type: "POST",
+        data: {
+          addComment: true,
+          targetType: targettype,
+          targetcommentid: targetcommentid,
+          targetDiscussionID: targetDiscussionID,
+          comment: comment
+        },
+        success: function(result){
+          alert(result);
+          loadComments();
+        }
+      }
+    );
+    $("#commentInput").val('');
+  }
+
+  function report(){
+    var title=$("#reportTitleInput").val();
+    var details=$("#detailInput").val();
+    $("#detailInput").val('');
+    $("#reportTitleInput").val('');
+    var targettype=$("#modalReport").attr('targettype');
+    var targetDiscussionID=$("#modalReport").attr('targetDiscussionID');
+    var targetcommentid=$("#modalReport").attr('targetcommentid');
+
+    $.ajax(
+      {
+        url: "addReport.php",
+        type: "POST",
+        data: {
+          addReport:true,
+          title:title,
+          targettype:targettype,
+          targetcommentid:targetcommentid,
+          targetDiscussionID:targetDiscussionID,
+          details: details
+        },
+        success: function(result) {
+          alert(result);
+        }
+      }
+    );
+  }
+
+  $(document).ready(
+    function(){
+      loadComments();
+      $("body").delegate(
+        ".btn-add-comment",
+        "click",
+        function(){
+          $('#modalComment').attr('targettype', $(this).attr('targettype'));
+          alert($('#modalComment').attr('targettype'));
+          $('#modalComment').attr('targetcommentid', $(this).attr('targetcommentid'));
+          alert($('#modalComment').attr('targetcommentid'));
+          $('#modalComment').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));  
+          alert($('#modalComment').attr('targetDiscussionID'));
+        }
+      );
+
+      $("body").delegate(
+        ".btn-report",
+        "click",
+        function(){
+          $('#modalReport').attr('targettype', $(this).attr('targettype'));
+          alert($('#modalReport').attr('targettype'));
+          $('#modalReport').attr('targetcommentid', $(this).attr('targetcommentid'));
+          alert($('#modalReport').attr('targetcommentid'));
+          $('#modalReport').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));  
+          alert($('#modalReport').attr('targetDiscussionID'));
+        }
+      );
+
+      $("#modalComment").click(
+        function(){
+          addComment();
+        }
+      );
+
+      $("#modalReport").click(
+        function() {
+          report();
+        }
+      );
+    }
+  );
+</script>
 </html>

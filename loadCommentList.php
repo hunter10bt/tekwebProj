@@ -17,10 +17,8 @@
         echo "<p class='mb-1'>{$row['comment']}</p>";
         //Loads the buttons
         if(isset($_SESSION["uname"])){
-          echo "<div class='btn-group' role='group'>";
-          echo "<button type='button' class='btn btn-add-comment btn-primary' targetType='comment' targetCommentID='$row[commentID]'>Add Comment</button>";
-          echo "<button type='button' class='btn btn-danger btn-primary' targetType='comment'  targetCommentID='$row[commentID]'>Report</button>";
-          echo "</div>";
+          echo "<button type='button' class='btn btn-primary btn-add-comment' targettype='comment' targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
+          echo "<button type='button' class='btn btn-danger btn-report' targettype='comment'  targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#reportModal'>Report</button>";
         }
 
         //Recursively loads comments to this comment
@@ -40,6 +38,7 @@
 
     $commentResult = mysqli_query($con, $query);
     if ($commentResult) {
+      echo '<h1>List of Comments</h1>';
       echo '<ul class="list-group">';
 
       while (($row = mysqli_fetch_array($commentResult)) != null) {        
@@ -49,10 +48,8 @@
         echo "<p class='mb-1'>{$row['comment']}</p>";
         //Loads the buttons
         if(isset($_SESSION["uname"])){
-          echo "<div class='btn-group' role='group'>";
-          echo "<button type='button' class='btn btn-add-comment btn-primary' targetType='comment' targetCommentID='$row[commentID]'>Add Comment</button>";
-          echo "<button type='button' class='btn btn-danger btn-primary' targetType='comment'  targetCommentID='$row[commentID]'>Report</button>";
-          echo "</div>";
+          echo "<button type='button' class='btn btn-primary btn-add-comment' targettype='comment' targetcommentid='{$row["commentID"]}'  data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
+          echo "<button type='button' class='btn btn-danger btn-report' targettype='comment'  targetcommentid='{$row["commentID"]}'  data-toggle='modal' data-target='#reportModal'>Report</button>";
         }
 
         //Recursively loads comments to this comment
