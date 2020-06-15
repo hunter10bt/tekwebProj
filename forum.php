@@ -99,8 +99,8 @@
         <?php
           if (isset($_SESSION["uname"])) {
             echo "<div class='list-group'>";
-            echo "<button class='list-group-item list-group-item-success btn-add-comment' targetType='discussion' targetDiscussionID='$id' id='addCommentToDiscussion' data-toggle='modal' data-target='#addCommentModal'>Add Comment</a>";
-            echo "<button class='list-group-item list-group-item-danger btn-report' targetType='discussion' targetDiscussionID='$id' id='reportDiscussion' data-toggle='modal' data-target='#reportModal'>Report</a>";
+            echo "<button class='list-group-item list-group-item-success btn-add-comment' targettype='discussion' targetDiscussionID='$id' id='addCommentToDiscussion' data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
+            echo "<button class='list-group-item list-group-item-danger btn-report' targettype='discussion' targetDiscussionID='$id' id='reportDiscussion' data-toggle='modal' data-target='#reportModal'>Report</button>";
             echo "</div>";
           }
         ?>        
@@ -108,12 +108,12 @@
         <div class='modal fade' id='addCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
           <div class='modal-dialog' role='document'>
             <div class='modal-content'>
-                <div class='modal-header'>
-                    <h5 class='modal-title'>Add Comment</h5>
-                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                      </button>
-                  </div>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Add Comment</h5>
+                  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                  </button>
+              </div>
               <div class='modal-body'>
                 <div class='container-fluid'>
                   <div class='form-group'>
@@ -124,7 +124,7 @@
               </div>
               <div class='modal-footer'>
                 <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal'>Add Comment</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalComment">Add Comment</button>
               </div>
             </div>
           </div>
@@ -135,12 +135,12 @@
         <div class='modal fade' id='reportModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
           <div class='modal-dialog' role='document'>
             <div class='modal-content'>
-                <div class='modal-header'>
-                    <h5 class='modal-title'>Report</h5>
-                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                      </button>
-                  </div>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Report</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
               <div class='modal-body'>
                 <div class='container-fluid'>
                   <div class='form-group'>
@@ -148,14 +148,14 @@
                     <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
                   </div>
                   <div class='form-group'>
-                    <label for='commentInput'>Detail:</label>
-                    <textarea class='form-control' name='commentInput' id='commentInput' rows='5'></textarea>
+                    <label for='detailInput'>Detail:</label>
+                    <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
                   </div>
                 </div>
               </div>
               <div class='modal-footer'>
                 <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal'>Add Comment</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalReport">Report</button>
               </div>
             </div>
           </div>
@@ -184,15 +184,96 @@
     )
   }
 
+  function addComment(){
+    var targettype = $("#modalComment").attr('targettype');
+    var targetDiscussionID = $("#modalComment").attr('targetDiscussionID');
+    var targetcommentid = $("#modalComment").attr('targetcommentid');
+    var comment = $("#commentInput").val();
+    alert("Target type: "+targettype);
+    alert("Target discussion ID: "+targetDiscussionID);
+    alert("Target comment ID: "+targetcommentid);
+    alert("Comment: "+comment);
+
+    $.ajax(
+      {
+        url: "addComment.php",
+        type: "POST",
+        data: {
+          addComment: true,
+          targetType: targettype,
+          targetcommentid: targetcommentid,
+          targetDiscussionID: targetDiscussionID,
+          comment: comment
+        },
+        success: function(result){
+          alert(result);
+          loadComments();
+        }
+      }
+    );
+    $("#commentInput").val('');
+  }
+
+  function report(){
+    var title=$("#reportTitleInput").val();
+    var details=$("#detailInput").val();
+    var targettype=$("#modalReport").attr('targettype');
+    var targetDiscussionID=$("#modalReport").attr('targetDiscussionID');
+    var targetcommentid=$("#modalReport").attr('targetcommentid');
+
+    $.ajax(
+      {
+        url: "addReport.php",
+        type: "POST",
+        data: {
+          addReport:true,
+          title:title,
+          targettype:targettype,
+          targetcommentid:targetcommentid,
+          targetDiscussionID:targetDiscussionID,
+          details: details
+        },
+        success: function(result) {
+          alert(result);
+        }
+      }
+    );
+  }
+
   $(document).ready(
     function(){
-      $(".btn-add-comment").click(
+      loadComments();
+      $("body").delegate(
+        ".btn-add-comment",
+        "click",
         function(){
-          alert($(this).attr('targetType'));
+          $('#modalComment').attr('targettype', $(this).attr('targettype'));
+          alert($('#modalComment').attr('targettype'));
+          $('#modalComment').attr('targetcommentid', $(this).attr('targetcommentid'));
+          alert($('#modalComment').attr('targetcommentid'));
+          $('#modalComment').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));  
+          alert($('#modalComment').attr('targetDiscussionID'));
         }
       );
 
-      loadComments();
+      $("body").delegate(
+        ".btn-report",
+        "click",
+        function(){
+          $('#modalReport').attr('targettype', $(this).attr('targettype'));
+          alert($('#modalReport').attr('targettype'));
+          $('#modalReport').attr('targetcommentid', $(this).attr('targetcommentid'));
+          alert($('#modalReport').attr('targetcommentid'));
+          $('#modalReport').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));  
+          alert($('#modalReport').attr('targetDiscussionID'));
+        }
+      );
+
+      $("#modalComment").click(
+        function(){
+          addComment();
+        }
+      );
     }
   );
 </script>
