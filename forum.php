@@ -99,11 +99,68 @@
         <?php
           if (isset($_SESSION["uname"])) {
             echo "<div class='list-group'>";
-            echo "<button class='list-group-item list-group-item-success btn-add-comment' targetType='discussion' targetDiscussionID='$id' id='addCommentToDiscussion'>Add Comment</a>";
-            echo "<button class='list-group-item list-group-item-danger btn-report' targetType='discussion' targetDiscussionID='$id'>Report</a>";
+            echo "<button class='list-group-item list-group-item-success btn-add-comment' targetType='discussion' targetDiscussionID='$id' id='addCommentToDiscussion' data-toggle='modal' data-target='#addCommentModal'>Add Comment</a>";
+            echo "<button class='list-group-item list-group-item-danger btn-report' targetType='discussion' targetDiscussionID='$id' id='reportDiscussion' data-toggle='modal' data-target='#reportModal'>Report</a>";
             echo "</div>";
           }
-        ?>
+        ?>        
+        <!-- Add Comment Modal -->
+        <div class='modal fade' id='addCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Add Comment</h5>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                      </button>
+                  </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <div class='form-group'>
+                    <label for='commentInput'>Comment:</label>
+                    <textarea class='form-control' name='commentInput' id='commentInput' rows='5'></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal'>Add Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <!-- Report Modal -->
+        <div class='modal fade' id='reportModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Report</h5>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                      </button>
+                  </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <div class='form-group'>
+                    <label for='reportTitleInput'>Report Title</label>
+                    <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
+                  </div>
+                  <div class='form-group'>
+                    <label for='commentInput'>Detail:</label>
+                    <textarea class='form-control' name='commentInput' id='commentInput' rows='5'></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal'>Add Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
