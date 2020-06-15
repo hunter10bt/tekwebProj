@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2020 at 04:00 PM
+-- Generation Time: Jun 15, 2020 at 07:04 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -81,6 +81,18 @@ CREATE TABLE `discussion` (
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `discussion`
+--
+
+INSERT INTO `discussion` (`discussionID`, `dateCreated`, `title`, `user`, `storyID`, `franchiseID`, `content`, `readable`) VALUES
+(1, '2020-06-10', 'adfsfasdfas', 'hunter10bt', 0, 'asdfdasds', 'afsddafdassdfafdasfasafsd', 1),
+(2, '2020-06-10', 'dsfsafsdafsadfsad', 'hunter10bt', 0, 'asdfdasds', 'afsdfsafsdafdsa', 1),
+(3, '2020-06-11', 'fdsafsda', 'hunter10bt', 0, 'asdfdasds', 'asdfsdafdsds', 1),
+(4, '2020-06-11', 'dfasfds', 'hunter10bt', 0, 'asdfdasds', 'asdfdsafsda', 1),
+(5, '2020-06-11', 'sdfafdsaf', 'hunter10bt', 7, '', 'asdfdsafdsafsdafds', 1),
+(6, '2020-06-11', 'dfsasdfa', 'hunter10bt', 7, '', 'sdfa', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -146,7 +158,9 @@ INSERT INTO `story` (`storyID`, `title`, `author`, `summary`, `dateAdded`, `read
 (3, 'asfdffsda', 'nick', 'asfsdafsdafsdafsad', '2020-06-09', 1),
 (4, 'asdfdsa', 'regan', 'safdsadfsafsdfsa', '2020-06-09', 1),
 (5, 'fsdafasdfsad', 'hunter10bt', 'asdffsafsafsdafas', '2020-06-09', 1),
-(6, 'Hahaha', 'hunter10bt', 'wfafdsafdsafsadfdsa', '2020-06-08', 1);
+(6, 'Hahaha', 'hunter10bt', 'wfafdsafdsafsadfdsa', '2020-06-08', 1),
+(7, 'Test', 'hunter10bt', 'tes 1 2 3', '2020-06-11', 1),
+(10, 'Halo', 'hunter10bt', 'saya di sini', '2020-06-11', 1);
 
 -- --------------------------------------------------------
 
@@ -165,6 +179,8 @@ CREATE TABLE `tagdetails` (
 
 INSERT INTO `tagdetails` (`franchiseID`, `storyID`) VALUES
 ('asdfdasds', 1),
+('asdfdasds', 7),
+('asdfdasds', 10),
 ('asfdsa', 1);
 
 -- --------------------------------------------------------
@@ -203,7 +219,8 @@ ALTER TABLE `admin`
 -- Indexes for table `chapter`
 --
 ALTER TABLE `chapter`
-  ADD PRIMARY KEY (`chapterID`);
+  ADD PRIMARY KEY (`chapterID`),
+  ADD UNIQUE KEY `title-storyID_combination` (`storyID`,`title`);
 
 --
 -- Indexes for table `comment`
@@ -233,7 +250,8 @@ ALTER TABLE `report`
 -- Indexes for table `story`
 --
 ALTER TABLE `story`
-  ADD PRIMARY KEY (`storyID`);
+  ADD PRIMARY KEY (`storyID`),
+  ADD UNIQUE KEY `title` (`title`);
 
 --
 -- Indexes for table `tagdetails`
@@ -255,7 +273,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `chapterID` bigint(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `chapterID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `comment`
@@ -267,7 +285,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `discussion`
 --
 ALTER TABLE `discussion`
-  MODIFY `discussionID` bigint(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `discussionID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `report`
@@ -279,7 +297,7 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `story`
 --
 ALTER TABLE `story`
-  MODIFY `storyID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `storyID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
