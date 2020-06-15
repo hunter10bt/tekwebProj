@@ -19,7 +19,7 @@
         if(isset($_SESSION["uname"])){
           echo "<div class='btn-group' role='group'>";
           echo "<button type='button' class='btn btn-add-comment btn-primary' targetType='comment' targetCommentID='$row[commentID]'>Add Comment</button>";
-          echo "<button type='button' class='btn btn-danger btn-primary' targetType='comment'  targetCommentID='$row[commentID]'>Report</button>";
+          echo "<button type='button' class='btn btn-danger btn-report' targetType='comment'  targetCommentID='$row[commentID]'>Report</button>";
           echo "</div>";
         }
 
@@ -40,6 +40,7 @@
 
     $commentResult = mysqli_query($con, $query);
     if ($commentResult) {
+      echo '<h1>List of Comments</h1>';
       echo '<ul class="list-group">';
 
       while (($row = mysqli_fetch_array($commentResult)) != null) {        
@@ -51,7 +52,7 @@
         if(isset($_SESSION["uname"])){
           echo "<div class='btn-group' role='group'>";
           echo "<button type='button' class='btn btn-add-comment btn-primary' targetType='comment' targetCommentID='$row[commentID]'>Add Comment</button>";
-          echo "<button type='button' class='btn btn-danger btn-primary' targetType='comment'  targetCommentID='$row[commentID]'>Report</button>";
+          echo "<button type='button' class='btn btn-danger btn-report' targetType='comment'  targetCommentID='$row[commentID]'>Report</button>";
           echo "</div>";
         }
 
