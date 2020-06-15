@@ -217,6 +217,8 @@
   function report(){
     var title=$("#reportTitleInput").val();
     var details=$("#detailInput").val();
+    $("#detailInput").val('');
+    $("#reportTitleInput").val('');
     var targettype=$("#modalReport").attr('targettype');
     var targetDiscussionID=$("#modalReport").attr('targetDiscussionID');
     var targetcommentid=$("#modalReport").attr('targetcommentid');
@@ -272,6 +274,12 @@
       $("#modalComment").click(
         function(){
           addComment();
+        }
+      );
+
+      $("#modalReport").click(
+        function() {
+          report();
         }
       );
     }
