@@ -229,9 +229,17 @@
       loadChapters();
       loadDiscussions();
 
-      $("#list-chapters-list").click(loadChapters());
+      $("#list-chapters-list").click(
+        function(){
+          loadChapters();
+        }
+      );
 
-      $("#list-discussions-list").click(loadDiscussions());
+      $("#list-discussions-list").click(
+        function(){
+          loadDiscussions();
+        }
+      );
 
       $("#adddiscussion").click(
         function(){
