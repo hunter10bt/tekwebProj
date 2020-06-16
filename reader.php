@@ -12,22 +12,20 @@
       $row = mysqli_fetch_array($authorResult);
       $authorID = $row[0];
       $storyID = $row[1];
+      $isEditor = false;
 
-      if($_SESSION["uname"] == $authorID){
+      if(isset($_SESSION["uname"]) and $_SESSION["uname"] == $authorID){
         $isEditor = true;
-      }
-      else {
-        $isEditor = false;
       }
     }
     else {
-
+      header("location: index.php");
     }
   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <head>
@@ -44,37 +42,27 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo "<a class='nav-link' href='signin.php?prevPage=reader.php?id=$_GET[id]'>Sign In</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo "<a class='nav-link' href='signup.php?prevPage=reader.php?id={$_GET["id"]}'>Sign Up</a>";
             echo '</li>';
           }
           else {
 
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo "<a class='nav-link' href='signout.php?prevPage=reader.php?id={$_GET["id"]}'>Sign Out</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="#">New Story</a>';
+            echo "<a class='nav-link' href='#'>$_SESSION[uname]</a>";
             echo '</li>';
           }
         ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu" aria-labelledby="dropdownId">
-            <a class="dropdown-item" href="#">Action 1</a>
-            <a class="dropdown-item" href="#">Action 2</a>
-          </div>
-        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -87,6 +75,7 @@
       <div class="col-xl-2" id="sidebar">
         <button type="button" class="btn btn-primary">Next</button>
         <button type="button" class="btn btn-primary">Previous</button>
+        <button type="button" id="reloadChapter" class="btn btn-primary btn-lg btn-block">Reload Chapter</button>
 
         <a name="return" id="exit" class="btn btn-danger" href="story.php?id=<?php echo $storyID;?>" role="button">Back to Story Page</a>
         <?php
@@ -95,10 +84,43 @@
           }
         ?>
       </div>
-      <div class="col-xl-10">
+      <div class="col-xl-10" id="result">
         
       </div>
     </div>
   </div>
 </body>
+<script>
+  function loadChapter(){
+    //Loads from AJAX
+    var chapterID = <?php echo $_GET["id"]; ?>;
+    alert(chapterID);
+    $.ajax(
+      {
+        url: "loadChapter.php",
+        type: "post",
+        data: {
+          loadChapter: true,
+          chapterID: chapterID,
+        },
+        success: function (result) {
+          alert(result);
+          $("#result").html(result);
+        }
+      }
+    );
+  }
+
+  $(document).ready(
+    function(){
+      loadChapter();
+
+      $("#reloadChapter").click(
+        function(){
+          loadChapter();
+        }
+      )
+    }
+  );
+</script>
 </html>
