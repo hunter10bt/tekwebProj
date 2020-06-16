@@ -51,7 +51,7 @@
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo "<a class='nav-link' href='signin.php?prevPage=story.php?id=$storyID'>Sign In</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
@@ -61,7 +61,7 @@
           else {
 
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo "<a class='nav-link' href='signout.php?prevPage=story.php?id=$storyID'>Sign Out</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
