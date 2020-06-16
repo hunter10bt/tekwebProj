@@ -86,6 +86,7 @@
           <a name="return" id="exit" class="list-group-item list-group-item-action list-group-item-primary" href="story.php?id=<?php echo $storyID; ?>" role="button">Back to Story Page</a>
         </div>
         <div id="changeCheck"></div>
+        <p>Please write at least two (2) paragraphs.</p>
       </div>
       <div class="col-xl-10" contenteditable="true" id="result">
         
