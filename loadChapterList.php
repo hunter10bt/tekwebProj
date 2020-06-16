@@ -9,6 +9,7 @@
     $result = "";
 
     if ($chapterRes){
+      $count = 0;
       while ($row = mysqli_fetch_array(($chapterRes))) {
         $result.= "
         <a href='reader.php?id=$row[0]' class='list-group-item list-group-item-action'>
@@ -17,7 +18,12 @@
           </div>
           <p class='mb-1'>$row[2]</p>
         </a>";
+        $count +=1;
       }
+      if($count < 1){
+        echo "No chapters.";
+      }
+      
     }
     else {
       $result.= "There are currently no chapters.";
