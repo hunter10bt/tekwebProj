@@ -18,11 +18,9 @@
       $authorID = $row[2];
     }
 
-    if($authorID == $_SESSION["uname"]){
+    $isAuthor = false;
+    if(isset($_SESSION["uname"]) and $authorID == $_SESSION["uname"]){
       $isAuthor = true;
-    }
-    else {
-      $isAuthor = false;
     }
   }
 ?>
