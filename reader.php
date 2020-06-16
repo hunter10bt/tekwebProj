@@ -73,16 +73,18 @@
   <div class="container-fluid"id="container">
     <div class="row">
       <div class="col-xl-2" id="sidebar">
-        <button type="button" class="btn btn-primary">Next</button>
-        <button type="button" class="btn btn-primary">Previous</button>
-        <button type="button" id="reloadChapter" class="btn btn-primary btn-lg btn-block">Reload Chapter</button>
-
-        <a name="return" id="exit" class="btn btn-danger" href="story.php?id=<?php echo $storyID;?>" role="button">Back to Story Page</a>
-        <?php
-          if ($isEditor == true){
-            echo "currently an editor of this chapter";
-          }
-        ?>
+        <div class="list-group">
+          <a href='#' class='list-group-item list-group-item-action list-group-item-primary'>Next Chapter</a>
+          <a href='#' class='list-group-item list-group-item-action list-group-item-primary'> Previous Chapter </a>
+          <button id='reloadChapter' class='list-group-item list-group-item-action list-group-item-success'>Reload Chapter</button>
+          <a name='return' id='exit' class='list-group-item list-group-item-action list-group-item-primary' href='story.php?id=<?php echo $storyID;?>' role='button'>Back to Story Page</a>
+          <?php
+            if ($isEditor == true){
+              echo "<a name='edit' id='edit' class='list-group-item list-group-item-action list-group-item-warning' href='editor.php?id=$chapterID' role='button'>Edit this Chapter</a>";
+              echo "<button id='deleteChapter' class='list-group-item list-group-item-action list-group-item-danger' idd=$chapterID> Delete this Chapter</button>";
+            }
+          ?>
+        </div>
       </div>
       <div class="col-xl-10" id="result">
         
@@ -94,7 +96,6 @@
   function loadChapter(){
     //Loads from AJAX
     var chapterID = <?php echo $_GET["id"]; ?>;
-    alert(chapterID);
     $.ajax(
       {
         url: "loadChapter.php",
@@ -104,7 +105,6 @@
           chapterID: chapterID,
         },
         success: function (result) {
-          alert(result);
           $("#result").html(result);
         }
       }
