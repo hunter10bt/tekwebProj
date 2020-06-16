@@ -2,11 +2,12 @@
   session_start();
   include "connectdb.php";
   $today = gmdate('Y-m-d');
+  $result = false;
 
   try {
-    if(isset($_POST["newChapter"])){
+    if(isset($_POST["addChapter"])){
       //Inserts to database
-      $query = "INSERT INTO chapter (title, storyID, summary) VALUES ('{$_POST["title"]}', $_POST[storyID], '{$_POST["summary"]}')";
+      $query = "INSERT INTO chapter (title, storyID, summary) VALUES ('{$_POST["title"]}', '{$_POST["storyID"]}', '{$_POST["summary"]}')";
 
       $result = mysqli_query($con, $query);
 
@@ -15,12 +16,15 @@
         $search = "SELECT chapterID FROM chapter WHERE title='{$_POST["title"]}' AND storyID = $_POST[storyID]";
         $res = mysqli_query($con, $search);
 
-        $id = mysqli_fetch_array($res)[0];
+        $row = mysqli_fetch_array($res);
 
-        if ($id){        //Creates file
+        if (isset($row)){        
+          //Creates file
+          $id = $row[0];
           $filename = "./chapters/$id.json";
           // $file = fopen();
-          $result = file_put_contents($filename, json_encode (json_decode ("{}")));
+          $paragraphs = array();
+          $result = file_put_contents($filename, json_encode ($paragraphs));
         }
         else{
           $result = false;
@@ -30,11 +34,15 @@
         $result = false;
       }
     }
-  } catch (\Throwable $th) {
+    else {
+      $result = false;
+    }
+  } 
+  catch (\Throwable $th) {
     //throw $th;
     $result = $th->getMessage();
   }
 
-  echo json_encode($result);
+  echo $result;
   exit();
 ?>

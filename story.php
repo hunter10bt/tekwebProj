@@ -18,11 +18,9 @@
       $authorID = $row[2];
     }
 
-    if($authorID == $_SESSION["uname"]){
+    $isAuthor = false;
+    if(isset($_SESSION["uname"]) and $authorID == $_SESSION["uname"]){
       $isAuthor = true;
-    }
-    else {
-      $isAuthor = false;
     }
   }
 ?>
@@ -53,7 +51,7 @@
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo "<a class='nav-link' href='signin.php?prevPage=story.php?id=$storyID'>Sign In</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
@@ -63,7 +61,7 @@
           else {
 
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo "<a class='nav-link' href='signout.php?prevPage=story.php?id=$storyID'>Sign Out</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
@@ -87,7 +85,7 @@
   </nav>
   <div class="container-fluid"id="container">
     <div class="row">
-      <div class="col-xl-10">
+      <div class="col-xl-10" style="padding-left: 2.5%; padding-right: 2.5%;">
         <div class="row">
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
@@ -122,7 +120,10 @@
               if (isset($_SESSION["uname"])) {
                 # code...
                 echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal'>New Discussion</button>";
-                echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addChapterModal'>New Story</button>";
+                if ($_SESSION["uname"] == $authorID) {
+                  # code...
+                  echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addChapterModal'>New Chapter</button>";
+                }
               }
             ?>
           </div>
@@ -174,7 +175,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" id="addChapter" data-dismiss="modal">Add Story</button>
+                  <button type="button" class="btn btn-primary" id="addChapter" data-dismiss="modal">Add Chapter</button>
                 </div>
               </div>
             </div>
@@ -185,45 +186,56 @@
   </div>
 </body>
 <script>
+  function loadChapters(){
+    var s_id = $("#list-chapters-list").attr("storyID");
+    $.ajax(
+      {
+        url: "loadChapterList.php",
+        type: "POST",
+        async: true,
+        data:{
+          storyID: s_id,
+          loadChapters: true,
+        },
+        success: function(result){
+          $("#list-group-chapters").html(result);
+        }
+      }
+    );
+  }
+
+  function loadDiscussions(){
+    var s_id = $("#list-discussions-list").attr("storyID");
+    $.ajax(
+      {
+        url: "loadDiscussionList.php",
+        type: "POST",
+        async: true,
+        data:{
+          storyID: s_id,
+          updateDiscussionList: true,
+        },
+        success: function(result){
+          $("#discussion-list").html(result);
+        }
+      }
+    );
+  }
+
   $(
     function(){
+      loadChapters();
+      loadDiscussions();
+
       $("#list-chapters-list").click(
         function(){
-          var s_id = $(this).attr("storyID");
-          $.ajax(
-            {
-              url: "loadChapterList.php",
-              type: "POST",
-              async: true,
-              data:{
-                storyID: s_id,
-                loadChapters: true,
-              },
-              success: function(result){
-                $("#list-group-chapters").html(result);
-              }
-            }
-          );
+          loadChapters();
         }
       );
 
       $("#list-discussions-list").click(
         function(){
-          var s_id = $(this).attr("storyID");
-          $.ajax(
-            {
-              url: "loadDiscussionList.php",
-              type: "POST",
-              async: true,
-              data:{
-                storyID: s_id,
-                updateDiscussionList: true,
-              },
-              success: function(result){
-                $("#discussion-list").html(result);
-              }
-            }
-          );
+          loadDiscussions();
         }
       );
 
@@ -253,6 +265,7 @@
               },
               success: function(show){
                 alert(show);
+                loadDiscussions();
               }
             }
           );
@@ -263,8 +276,14 @@
       $("#addChapter").click(
         function(){
           var title = $("#chapterTitleInput").val();
+          $("#chapterTitleInput").val('');
           var summary = $("#summaryInput").val();
+          $("#summaryInput").val('');
           var storyID = $("#list-chapters-list").attr('storyID');
+
+          alert("Title: "+title);
+          alert("Summary: "+summary);
+          alert("Story ID: "+storyID);
 
           $.ajax(
             {
@@ -278,6 +297,7 @@
               },
               success: function(result){
                 alert(result);
+                loadChapters();
               }
             }
           );

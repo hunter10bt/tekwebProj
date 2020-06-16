@@ -1,5 +1,7 @@
 <?php
   session_start();
+  include "connectdb.php";
+  $result = "";
 
   try {
     //code...
@@ -14,10 +16,17 @@
 
         foreach ($array as $paragraph) {
           # code...
-          echo "<p>$paragraph</p>";
+          $result .= "<div>$paragraph</div>";
         }
       }
+      else {        
+        $result = "Unable to read json";
+      }
     }
+    else {
+      $result = false;
+    }
+    
   } catch (\Throwable $th) {
     //throw $th;
     $result = $th->getMessage();

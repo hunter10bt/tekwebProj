@@ -1,26 +1,35 @@
 <?php
   include "connectdb.php";
+  session_start();
 
   if(isset($_POST["loadChapters"])){
     
-    $query = "SELECT chapterID,title,category,summary FROM chapter WHERE readable = 1 AND storyID = '{$_POST["storyID"]}'";
+    $query = "SELECT chapterID,title,summary FROM chapter WHERE readable = 1 AND storyID = $_POST[storyID]";
     $chapterRes = mysqli_query($con, $query);
+    $result = "";
 
     if ($chapterRes){
+      $count = 0;
       while ($row = mysqli_fetch_array(($chapterRes))) {
-        echo "
+        $result.= "
         <a href='reader.php?id=$row[0]' class='list-group-item list-group-item-action'>
           <div class='d-flex w-100 justify-content-between'>
             <h4 class='mb-1'>$row[1]</h5>
-            <!--<small>3 days ago</small>-->
           </div>
-          <p class='mb-1'>$row[3]</p>
-          <small>By $row[2]</small>
+          <p class='mb-1'>$row[2]</p>
         </a>";
+        $count +=1;
       }
+      if($count < 1){
+        echo "No chapters.";
+      }
+      
     }
     else {
-      echo "There are currently no chapters.";
+      $result.= "There are currently no chapters.";
     }
   }
+
+  echo $result;
+  exit();
 ?>

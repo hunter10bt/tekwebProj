@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2020 at 07:04 AM
+-- Generation Time: Jun 16, 2020 at 03:40 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -45,9 +45,16 @@ CREATE TABLE `chapter` (
   `title` varchar(64) NOT NULL,
   `storyID` bigint(11) NOT NULL,
   `summary` varchar(128) NOT NULL,
-  `category` varchar(64) NOT NULL,
+  `category` varchar(64) DEFAULT NULL,
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `chapter`
+--
+
+INSERT INTO `chapter` (`chapterID`, `title`, `storyID`, `summary`, `category`, `readable`) VALUES
+(6, 'fdsa', 10, 'asdfdfsa', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -63,6 +70,19 @@ CREATE TABLE `comment` (
   `user` varchar(32) NOT NULL,
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`commentID`, `comment`, `discussionID`, `targetCommentID`, `user`, `readable`) VALUES
+(1, 'sdafsafdsafsa', 1, NULL, 'hunter10bt', 1),
+(2, 'sdfafdsfdsa', 1, NULL, 'hunter10bt', 1),
+(3, 'sdafdsafds', 1, NULL, 'hunter10bt', 1),
+(4, 'fdsasdf', 1, NULL, 'hunter10bt', 1),
+(5, 'fsdafdsaf', NULL, 1, 'hunter10bt', 1),
+(6, 'sdfafdsasdf', NULL, 5, 'hunter10bt', 1),
+(7, 'asdfdsadfsa', NULL, 5, 'hunter10bt', 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +111,8 @@ INSERT INTO `discussion` (`discussionID`, `dateCreated`, `title`, `user`, `story
 (3, '2020-06-11', 'fdsafsda', 'hunter10bt', 0, 'asdfdasds', 'asdfsdafdsds', 1),
 (4, '2020-06-11', 'dfasfds', 'hunter10bt', 0, 'asdfdasds', 'asdfdsafsda', 1),
 (5, '2020-06-11', 'sdfafdsaf', 'hunter10bt', 7, '', 'asdfdsafdsafsdafds', 1),
-(6, '2020-06-11', 'dfsasdfa', 'hunter10bt', 7, '', 'sdfa', 1);
+(6, '2020-06-11', 'dfsasdfa', 'hunter10bt', 7, '', 'sdfa', 1),
+(7, '2020-06-16', 'dsa', 'hunter10bt', 10, '', 'adsasdsa', 1);
 
 -- --------------------------------------------------------
 
@@ -132,6 +153,14 @@ CREATE TABLE `report` (
   `detail` varchar(256) NOT NULL,
   `resolved` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `report`
+--
+
+INSERT INTO `report` (`reportID`, `submitter`, `userTgtID`, `storyID`, `franchiseIDName`, `discussionID`, `commentID`, `title`, `detail`, `resolved`) VALUES
+(1, 'hunter10bt', NULL, NULL, NULL, NULL, 1, 'dsfafdas', 'asdfas', 0),
+(2, 'hunter10bt', NULL, NULL, NULL, 1, NULL, 'asfddsa', 'afsdfdsafsd', 0);
 
 -- --------------------------------------------------------
 
@@ -273,25 +302,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `chapterID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `chapterID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `commentID` bigint(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `commentID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `discussion`
 --
 ALTER TABLE `discussion`
-  MODIFY `discussionID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `discussionID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `reportID` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `reportID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `story`
