@@ -2,26 +2,42 @@
   include "connectdb.php";
   session_start();
 
+  header("Content-type: text/x-json");
   $uname = $_POST["uname"];
   $pass = $_POST["password"];
+  $out = [];
+  $out["success"] = false;
 
-  $query = "SELECT `password` FROM `user` WHERE username='$uname' AND readable=1";
-  $result = mysqli_query($con, $query);
-  $passCheck = mysqli_fetch_array($result)[0];
-  
-  if (isset($passCheck)){
-    if ($passCheck == $pass){
-      $_SESSION["uname"] = $uname;
-      if (isset($_POST["prevPage"]))
-        header("location: {$_POST["prevPage"]}");
-      else
-        header("location: index.php");
+  try {
+    if (isset($_POST["authenticate"])) {
+      # code...
+      $query = "SELECT `password` FROM `user` WHERE username='$uname' AND readable=1";
+      $result = mysqli_query($con, $query);
+      $row = mysqli_fetch_array($result);
+      
+      if (isset($row)){
+        $passCheck = $row[0];
+
+        if ($passCheck == $pass){
+          $_SESSION["uname"] = $uname;
+          $out["success"] = true;
+          $out["message"] = "Login successful.";
+        }
+        else{
+          $out["message"] = "Incorrect Password.";
+        }
+      }
+      else{
+        $out["message"] = "Username is not registered.";
+      }
+    } else {
+      $out["message"] = "No authentication signal received.";
     }
-    else{
-      header("location: signin.php?prevPage={$_POST["prevPage"]}&pass=false");
-    }
+  } catch (\Throwable $th) {
+    //throw $th;
+    $out["message"] = $th->getMessage();
   }
-  else{
-    header("location: signin.php?prevPage={$_POST["prevPage"]}&registered=false");
-  }
+
+  echo json_encode($out);
+  exit();
 ?>
