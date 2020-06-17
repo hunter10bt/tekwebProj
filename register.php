@@ -1,8 +1,25 @@
 <?php
   include "connectdb.php";
+  header("Content-type: text/x-json");
 
-  $query = "INSERT INTO user (username, password) VALUES ('%s','%s')";
-  $test = mysqli_query($con, sprintf($query, $_POST["user"], $_POST["pass"]));
+  $result = [];
+  $result["bool"] = false;
+  $result["message"] = "";
 
-  header("location: index.php?register=".$test);
+  try {
+    if (isset($_POST["signup"])) {
+      $query = "INSERT INTO user (username, password) VALUES ('%s','%s')";
+      $result["bool"] = mysqli_query($con, sprintf($query, $_POST["user"], $_POST["pass"]));
+      $result["message"] = "Sign-up successful";
+    } else {
+      $result["bool"] = false;
+      $result["message"] = "No sign-up signal received.";
+    }
+  } catch (\Throwable $th) {
+    $result["bool"] = false;
+    $result["message"] = $th->getMessage();
+  }
+
+  echo json_encode($result);
+  exit();
 ?>
