@@ -23,7 +23,7 @@
           $id = $row[0];
           $filename = "./chapters/$id.json";
           // $file = fopen();
-          $paragraphs = array();
+          $paragraphs = array([""]);
           $result = file_put_contents($filename, json_encode ($paragraphs));
         }
         else{

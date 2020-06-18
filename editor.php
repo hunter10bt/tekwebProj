@@ -19,7 +19,7 @@
         $isEditor = true;
       }
       if(!$isEditor){
-        header("location: index.php");
+        header("location: story.php?id=$storyID");
       }
     }
     else {
@@ -52,7 +52,7 @@
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo "<a class='nav-link' href='signin.php?prevPage=reader.php?id=$_GET[id]'>Sign In</a>";
+            echo "<a class='nav-link' href='signin.php?prevPage=reader.php?id={$_GET["id"]}'>Sign In</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';

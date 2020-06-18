@@ -74,8 +74,28 @@
     <div class="row">
       <div class="col-xl-2" id="sidebar">
         <div class="list-group">
-          <a href='#' class='list-group-item list-group-item-action list-group-item-primary'>Next Chapter</a>
-          <a href='#' class='list-group-item list-group-item-action list-group-item-primary'> Previous Chapter </a>
+          <?php
+            $prevChapQuery = "SELECT MAX(chapterID) FROM chapter WHERE chapterID<$chapterID and storyID = $storyID";
+            $prevChapRes = mysqli_query($con, $prevChapQuery);
+            if ($prevChapQuery) {
+              $prevChap = mysqli_fetch_array($prevChapRes)[0];
+              if ($prevChap) {
+                # code...
+                echo "<a href='reader.php?id=$prevChap' class='list-group-item list-group-item-action list-group-item-primary'>Previous Chapter</a>";
+              }
+            }
+          ?>
+          <?php
+            $nextChapQuery = "SELECT MIN(chapterID) FROM chapter WHERE chapterID>$chapterID and storyID = $storyID";
+            $nextChapRes = mysqli_query($con, $nextChapQuery);
+            if ($nextChapQuery) {
+              $nextChap = mysqli_fetch_array($nextChapRes)[0];
+              if ($nextChap) {
+                # code...
+                echo "<a href='reader.php?id=$nextChap' class='list-group-item list-group-item-action list-group-item-primary'>Next Chapter</a>";
+              }
+            }
+          ?>
           <button id='reloadChapter' class='list-group-item list-group-item-action list-group-item-success'>Reload Chapter</button>
           <a name='return' id='exit' class='list-group-item list-group-item-action list-group-item-primary' href='story.php?id=<?php echo $storyID;?>' role='button'>Back to Story Page</a>
           <?php
