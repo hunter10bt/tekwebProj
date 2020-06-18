@@ -27,17 +27,17 @@
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo '<a class="nav-link" href="adminLogin.php?prevPage=admin.php">Sign In</a>';
             echo '</li>';
             
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo '<a class="nav-link" href="adminDaftar.php?prevPage=admin.php">Sign Up</a>';
             echo '</li>';
           }
           else {
 
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
+            echo '<a class="nav-link" href="adminOut.php?prevPage=admin.php">Sign Out</a>';
             echo '</li>';
             
             echo '<li class="nav-item">';

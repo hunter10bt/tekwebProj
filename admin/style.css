@@ -1,0 +1,5 @@
+.col-xl-2{
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+}
