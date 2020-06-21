@@ -5,7 +5,7 @@
 
   try {
     //code...
-    if (isset($_POST["edit"]) or isset($_POST["delete"])) {
+    if ((isset($_POST["edit"]) or isset($_POST["delete"])) and isset($_POST["commentID"])) {
       # code...
       $query = "UPDATE comment";
       if(isset($_POST["edit"]))
@@ -30,7 +30,8 @@
       }
     } else {
       # code...
-      $result = "No signal received";
+      if (!(isset($_POST["edit"]) or isset($_POST["delete"]))) $result .= "No signal received";
+      if (!isset($_POST["commentID"])) $result .= "No target comment ID received";
     }
     
   } catch (\Throwable $th) {
