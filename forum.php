@@ -113,7 +113,7 @@
               </div>
               <div class='modal-footer'>
                 <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalComment">Add Comment</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalComment'>Add Comment</button>
               </div>
             </div>
           </div>
@@ -144,17 +144,132 @@
               </div>
               <div class='modal-footer'>
                 <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalReport">Report</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalReport'>Report</button>
               </div>
             </div>
           </div>
         </div>
         
+        <!-- Edit comment modal implemented soon-->
+        <div class='modal fade' id='editCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Edit Comment</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <div class='form-group'>
+                    <label for='editCommentInput'>Edit Comment:</label>
+                    <textarea class='form-control' name='editCommentInput' id='editCommentInput' rows='5'></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-success' data-dismiss='modal' targetcommentid='' id='modalEditComment'>Edit Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete comment modal implemented soon -->
+        <div class='modal fade' id='deleteCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Delete Comment</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <p>Do you want to delete this comment?</p>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targetcommentid='' id='modalDeleteComment'>Delete Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- edit discussion modal implemented soon-->
+        <div class='modal fade' id='editDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Report</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <div class='form-group'>
+                    <label for='reportTitleInput'>Report Title</label>
+                    <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
+                  </div>
+                  <div class='form-group'>
+                    <label for='detailInput'>Detail:</label>
+                    <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalReport">Report</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete discussion modal implemented soon -->
+        <div class='modal fade' id='deleteDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+          <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+              <div class='modal-header'>
+                <h5 class='modal-title'>Report</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                </button>
+              </div>
+              <div class='modal-body'>
+                <div class='container-fluid'>
+                  <div class='form-group'>
+                    <label for='reportTitleInput'>Report Title</label>
+                    <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
+                  </div>
+                  <div class='form-group'>
+                    <label for='detailInput'>Detail:</label>
+                    <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalReport">Report</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </body>
 <script>
+  function editComment() {
+    var commentID = $('#modalEditComment').attr('targetcommentid');
+    var comment = $('#editCommentInput').val();
+    
+    
+  }
+
   function loadComments() {
     //Trigger ajax script here
     var targetDiscussionID = <?php echo $id; ?>;
@@ -170,7 +285,7 @@
           $("#commentList").html(result);
         },
         error: function(jqXHR, textStatus, errorThrown){
-          console.log(errorThrown);
+          alert(errorThrown);
         }
       }
     )
@@ -200,6 +315,9 @@
         success: function(result){
           alert(result);
           loadComments();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          alert(errorThrown);
         }
       }
     );
@@ -229,6 +347,9 @@
         },
         success: function(result) {
           alert(result);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          alert(errorThrown);
         }
       }
     );
