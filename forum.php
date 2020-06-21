@@ -71,12 +71,12 @@
       <div class="col-xl-10" style="padding-left: 2.5%; padding-right: 2.5%;">
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 class="display-3">
+            <h1 class="display-3" id="title">
               <?php echo $title; ?>
             </h1>
             <p class="lead">By <?php echo $user; ?></p>
             <hr class="my-2">
-            <p><?php echo $content; ?></p>
+            <p id='detail'><?php echo $content; ?></p>
           </div>
         </div>
         <div id="commentList"></div>
@@ -90,312 +90,370 @@
             echo "<div class='list-group'>";
             echo "<button class='list-group-item list-group-item-success btn-add-comment' targettype='discussion' targetDiscussionID='$id' id='addCommentToDiscussion' data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
             echo "<button class='list-group-item list-group-item-danger btn-report' targettype='discussion' targetDiscussionID='$id' id='reportDiscussion' data-toggle='modal' data-target='#reportModal'>Report</button>";
+            if ($_SESSION["uname"] == $user) {
+              echo "<button class='list-group-item list-group-item-success' data-toggle='modal' data-target='#editDiscussionModal' id='openEditDiscussionModal'>Edit Discussion Details</button>";
+              echo "<button class='list-group-item list-group-item-danger' data-toggle='modal' data-target='#deleteDiscussionModal' id='openDeleteDiscussionModal'>Delete Discussion</button>";
+            }
             echo "</div>";
+
+            echo "<!-- Add Comment Modal -->
+              <div class='modal fade' id='addCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+                <div class='modal-dialog' role='document'>
+                  <div class='modal-content'>
+                    <div class='modal-header'>
+                      <h5 class='modal-title'>Add Comment</h5>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                          <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>
+                    <div class='modal-body'>
+                      <div class='container-fluid'>
+                        <div class='form-group'>
+                          <label for='commentInput'>Comment:</label>
+                          <textarea class='form-control' name='commentInput' id='commentInput' rows='5'></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='modal-footer'>
+                      <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                      <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalComment'>Add Comment</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+              <!-- Report Modal -->
+              <div class='modal fade' id='reportModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+                <div class='modal-dialog' role='document'>
+                  <div class='modal-content'>
+                    <div class='modal-header'>
+                      <h5 class='modal-title'>Report</h5>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                      </button>
+                    </div>
+                    <div class='modal-body'>
+                      <div class='container-fluid'>
+                        <div class='form-group'>
+                          <label for='reportTitleInput'>Report Title</label>
+                          <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
+                        </div>
+                        <div class='form-group'>
+                          <label for='detailInput'>Detail:</label>
+                          <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='modal-footer'>
+                      <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                      <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalReport'>Report</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Edit comment modal implemented soon-->
+              <div class='modal fade' id='editCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+                <div class='modal-dialog' role='document'>
+                  <div class='modal-content'>
+                    <div class='modal-header'>
+                      <h5 class='modal-title'>Edit Comment</h5>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                      </button>
+                    </div>
+                    <div class='modal-body'>
+                      <div class='container-fluid'>
+                        <div class='form-group'>
+                          <label for='editCommentInput'>Edit Comment:</label>
+                          <textarea class='form-control' name='editCommentInput' id='editCommentInput' rows='5'></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='modal-footer'>
+                      <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                      <button type='button' class='btn btn-success' data-dismiss='modal' targetcommentid='' id='modalEditComment'>Edit Comment</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Delete comment modal implemented soon -->
+              <div class='modal fade' id='deleteCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+                <div class='modal-dialog' role='document'>
+                  <div class='modal-content'>
+                    <div class='modal-header'>
+                      <h5 class='modal-title'>Delete Comment</h5>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                      </button>
+                    </div>
+                    <div class='modal-body'>
+                      <div class='container-fluid'>
+                        <p>Do you want to delete this comment?</p>
+                      </div>
+                    </div>
+                    <div class='modal-footer'>
+                      <button type='button' class='btn btn-primary' data-dismiss='modal'>Cancel</button>
+                      <button type='button' class='btn btn-primary' data-dismiss='modal' targetcommentid='' id='modalDeleteComment'>Delete Comment</button>
+                    </div>
+                  </div>
+                </div>
+              </div>";
+
+            if ($_SESSION["uname"] == $user) echo "<!-- edit discussion modal implemented soon-->
+            <div class='modal fade' id='editDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+              <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                  <div class='modal-header'>
+                    <h5 class='modal-title'>Edit Discussion</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                  </div>
+                  <div class='modal-body'>
+                    <div class='container-fluid'>
+                      <div class='form-group'>
+                        <label for='discussionTitleInput'>Discussion Title</label>
+                        <input type='text' class='form-control' name='discussionTitleInput' id='discussionTitleInput' placeholder='Insert title here...'>
+                      </div>
+                      <div class='form-group'>
+                        <label for='discussionDetailInput'>Detail:</label>
+                        <textarea class='form-control' name='discussionDetailInput' id='discussionDetailInput' rows='5'></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                    <button type='button' class='btn btn-success' data-dismiss='modal' targetDiscussionID='' id='modalEditDiscussion'>Edit Discussion</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Delete discussion modal implemented soon -->
+            <div class='modal fade' id='deleteDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+              <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                  <div class='modal-header'>
+                    <h5 class='modal-title'>Report</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                  </div>
+                  <div class='modal-body'>
+                    <div class='container-fluid'>
+                      <p>Do you want to delete this discussion?</p>
+                    </div>
+                  </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-primary' data-dismiss='modal'>Cancel</button>
+                    <button type='button' class='btn btn-danger' data-dismiss='modal' id='modalDeleteDiscussion'>Delete Discussion</button>
+                  </div>
+                </div>
+              </div>
+            </div>";
           }
-        ?>        
-        <!-- Add Comment Modal -->
-        <div class='modal fade' id='addCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-          <div class='modal-dialog' role='document'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <h5 class='modal-title'>Add Comment</h5>
-                  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                  </button>
-              </div>
-              <div class='modal-body'>
-                <div class='container-fluid'>
-                  <div class='form-group'>
-                    <label for='commentInput'>Comment:</label>
-                    <textarea class='form-control' name='commentInput' id='commentInput' rows='5'></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class='modal-footer'>
-                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalComment'>Add Comment</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        
-        <!-- Report Modal -->
-        <div class='modal fade' id='reportModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-          <div class='modal-dialog' role='document'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <h5 class='modal-title'>Report</h5>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div>
-              <div class='modal-body'>
-                <div class='container-fluid'>
-                  <div class='form-group'>
-                    <label for='reportTitleInput'>Report Title</label>
-                    <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
-                  </div>
-                  <div class='form-group'>
-                    <label for='detailInput'>Detail:</label>
-                    <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class='modal-footer'>
-                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalReport'>Report</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Edit comment modal implemented soon-->
-        <div class='modal fade' id='editCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-          <div class='modal-dialog' role='document'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <h5 class='modal-title'>Edit Comment</h5>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div>
-              <div class='modal-body'>
-                <div class='container-fluid'>
-                  <div class='form-group'>
-                    <label for='editCommentInput'>Edit Comment:</label>
-                    <textarea class='form-control' name='editCommentInput' id='editCommentInput' rows='5'></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class='modal-footer'>
-                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-success' data-dismiss='modal' targetcommentid='' id='modalEditComment'>Edit Comment</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Delete comment modal implemented soon -->
-        <div class='modal fade' id='deleteCommentModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-          <div class='modal-dialog' role='document'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <h5 class='modal-title'>Delete Comment</h5>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div>
-              <div class='modal-body'>
-                <div class='container-fluid'>
-                  <p>Do you want to delete this comment?</p>
-                </div>
-              </div>
-              <div class='modal-footer'>
-                <button type='button' class='btn btn-primary' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal' targetcommentid='' id='modalDeleteComment'>Delete Comment</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- edit discussion modal implemented soon-->
-        <div class='modal fade' id='editDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-          <div class='modal-dialog' role='document'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <h5 class='modal-title'>Report</h5>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div>
-              <div class='modal-body'>
-                <div class='container-fluid'>
-                  <div class='form-group'>
-                    <label for='reportTitleInput'>Report Title</label>
-                    <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
-                  </div>
-                  <div class='form-group'>
-                    <label for='detailInput'>Detail:</label>
-                    <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class='modal-footer'>
-                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalReport">Report</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Delete discussion modal implemented soon -->
-        <div class='modal fade' id='deleteDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-          <div class='modal-dialog' role='document'>
-            <div class='modal-content'>
-              <div class='modal-header'>
-                <h5 class='modal-title'>Report</h5>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-                </button>
-              </div>
-              <div class='modal-body'>
-                <div class='container-fluid'>
-                  <div class='form-group'>
-                    <label for='reportTitleInput'>Report Title</label>
-                    <input type='text' class='form-control' name='reportTitleInput' id='reportTitleInput' placeholder='Insert report title here...'>
-                  </div>
-                  <div class='form-group'>
-                    <label for='detailInput'>Detail:</label>
-                    <textarea class='form-control' name='detailInput' id='detailInput' rows='5'></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class='modal-footer'>
-                <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-                <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id="modalReport">Report</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        ?>
       </div>
     </div>
   </div>
 </body>
 <script>
-  function deleteComment(){
-    var commentID = $('#modalDeleteComment').attr('targetcommentid');
-
-    $.ajax(
-      {
-        url: "editComment.php",
-        type: "POST",
-        dataType: "html",
-        data: {
-          delete: true,
-          commentID: commentID,
-        },
-        success: function(result){
-          check = JSON.parse(result);
-          alert(check.message);
-          loadComments();
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          alert(errorThrown);
-        }
+  <?php
+    if (isset($_SESSION["uname"])) {
+      if ($_SESSION["uname"] == $user)echo "function deleteDiscussion(){
+        var discussionID = $id;
+    
+        $.ajax(
+          {
+            url: 'editDiscussion.php',
+            type: 'POST',
+            dataType: 'html',
+            data: {
+              delete: true,
+              discussionID: discussionID,
+            },
+            success: function(result){
+              check = JSON.parse(result);
+              alert(check.message);
+              if (check.bool) {
+                window.location.replace('index.php');
+              }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              alert(errorThrown);
+              console.log(errorThrown);
+            }
+          }
+        );
       }
-    );    
-  }
-
-  function editComment() {
-    var commentID = $('#modalEditComment').attr('targetcommentid');
-    var comment = $('#editCommentInput').val();
-    $.ajax(
-      {
-        url: "editComment.php",
-        type: "POST",
-        dataType: "html",
-        data: {
-          edit: true,
-          commentID: commentID,
-          comment: comment,
-        },
-        success: function(result){
-          check = JSON.parse(result);
-          alert(check.message);
-          loadComments();
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          alert(errorThrown);
-          console.log(errorThrown);
-        }
+    
+      function editDiscussion(){
+        var discussionID = $id;
+        var title = $('#discussionTitleInput').val();
+        var content = $('#discussionDetailInput').val();
+    
+        $.ajax(
+          {
+            url: 'editDiscussion.php',
+            type: 'POST',
+            dataType: 'html',
+            data: {
+              edit: true,
+              discussionID: discussionID,
+              title: title,
+              content: content
+            },
+            success: function(result){
+              check = JSON.parse(result);
+              alert(check.message);
+              if (check.bool) {
+                $('#title').html(title);
+                $('#detail').html(content);
+              }
+              loadComments();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              alert(errorThrown);
+              console.log(errorThrown);
+            }
+          }
+        );
+      }";
+    
+      echo "function deleteComment(){
+        var commentID = $('#modalDeleteComment').attr('targetcommentid');
+    
+        $.ajax(
+          {
+            url: 'editComment.php',
+            type: 'POST',
+            dataType: 'html',
+            data: {
+              delete: true,
+              commentID: commentID,
+            },
+            success: function(result){
+              check = JSON.parse(result);
+              alert(check.message);
+              loadComments();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              alert(errorThrown);
+            }
+          }
+        );    
       }
-    );
-  }
+    
+      function editComment() {
+        var commentID = $('#modalEditComment').attr('targetcommentid');
+        var comment = $('#editCommentInput').val();
+        $.ajax(
+          {
+            url: 'editComment.php',
+            type: 'POST',
+            dataType: 'html',
+            data: {
+              edit: true,
+              commentID: commentID,
+              comment: comment,
+            },
+            success: function(result){
+              check = JSON.parse(result);
+              alert(check.message);
+              loadComments();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              alert(errorThrown);
+              console.log(errorThrown);
+            }
+          }
+        );
+      }
+    
+      function addComment(){
+        var targettype = $('#modalComment').attr('targettype');
+        var targetDiscussionID = $('#modalComment').attr('targetDiscussionID');
+        var targetcommentid = $('#modalComment').attr('targetcommentid');
+        var comment = $('#commentInput').val();
+    
+        $.ajax(
+          {
+            url: 'addComment.php',
+            type: 'POST',
+            data: {
+              addComment: true,
+              targetType: targettype,
+              targetcommentid: targetcommentid,
+              targetDiscussionID: targetDiscussionID,
+              comment: comment
+            },
+            success: function(result){
+              alert(result);
+              loadComments();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              alert(errorThrown);
+            }
+          }
+        );
+        $('#commentInput').val('');
+      }
+    
+      function report(){
+        var title=$('#reportTitleInput').val();
+        var details=$('#detailInput').val();
+        $('#detailInput').val('');
+        $('#reportTitleInput').val('');
+        var targettype=$('#modalReport').attr('targettype');
+        var targetDiscussionID=$('#modalReport').attr('targetDiscussionID');
+        var targetcommentid=$('#modalReport').attr('targetcommentid');
+    
+        $.ajax(
+          {
+            url: 'addReport.php',
+            type: 'POST',
+            data: {
+              addReport:true,
+              title:title,
+              targettype:targettype,
+              targetcommentid:targetcommentid,
+              targetDiscussionID:targetDiscussionID,
+              details: details
+            },
+            success: function(result) {
+              alert(result);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              alert(errorThrown);
+            }
+          }
+        );
+      }";
+    }
+  ?>
 
   function loadComments() {
     //Trigger ajax script here
     var targetDiscussionID = <?php echo $id; ?>;
     $.ajax(
       {
-        url: "loadCommentList.php",
-        type: "POST",
+        url: 'loadCommentList.php',
+        type: 'POST',
         data: {
           loadComment: true,
           discussionID: targetDiscussionID
         },
         success: function (result) {
-          $("#commentList").html(result);
+          $('#commentList').html(result);
         },
         error: function(jqXHR, textStatus, errorThrown){
           alert(errorThrown);
         }
       }
     )
-  }
-
-  function addComment(){
-    var targettype = $("#modalComment").attr('targettype');
-    var targetDiscussionID = $("#modalComment").attr('targetDiscussionID');
-    var targetcommentid = $("#modalComment").attr('targetcommentid');
-    var comment = $("#commentInput").val();
-    alert("Target type: "+targettype);
-    alert("Target discussion ID: "+targetDiscussionID);
-    alert("Target comment ID: "+targetcommentid);
-    alert("Comment: "+comment);
-
-    $.ajax(
-      {
-        url: "addComment.php",
-        type: "POST",
-        data: {
-          addComment: true,
-          targetType: targettype,
-          targetcommentid: targetcommentid,
-          targetDiscussionID: targetDiscussionID,
-          comment: comment
-        },
-        success: function(result){
-          alert(result);
-          loadComments();
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          alert(errorThrown);
-        }
-      }
-    );
-    $("#commentInput").val('');
-  }
-
-  function report(){
-    var title=$("#reportTitleInput").val();
-    var details=$("#detailInput").val();
-    $("#detailInput").val('');
-    $("#reportTitleInput").val('');
-    var targettype=$("#modalReport").attr('targettype');
-    var targetDiscussionID=$("#modalReport").attr('targetDiscussionID');
-    var targetcommentid=$("#modalReport").attr('targetcommentid');
-
-    $.ajax(
-      {
-        url: "addReport.php",
-        type: "POST",
-        data: {
-          addReport:true,
-          title:title,
-          targettype:targettype,
-          targetcommentid:targetcommentid,
-          targetDiscussionID:targetDiscussionID,
-          details: details
-        },
-        success: function(result) {
-          alert(result);
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          alert(errorThrown);
-        }
-      }
-    );
   }
 
   $(document).ready(
@@ -469,6 +527,18 @@
       $("#modalReport").click(
         function() {
           report();
+        }
+      );
+
+      $('#modalEditDiscussion').click(
+        function(){
+          editDiscussion();
+        }
+      );
+
+      $('#modalDeleteDiscussion').click(
+        function() {
+          deleteDiscussion();
         }
       );
     }
