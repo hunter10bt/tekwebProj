@@ -47,11 +47,11 @@
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo "<a class='nav-link' href='signin.php?prevPage=forum.php?id=$id'>Sign In</a>";
+            echo "<a class='nav-link' href='signin.php?prevPage=story.php?id=$storyID'>Sign In</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
-            echo "<a class='nav-link' href='signup.php?prevPage=forum.php?id=$id'>Sign Up</a>";
+            echo "<a class='nav-link' href='signup.php?prevPage=story.php?id=$storyID'>Sign Up</a>";
             echo '</li>';
           }
           else {
@@ -60,7 +60,7 @@
             echo '</li>';
 
             echo '<li class="nav-item">';
-            echo "<a class='nav-link' href='signout.php?prevPage=forum.php?id=$id'>Sign Out</a>";
+            echo "<a class='nav-link' href='signout.php?prevPage=story.php?id=$storyID'>Sign Out</a>";
             echo '</li>';
           }
         ?>
