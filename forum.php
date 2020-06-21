@@ -427,6 +427,27 @@
         }
       );
 
+      $('body').delegate(
+        '.btn-edit-comment',
+        'click',
+        function(){
+          $('#modalEditComment').attr(
+            'targetcommentid', $(this).attr('targetcommentid')
+          );
+        }
+      );
+
+      $('body').delegate(
+        '.btn-delete-comment',
+        'click',
+        function(){
+          $('#modalDeleteComment').attr(
+            'targetcommentid',
+            $(this).attr('targetcommentid')
+          );
+        }
+      );
+
       $('#modalEditComment').click(
         function(){
           editComment();
