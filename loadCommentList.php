@@ -4,7 +4,7 @@
   $result = "";
 
   function loadCommentFromComment($commentID, $con){
-    $query = "SELECT commentID, comment, user FROM comment WHERE readable = 1 AND targetCommentID = $commentID";
+    $query = "SELECT commentID, comment, user,readable FROM comment WHERE targetCommentID = $commentID ORDER by commentID DESC";
 
     $commentResult = mysqli_query($con, $query);
     if ($commentResult) {
@@ -14,11 +14,20 @@
         //Loads this comment
         echo "<li class='list-group-item list-group-item-action'>";
         echo "<div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>{$row['user']}</h5></div>";
-        echo "<p class='mb-1'>{$row['comment']}</p>";
+        if ($row["readable"] == 1) echo "<p class='mb-1'>{$row['comment']}</p>";
+        else echo "<p>This comment has been deleted.</p>";
         //Loads the buttons
         if(isset($_SESSION["uname"])){
+          //Add comment
           echo "<button type='button' class='btn btn-primary btn-add-comment' targettype='comment' targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
+          //Report
           echo "<button type='button' class='btn btn-danger btn-report' targettype='comment'  targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#reportModal'>Report</button>";
+          if ($_SESSION["uname"] == $row['user']) {
+            //Edit
+            echo "<button type='button' class='btn btn-primary btn-edit' targettype='comment' targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#addCommentModal'>Edit</button>";
+            //Delete
+            echo "<button type='button' class='btn btn-danger btn-delete' targettype='comment'  targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#reportModal'>Delete</button>";
+          }
         }
 
         //Recursively loads comments to this comment
@@ -34,7 +43,7 @@
   }
 
   function loadCommentFromThread($threadID, $con){
-    $query = "SELECT commentID, comment, user FROM comment WHERE readable = 1 AND discussionID = $threadID";
+    $query = "SELECT commentID, comment, user, readable FROM comment WHERE discussionID = $threadID ORDER by commentID DESC";
 
     $commentResult = mysqli_query($con, $query);
     if ($commentResult) {
@@ -45,11 +54,20 @@
         //Loads this comment
         echo "<li class='list-group-item list-group-item-action'>";
         echo "<div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>{$row['user']}</h5></div>";
-        echo "<p class='mb-1'>{$row['comment']}</p>";
+        if ($row["readable"] == 1) echo "<p class='mb-1'>{$row['comment']}</p>";
+        else echo "<p>This comment has been deleted.</p>";
         //Loads the buttons
         if(isset($_SESSION["uname"])){
-          echo "<button type='button' class='btn btn-primary btn-add-comment' targettype='comment' targetcommentid='{$row["commentID"]}'  data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
-          echo "<button type='button' class='btn btn-danger btn-report' targettype='comment'  targetcommentid='{$row["commentID"]}'  data-toggle='modal' data-target='#reportModal'>Report</button>";
+          //Add comment
+          echo "<button type='button' class='btn btn-primary btn-add-comment' targettype='comment' targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#addCommentModal'>Add Comment</button>";
+          //Report
+          echo "<button type='button' class='btn btn-danger btn-report' targettype='comment'  targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#reportModal'>Report</button>";
+          if ($_SESSION["uname"] == $row['user']) {
+            //Edit
+            echo "<button type='button' class='btn btn-primary btn-edit-comment' targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#editCommentModal'>Edit</button>";
+            //Delete
+            echo "<button type='button' class='btn btn-danger btn-delete-comment' targetcommentid='{$row["commentID"]}' data-toggle='modal' data-target='#deleteCommentModal'>Delete</button>";
+          }
         }
 
         //Recursively loads comments to this comment
