@@ -39,37 +39,26 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo "<a class='nav-link' href='signin.php?prevPage=forum.php?id=$id'>Sign In</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo "<a class='nav-link' href='signup.php?prevPage=forum.php?id=$id'>Sign Up</a>";
             echo '</li>';
           }
           else {
+            echo '<li class="nav-item">';
+            echo "<a class='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>{$_SESSION['uname']}</a>";
+            echo '</li>';
 
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
-            echo '</li>';
-            
-            echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="#">New Story</a>';
+            echo "<a class='nav-link' href='signout.php?prevPage=forum.php?id=$id'>Sign Out</a>";
             echo '</li>';
           }
         ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu" aria-labelledby="dropdownId">
-            <a class="dropdown-item" href="#">Action 1</a>
-            <a class="dropdown-item" href="#">Action 2</a>
-          </div>
-        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -179,6 +168,9 @@
         },
         success: function (result) {
           $("#commentList").html(result);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          console.log(errorThrown);
         }
       }
     )
