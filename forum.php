@@ -157,7 +157,7 @@
 <script>
   function loadComments() {
     //Trigger ajax script here
-    var targetDiscussionID = $("#addCommentToDiscussion").attr('targetDiscussionID');
+    var targetDiscussionID = <?php echo $id; ?>;
     $.ajax(
       {
         url: "loadCommentList.php",
