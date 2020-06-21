@@ -11,7 +11,7 @@
       # code...
       $query = "UPDATE comment";
       if(isset($_POST["edit"]))
-        $query .= " SET comment = {$_POST["comment"]}";
+        $query .= " SET comment = '{$_POST["comment"]}'";
       elseif(isset($_POST["delete"]))
         $query .= " SET readable = 0";
 
@@ -20,23 +20,23 @@
 
       if ($result["bool"]){
         if(isset($_POST["edit"]))
-          $result["message"] .= "Edit successful.";
+          $result["message"] = "Edit successful.";
         elseif(isset($_POST["delete"]))
-          $result["message"] .= "Delete Successful";
+          $result["message"] = "Delete Successful";
       }
       else {
         if(isset($_POST["edit"]))
-          $result["message"] .= "Edit failed.";
+          $result["message"] = "Edit failed.";
         elseif(isset($_POST["delete"]))
-          $result["message"] .= "Delete failed";
+          $result["message"] = "Delete failed";
       }
     } else {
       # code...
-      if (!(isset($_POST["edit"]) or isset($_POST["delete"]))) $result["message"] .= "No signal received";
-      if (!isset($_POST["commentID"])) $result["message"] .= "No target comment ID received";
+      if (!(isset($_POST["edit"]) or isset($_POST["delete"]))) $result["message"] = "No signal received";
+      if (!isset($_POST["commentID"])) $result["message"] = "No target comment ID received";
     }
-    
-  } catch (\Throwable $th) {
+  } 
+  catch (Throwable $th) {
     //throw $th;
     $result["message"] = $th -> getMessage();
   }
