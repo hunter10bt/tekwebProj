@@ -277,7 +277,7 @@
         },
         success: function(result){
           check = JSON.parse(result);
-          alert(result.message);
+          alert(check.message);
           loadComments();
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -290,7 +290,6 @@
   function editComment() {
     var commentID = $('#modalEditComment').attr('targetcommentid');
     var comment = $('#editCommentInput').val();
-    
     $.ajax(
       {
         url: "editComment.php",
@@ -303,11 +302,12 @@
         },
         success: function(result){
           check = JSON.parse(result);
-          alert(result.message);
+          alert(check.message);
           loadComments();
         },
         error: function(jqXHR, textStatus, errorThrown){
           alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
