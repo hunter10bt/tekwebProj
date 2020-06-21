@@ -67,6 +67,9 @@
   try {
     if (isset($_POST["loadComment"]) and isset($_POST["discussionID"])) {
       loadCommentFromThread($_POST["discussionID"], $con);
+    }else {
+      if(!isset($_POST["loadComment"])) echo "No signal received.";
+      if(!isset($_POST["discussionID"])) echo "No discussion ID received.";
     }
   } catch (Throwable $th) {
     $result = $th->getMessage();
