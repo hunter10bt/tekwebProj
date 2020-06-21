@@ -12,46 +12,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - ReadHere</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-xl navbar-light bg-light navbar-fixed-top" id="navbar">
+  <nav class="navbar navbar-expand-xl navbar-light bg-light fixed-top" id="navbar">
     <a class="navbar-brand" href="index.php">ReadHere</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
         <?php
           if(!isset($_SESSION["uname"])){
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signin.php?prevPage=index.php">Sign In</a>';
+            echo "<a class='nav-link' href='signin.php?prevPage=index.php'>Sign In</a>";
             echo '</li>';
             
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signup.php?prevPage=index.php">Sign Up</a>';
+            echo "<a class='nav-link' href='signup.php?prevPage=index.php'>Sign Up</a>";
             echo '</li>';
           }
           else {
+            echo '<li class="nav-item">';
+            echo "<a class='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>{$_SESSION['uname']}</a>";
+            echo '</li>';
 
             echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="signout.php?prevPage=index.php">Sign Out</a>';
-            echo '</li>';
-            
-            echo '<li class="nav-item">';
-            echo '<a class="nav-link" href="#">New Story</a>';
+            echo "<a class='nav-link' href='signout.php?prevPage=index.php'>Sign Out</a>";
             echo '</li>';
           }
         ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu" aria-labelledby="dropdownId">
-            <a class="dropdown-item" href="#">Action 1</a>
-            <a class="dropdown-item" href="#">Action 2</a>
-          </div>
-        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
