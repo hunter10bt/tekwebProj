@@ -263,11 +263,54 @@
   </div>
 </body>
 <script>
+  function deleteComment(){
+    var commentID = $('#modalDeleteComment').attr('targetcommentid');
+
+    $.ajax(
+      {
+        url: "editComment.php",
+        type: "POST",
+        dataType: "html",
+        data: {
+          delete: true,
+          commentID: commentID,
+        },
+        success: function(result){
+          check = JSON.parse(result);
+          alert(result.message);
+          loadComments();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          alert(errorThrown);
+        }
+      }
+    );    
+  }
+
   function editComment() {
     var commentID = $('#modalEditComment').attr('targetcommentid');
     var comment = $('#editCommentInput').val();
     
-    
+    $.ajax(
+      {
+        url: "editComment.php",
+        type: "POST",
+        dataType: "html",
+        data: {
+          edit: true,
+          commentID: commentID,
+          comment: comment,
+        },
+        success: function(result){
+          check = JSON.parse(result);
+          alert(result.message);
+          loadComments();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          alert(errorThrown);
+        }
+      }
+    );
   }
 
   function loadComments() {
@@ -381,6 +424,18 @@
           alert($('#modalReport').attr('targetcommentid'));
           $('#modalReport').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));  
           alert($('#modalReport').attr('targetDiscussionID'));
+        }
+      );
+
+      $('#modalEditComment').click(
+        function(){
+          editComment();
+        }
+      );
+
+      $('#modalDeleteComment').click(
+        function(){
+          deleteComment();
         }
       );
 
