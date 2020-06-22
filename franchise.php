@@ -168,64 +168,71 @@
 </div>
 </body>
 <script type="text/javascript">
+  function loadStoryList(){
+    var v_id = $(this).attr('franchiseID');
+    $.ajax(
+      {
+        url : "loadStoryList.php",
+        type : "POST",
+        async : true,
+        data : {
+          id : v_id,
+          updateStoryList : true,
+        },
+        success : function(result){
+          $("#story-list").html(result);
+        }
+      }
+    );
+  }
+
+  function loadDiscussionList(){
+    var v_id = $(this).attr('franchiseID');
+    $.ajax(
+      {
+        url : "loadDiscussionList.php",
+        type : "POST",
+        async : true,
+        data : {
+          franchiseID : v_id,
+          updateDiscussionList : true,
+        },
+        success : function(result){
+          $("#discussion-list").html(result);
+        }
+      }
+    );
+  }
+
   $(function(){
+    loadDiscussionList();
+    loadStoryList();
+
     $("#list-story-list").click(
       function(){
-        var v_id = $(this).attr('franchiseID');
-        $.ajax(
-          {
-            url : "loadStoryList.php",
-            type : "POST",
-            async : true,
-            data : {
-              id : v_id,
-              updateStoryList : true,
-            },
-            success : function(result){
-              $("#story-list").html(result);
-            }
-          }
-        );
+        loadStoryList();
       }
     );
     
     $("#list-discussions-list").click(
       function(){
-        var v_id = $(this).attr('franchiseID');
-        $.ajax(
-          {
-            url : "loadDiscussionList.php",
-            type : "POST",
-            async : true,
-            data : {
-              franchiseID : v_id,
-              updateDiscussionList : true,
-            },
-            success : function(result){
-              $("#discussion-list").html(result);
-            }
-          }
-        );
+        loadDiscussionList();
       }
     );
 
-    $("#addStory").click(
+    $('#addStory').click(
       function(){
-        var title = $("#storyTitleInput").val();
-        var details = $("#summaryInput").val();
-        var initiator = $("#unameDisplay").text();
-        var franchiseID = $("#trigger-new-discussion").attr('franchiseID');
-        // alert(title);
-        // alert(details);
-        // alert(initiator);
-        // alert(franchiseID);
+        var title = $('#storyTitleInput').val();
+        var details = $('#summaryInput').val();
+        var initiator = $('#unameDisplay').text();
+        var franchiseID = $('#trigger-new-discussion').attr('franchiseID');
         $("#storyTitleInput").val('');
         $("#summaryInput").val('');
 
         $.ajax(
           {
-            url: "addStory.php",
-            type: "POST",
+            url: 'addStory.php',
+            type: 'POST',
             async: true,
             data: {
               title: title,
@@ -241,23 +248,19 @@
       }
     );
 
-    $("#adddiscussion").click(
+    $('#adddiscussion').click(
       function(){
-        var title = $("#discussionTitleInput").val();
-        var details = $("#discussionDetailsInput").val();
-        var initiator = $("#unameDisplay").text();
-        var franchiseID = $("#trigger-new-discussion").attr('franchiseID');
-        // alert(title);
-        // alert(details);
-        // alert(initiator);
-        // alert(franchiseID);
-        $("#discussionTitleInput").val('');
-        $("#discussionDetailsInput").val('');
+        var title = $('#discussionTitleInput').val();
+        var details = $('#discussionDetailsInput').val();
+        var initiator = $('#unameDisplay').text();
+        var franchiseID = $('#trigger-new-discussion').attr('franchiseID');
+        $('#discussionTitleInput').val('');
+        $('#discussionDetailsInput').val('');
 
         $.ajax(
           {
-            url: "addDiscussion.php",
-            type: "POST",
+            url: 'addDiscussion.php',
+            type: 'POST',
             async: true,
             data: {
               title: title,
