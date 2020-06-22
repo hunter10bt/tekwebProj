@@ -12,6 +12,7 @@
   // }
   session_start();
   include "connectdb.php";
+  $result = "";
 
   try {
     //code...
@@ -25,12 +26,19 @@
         # code...
         $query = "INSERT INTO report(submitter, discussionID, title, detail) VALUES ('{$_SESSION["uname"]}','{$_POST["targetDiscussionID"]}','{$_POST["title"]}','{$_POST["details"]}')";
       }
-      $result = mysqli_query($con, $query);
+      $check = mysqli_query($con, $query);
+      if ($check) {
+        $result = "Report successfully sent.";
+      } else {
+        $result = "Failed to send report";
+      }
     }
     else {
-      $result = false;
+      if (!isset($_POST["addReport"])) $result .= " No signal received.";
+      if (!isset($_SESSION["uname"])) $result .= " Report cannot be sent because you are not logged in.";
+      if (!isset($_POST["targettype"])) $result .= " No target type received.";
     }
-  } catch (\Throwable $th) {
+  } catch (Throwable $th) {
     $result = $th->getMessage();
   }
 
