@@ -34,11 +34,10 @@
         <li class="nav-item">
           <a class="nav-link" href="signup.php?prevPage=<?php if (isset($_GET["prevPage"])) echo $_GET["prevPage"] ; else echo "index.php"; ?>">Sign Up<span class="sr-only">(current)</span></a>
         </li>
+        <li class='nav-item'>
+          <a class='nav-link' href='about.php'>About</a>
+        </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
     </div>
   </nav>
   <div class="container-fluid"id="container">
