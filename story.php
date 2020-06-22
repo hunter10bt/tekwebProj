@@ -187,6 +187,10 @@
         },
         success: function(result){
           $("#list-group-chapters").html(result);
+        },
+        error: function(jqXHR, status, errorThrown){
+          alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
@@ -205,6 +209,10 @@
         },
         success: function(result){
           $("#discussion-list").html(result);
+        },
+        error: function(jqXHR, status, errorThrown){
+          alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
@@ -227,23 +235,19 @@
         }
       );
 
-      $("#adddiscussion").click(
+      $('#adddiscussion').click(
         function(){
-          var title = $("#discussionTitleInput").val();
-          var details = $("#discussionDetailsInput").val();
-          var initiator = $("#unameDisplay").text();
-          var storyID = $("#list-discussions-list").attr('storyID');
-          // alert(title);
-          // alert(details);
-          // alert(initiator);
-          // alert(storyID);
-          $("#discussionTitleInput").val('');
-          $("#discussionDetailsInput").val('');
+          var title = $('#discussionTitleInput').val();
+          var details = $('#discussionDetailsInput').val();
+          var initiator = $('#unameDisplay').text();
+          var storyID = $('#list-discussions-list').attr('storyID');
+          $('#discussionTitleInput').val('');
+          $('#discussionDetailsInput').val('');
 
           $.ajax(
             {
-              url: "addDiscussion.php",
-              type: "POST",
+              url: 'addDiscussion.php',
+              type: 'POST',
               async: true,
               data: {
                 title: title,
@@ -253,6 +257,13 @@
               },
               success: function(show){
                 alert(show);
+                console.log(show);
+              },
+              error: function(jqXHR, status, errorThrown){
+                alert(errorThrown);
+                console.log(errorThrown);
+              },
+              complete: function(){
                 loadDiscussions();
               }
             }
@@ -261,22 +272,22 @@
       );
 
       //Menambahkan chapter - IN PROGRESS
-      $("#addChapter").click(
+      $('#addChapter').click(
         function(){
-          var title = $("#chapterTitleInput").val();
-          $("#chapterTitleInput").val('');
-          var summary = $("#summaryInput").val();
-          $("#summaryInput").val('');
-          var storyID = $("#list-chapters-list").attr('storyID');
+          var title = $('#chapterTitleInput').val();
+          $('#chapterTitleInput').val('');
+          var summary = $('#summaryInput').val();
+          $('#summaryInput').val('');
+          var storyID = $('#list-chapters-list').attr('storyID');
 
-          alert("Title: "+title);
-          alert("Summary: "+summary);
-          alert("Story ID: "+storyID);
+          alert('Title: '+title);
+          alert('Summary: '+summary);
+          alert('Story ID: '+storyID);
 
           $.ajax(
             {
-              url: "addChapter.php",
-              type: "POST",
+              url: 'addChapter.php',
+              type: 'POST',
               data: {
                 addChapter: true,
                 title: title,
@@ -285,6 +296,13 @@
               },
               success: function(result){
                 alert(result);
+                console.log(result);
+              },
+              error: function(jqXHR, status, errorThrown){
+                alert(errorThrown);
+                console.log(errorThrown);
+              },
+              complete: function(){
                 loadChapters();
               }
             }
