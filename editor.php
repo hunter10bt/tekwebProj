@@ -131,6 +131,11 @@
           $("#result").html(result);
           change = false;
           onChange();
+        },
+        error: function(jqXHR, status, errorThrown){
+          $("#result").html(errorThrown);
+          alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
@@ -161,6 +166,10 @@
           change = false;
           onChange();
           alert("Changes successfully saved.")
+        },
+        error: function(jqXHR, status, errorThrown){
+          alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
