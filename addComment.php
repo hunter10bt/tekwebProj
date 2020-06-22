@@ -1,6 +1,7 @@
 <?php
   session_start();
   include "connectdb.php";
+  $result = "";
 
   try {
     if(isset($_POST["addComment"]) and isset($_POST["targetType"])){
@@ -11,10 +12,18 @@
         $query = "INSERT INTO comment (comment, targetCommentID, user) VALUES ('{$_POST["comment"]}', '{$_POST["targetcommentid"]}', '{$_SESSION["uname"]}')";
       }
 
-      $result = mysqli_query($con, $query);
+      $check = mysqli_query($con, $query);
+      if ($check) {
+        $result = "Successfully added comment.";
+      } else {
+        $result = "Adding comment failed";
+      }
     }
-  } catch (\Throwable $th) {
-    //throw $th;
+    else {
+      if (!isset($_POST["addComment"])) $result .= " No signal received.";
+      if (!isset($_POST["targetType"])) $result .= " No target type received";
+    }
+  } catch (Throwable $th) {
     $result = $th -> getMessage();
   }
 
