@@ -3,11 +3,12 @@
   $result = "";
   
   if(isset($_POST["updateDiscussionList"])){
+    $query = "SELECT discussionID,title,user FROM discussion WHERE readable = 1";
     if(isset($_POST["franchiseID"])){
-      $query = "SELECT discussionID,title,user FROM discussion WHERE readable = 1 AND franchiseID = '{$_POST["franchiseID"]}'";
+      $query .= " AND franchiseID = '{$_POST["franchiseID"]}'";
     }
     elseif (isset($_POST["storyID"])) {
-      $query = "SELECT discussionID,title,user FROM discussion WHERE readable = 1 AND storyID = $_POST[storyID]";
+      $query .= " AND storyID = $_POST[storyID]";
     }
     $discussionRes = mysqli_query($con, $query);
     if ($discussionRes) {
