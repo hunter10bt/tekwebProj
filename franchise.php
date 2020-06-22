@@ -184,6 +184,8 @@
         },
         error: function(jqXHR, status, errorThrown){
           $('#story-list').html(errorThrown);
+          alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
@@ -205,6 +207,8 @@
         },
         error: function(jqXHR, status, errorThrown){
           $('#discussion-list').html(errorThrown);
+          alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
