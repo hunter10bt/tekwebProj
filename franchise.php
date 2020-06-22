@@ -181,6 +181,9 @@
         },
         success : function(result){
           $("#story-list").html(result);
+        },
+        error: function(jqXHR, status, errorThrown){
+          $('#story-list').html(errorThrown);
         }
       }
     );
@@ -199,6 +202,9 @@
         },
         success : function(result){
           $("#discussion-list").html(result);
+        },
+        error: function(jqXHR, status, errorThrown){
+          $('#discussion-list').html(errorThrown);
         }
       }
     );
@@ -242,6 +248,11 @@
             },
             success: function(show){
               alert(show);
+              console.log(show);
+            },
+            error: function(jqXHR, status, errorThrown){
+              alert(errorThrown);
+              console.log(errorThrown);
             }
           }
         );
@@ -270,6 +281,11 @@
             },
             success: function(show){
               alert(show);
+              console.log(show);
+            },
+            error: function(jqXHR, status, errorThrown){
+              alert(errorThrown);
+              console.log(errorThrown);
             }
           }
         );
