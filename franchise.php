@@ -169,7 +169,7 @@
 </body>
 <script type="text/javascript">
   function loadStoryList(){
-    var v_id = $(this).attr('franchiseID');
+    var v_id = $("#list-story-list").attr('franchiseid');
     $.ajax(
       {
         url : "loadStoryList.php",
@@ -190,7 +190,7 @@
   }
 
   function loadDiscussionList(){
-    var v_id = $(this).attr('franchiseID');
+    var v_id = $("#list-discussions-list").attr('franchiseid');
     $.ajax(
       {
         url : "loadDiscussionList.php",

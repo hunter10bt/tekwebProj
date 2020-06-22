@@ -28,7 +28,8 @@
       else {
         $result = "Cannot find list of stories for this franchise";
       }
-      exit();
+    } else {
+      $result = "No signal received";
     }
   } catch (Throwable $th) {
     $result = $th -> getMessage();
