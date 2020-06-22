@@ -127,6 +127,10 @@
         },
         success: function (result) {
           $("#result").html(result);
+        },
+        error: function (jqXHR, status, errorThrown){
+          alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     );
