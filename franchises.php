@@ -52,7 +52,19 @@
         <li class='nav-item'>
           <a href='discussions.php' class='nav-link'>Discussions</a>
         </li>
+        <li class='nav-item'>
+          <a href='franchises.php' class='nav-link'>Franchises</a>
+        </li>
       </ul>
+      <form class="form-inline my-2 my-lg-0" action="search.php" method="GET">
+        <select class="form-control mr-sm-2 custom-select" name="searchType" id="searchType">
+          <option value='story'>Story</option>
+          <option value='franchise'>Franchise</option>
+          <option value='discussion'>Discussion</option>
+        </select>
+        <input type="text" name="searchTitle" id="searchTitle" class="form-control mr-sm-2" placeholder="search by title...">
+        <button class='btn btn-success' type="submit">Search</button>
+      </form>
     </div>
   </nav>
   <div class="container-fluid" id="container">
