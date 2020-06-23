@@ -57,7 +57,7 @@
   <div class="container-fluid" id='container'>
     <div class="form-group">
       <label for="titleSearch">Search discussions by title</label>
-      <input type="text" class="form-control" name="titleSearch" id="titleSearch" aria-describedby="searchMessage" placeholder="search title...">
+      <input type="text" class="form-control" name="titleSearch" id="titleSearch" aria-describedby="searchMessage" placeholder="search title..." value="">
       <small id="searchMessage" class="form-text text-muted"></small>
     </div>
     <div class="list-group" id="searchResult">
@@ -90,6 +90,7 @@
 
   $(
     function(){
+      <?php if(isset($_GET['search'])) echo "$('#titleSearch').val('{$_GET['search']}');\n";?>
       search();
 
       $('#titleSearch').on(

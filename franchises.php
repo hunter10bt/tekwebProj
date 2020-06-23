@@ -90,6 +90,7 @@
 
   $(
     function(){
+      <?php if(isset($_GET['search'])) echo "$('#franchiseTitleSearch').val('{$_GET['search']}');\n";?>
       loadFranchiseList();
 
       $('#franchiseTitleSearch').on(

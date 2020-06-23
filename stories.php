@@ -90,6 +90,7 @@
 
   $(
     function(){
+      <?php if(isset($_GET['search'])) echo "$('#titleSearch').val('{$_GET['search']}');\n";?>
       search();
 
       $('#titleSearch').on(
