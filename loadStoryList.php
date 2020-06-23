@@ -4,7 +4,14 @@
 
   try {
     if(isset($_POST["updateStoryList"])){
-      $query = "SELECT storyID,title,author,summary FROM story WHERE readable = 1 AND storyID=any(SELECT storyID FROM tagdetails WHERE franchiseID = '{$_POST["id"]}') ORDER BY storyID desc";
+      $query = "SELECT storyID,title,author,summary FROM story WHERE readable = 1";
+      if (isset($_POST["id"])) {
+        $query .= " AND storyID=any(SELECT storyID FROM tagdetails WHERE franchiseID = '{$_POST["id"]}')";
+      }
+      elseif(isset($_POST["search"])){
+        $query .= " AND title LIKE '%{$_POST["search"]}%'";
+      }
+      $query .= " ORDER BY storyID desc";
       $storyRes = mysqli_query($con, $query);
   
       if ($storyRes) {

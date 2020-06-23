@@ -11,6 +11,10 @@
       elseif (isset($_POST["storyID"])) {
         $query .= " AND storyID = $_POST[storyID]";
       }
+      elseif (isset($_POST["search"])) {
+        $query .= " AND title LIKE '%{$_POST["search"]}%'";
+      }
+      $query .= " ORDER BY discussionID DESC";
       $discussionRes = mysqli_query($con, $query);
       if ($discussionRes) {
         $count = 0;
