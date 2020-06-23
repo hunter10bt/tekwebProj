@@ -70,6 +70,12 @@
         <li class='nav-item'>
           <a class='nav-link' href='about.php'>About</a>
         </li>
+        <li class='nav-item'>
+          <a href='stories.php' class='nav-link'>Stories</a>
+        </li>
+        <li class='nav-item'>
+          <a href='discussions.php' class='nav-link'>Discussions</a>
+        </li>
       </ul>
     </div>
   </nav>
