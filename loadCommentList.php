@@ -87,20 +87,18 @@
     $resultset = mysqli_query($con, $query);
 
     if ($resultset) {
-      echo "<ul>";
       $count = 0;
       while (($row = mysqli_fetch_array($resultset)) != NULL) {
         $count++;
-        echo "<li class='list-group-item list-group-item-action'>";
+        echo "<div class='list-group-item'>";
         echo "<div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>{$row['user']}</h5></div>";
         if ($row["readable"] == 1) echo "<p class='mb-1'>{$row['comment']}</p>";
         else echo "<p>This comment has been deleted.</p>";
-        echo "</li>";
+        echo "</div>";
       }
       if ($count == 0) {
         echo "There are no comments from this user.";
       }
-      echo "</ul>";
     } else {
       echo "Cannot find list of comments from this user.";
     }
