@@ -109,6 +109,59 @@
               }
             ?>
           </div>
+          <!-- Edit story modal, only for author -->
+          <!-- Button trigger modal -->
+          <button type='button' class='list-group-item list-group-item-warning' data-toggle='modal' data-target='#editStoryModal'>
+            Edit Story Info
+          </button>
+          
+          <!-- Modal -->
+          <div class='modal fade' id='editStoryModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+              <div class='modal-content'>
+                <div class='modal-header'>
+                  <h5 class='modal-title'>Edit Story Info</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                  Body
+                </div>
+                <div class='modal-footer'>
+                  <button type='button' class='btn btn-secondary' data-dismiss='modal'> Cancel </button>
+                  <button type='button' class='btn btn-primary' data-dismiss='modal'>Edit Story Info</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete story modal, only for author  -->
+          <!-- Button trigger modal -->
+          <button type='button' class='list-group-item list-group-item-warning' data-toggle='modal' data-target='#deleteStoryModal'>
+            Edit Story Info
+          </button>
+          
+          <!-- Modal -->
+          <div class='modal fade' id='deleteStoryModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+              <div class='modal-content'>
+                <div class='modal-header'>
+                  <h5 class='modal-title'>Delete Story</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                  Do you want to delete this story? This cannot be undone!
+                </div>
+                <div class='modal-footer'>
+                  <button type='button' class='btn btn-secondary' data-dismiss='modal'> Cancel </button>
+                  <button type='button' class='btn btn-danger'  data-dismiss='modal'>Delete Story</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <?php
             if (isset($_SESSION["uname"])) {
               echo "<!-- Add discussion modal -->
