@@ -14,6 +14,9 @@
       elseif (isset($_POST["search"])) {
         $query .= " AND title LIKE '%{$_POST["search"]}%'";
       }
+      elseif(isset($_POST["username"])) {
+        $query .= " AND user = '{$_POST["username"]}'";
+      }
       $query .= " ORDER BY discussionID DESC";
       $discussionRes = mysqli_query($con, $query);
       if ($discussionRes) {

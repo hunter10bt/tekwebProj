@@ -11,6 +11,9 @@
       elseif(isset($_POST["search"])){
         $query .= " AND title LIKE '%{$_POST["search"]}%'";
       }
+      elseif(isset($_POST["username"])) {
+        $query .= " AND author = '{$_POST["username"]}'";
+      }
       $query .= " ORDER BY storyID desc";
       $storyRes = mysqli_query($con, $query);
   
