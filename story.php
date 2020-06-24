@@ -172,7 +172,7 @@
           ?>
         </div>
       </div>
-      <div class="col-xl-10" style="padding-left: 2.5%; padding-right: 2.5%;">
+      <div class="col-xl-10">
         <div class="row">
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
@@ -339,10 +339,6 @@
           }
         }
       ?>
-
-      
-
-      
     }
   );
 </script>
