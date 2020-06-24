@@ -87,28 +87,6 @@
   </nav>
   <div class="container-fluid"id="container">
     <div class="row">
-      <div class="col-xl-10" style="padding-left: 2.5%; padding-right: 2.5%;">
-        <div class="row">
-          <div class="tab-content" id="nav-tabContent" style="width: max-content; ">
-            <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
-              <?php
-                echo "<h1>$name</h1>";
-                echo "$summary";
-              ?>
-            </div>
-            <div class="tab-pane fade" id="list-story" role="tabpanel" aria-labelledby="list-story-list">
-              <h2>List of Stories</h2>
-              <div class="list-group" id="story-list">
-              </div>
-            </div>
-            <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
-              <h2>List of Discussions</h2>
-              <div class="list-group" id="discussion-list">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="col-xl-2">
         <div class="list-group" id="list-tab" role="tablist">
           <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About</a>          
@@ -126,56 +104,83 @@
             }
           ?>
         </div>
-        <div class="modal fade" id="addDiscussionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Discussion</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="discussionTitleInput">Discussion Title</label>
-                  <input type="text" class="form-control" name="discussionTitleInput" id="discussionTitleInput" aria-describedby="discussionTitleHelp" placeholder="Insert title here..." maxlength="64">
-                  <small id="discussionTitleHelp" class="form-text text-muted">Inser discussion title here</small>
+        <?php
+          if (isset($_SESSION["uname"])){
+            echo "<!-- Add discussion modal -->
+            <div class='modal fade' id='addDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+              <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
+                <div class='modal-content'>
+                  <div class='modal-header'>
+                    <h5 class='modal-title' id='exampleModalLabel'>Add Discussion</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                  </div>
+                  <div class='modal-body'>
+                    <div class='form-group'>
+                      <label for='discussionTitleInput'>Discussion Title</label>
+                      <input type='text' class='form-control' name='discussionTitleInput' id='discussionTitleInput' aria-describedby='discussionTitleHelp' placeholder='Insert title here...' maxlength='64'>
+                      <small id='discussionTitleHelp' class='form-text text-muted'>Insert discussion title here</small>
+                    </div>
+                    <div class='form-group'>
+                      <label for='discussionDetailsInput'>Details</label>
+                      <textarea class='form-control' name='discussionDetailsInput' id='discussionDetailsInput' rows='5' maxlength='256'></textarea>
+                    </div>
+                  </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-danger' data-dismiss='modal'> Cancel </button>
+                    <button type='button' class='btn btn-primary' id='adddiscussion' data-dismiss='modal'>Add Discussion</button>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="discussionDetailsInput">Details</label>
-                  <textarea class="form-control" name="discussionDetailsInput" id="discussionDetailsInput" rows="5" maxlength="256"></textarea>
+              </div>
+            </div>";
+
+            echo "<!-- Add story modal -->
+            <div class='modal fade' id='addStoryModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+              <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
+                <div class='modal-content'>
+                  <div class='modal-header'>
+                    <h5 class='modal-title' id='exampleModalLabel'>Add Story</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                  </div>
+                  <div class='modal-body'>
+                    <div class='form-group'>
+                      <label for='storyTitleInput'>Story Title</label>
+                      <input type='text' class='form-control' name='storyTitleInput' id='storyTitleInput' placeholder='Insert title here...' maxlength='32'>
+                    </div>
+                    <div class='form-group'>
+                      <label for='summaryInput'>Summary</label>
+                      <textarea class='form-control' name='summaryInput' id='summaryInput' rows='5' maxlength='256'></textarea>
+                    </div>
+                  </div>
+                  <div class='modal-footer'>
+                    <button type='button' class='btn btn-danger' data-dismiss='modal'> Cancel </button>
+                    <button type='button' class='btn btn-primary' id='addStory'  data-dismiss='modal'> Add Story </button>
+                  </div>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="adddiscussion" data-dismiss="modal">Add Discussion</button>
-              </div>
+            </div>";
+          }
+        ?>
+      </div>
+      <div class="col-xl-10">
+        <div class="tab-content" id="nav-tabContent" style="width: max-content; ">
+          <div class="tab-pane fade show active" id="list-about" role="tabpanel" aria-labelledby="list-about-list">
+            <?php
+              echo "<h1>$name</h1>";
+              echo "$summary";
+            ?>
+          </div>
+          <div class="tab-pane fade" id="list-story" role="tabpanel" aria-labelledby="list-story-list">
+            <h2>List of Stories</h2>
+            <div class="list-group" id="story-list">
             </div>
           </div>
-        </div>
-        <div class="modal fade" id="addStoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Story</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="storyTitleInput">Story Title</label>
-                  <input type="text" class="form-control" name="storyTitleInput" id="storyTitleInput" placeholder="Insert title here..." maxlength="32">
-                </div>
-                <div class="form-group">
-                  <label for="summaryInput">Summary</label>
-                  <textarea class="form-control" name="summaryInput" id="summaryInput" rows="5" maxlength="256"></textarea>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="addStory"  data-dismiss="modal">Add Story</button>
-              </div>
+          <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
+            <h2>List of Discussions</h2>
+            <div class="list-group" id="discussion-list">
             </div>
           </div>
         </div>
@@ -247,71 +252,75 @@
       }
     );
 
-    $('#addStory').click(
-      function(){
-        var title = $('#storyTitleInput').val();
-        var details = $('#summaryInput').val();
-        var initiator = $('#unameDisplay').text();
-        var franchiseID = $('#trigger-new-discussion').attr('franchiseID');
-        $("#storyTitleInput").val('');
-        $("#summaryInput").val('');
-
-        $.ajax(
-          {
-            url: 'addStory.php',
-            type: 'POST',
-            async: true,
-            data: {
-              title: title,
-              details: details,
-              franchiseID: franchiseID,
-              newStory: true,
-            },
-            success: function(show){
-              alert(show);
-              console.log(show);
-            },
-            error: function(jqXHR, status, errorThrown){
-              alert(errorThrown);
-              console.log(errorThrown);
-            }
+    <?php
+      if (isset($_SESSION["uname"])) {
+        echo "$('#addStory').click(
+          function(){
+            var title = $('#storyTitleInput').val();
+            var details = $('#summaryInput').val();
+            var initiator = $('#unameDisplay').text();
+            var franchiseID = $('#trigger-new-discussion').attr('franchiseID');
+            $('#storyTitleInput').val('');
+            $('#summaryInput').val('');
+    
+            $.ajax(
+              {
+                url: 'addStory.php',
+                type: 'POST',
+                async: true,
+                data: {
+                  title: title,
+                  details: details,
+                  franchiseID: franchiseID,
+                  newStory: true,
+                },
+                success: function(show){
+                  alert(show);
+                  console.log(show);
+                },
+                error: function(jqXHR, status, errorThrown){
+                  alert(errorThrown);
+                  console.log(errorThrown);
+                }
+              }
+            );
           }
-        );
-      }
-    );
-
-    $('#adddiscussion').click(
-      function(){
-        var title = $('#discussionTitleInput').val();
-        var details = $('#discussionDetailsInput').val();
-        var initiator = $('#unameDisplay').text();
-        var franchiseID = $('#trigger-new-discussion').attr('franchiseID');
-        $('#discussionTitleInput').val('');
-        $('#discussionDetailsInput').val('');
-
-        $.ajax(
-          {
-            url: 'addDiscussion.php',
-            type: 'POST',
-            async: true,
-            data: {
-              title: title,
-              details: details,
-              franchiseID: franchiseID,
-              newDiscussion: true,
-            },
-            success: function(show){
-              alert(show);
-              console.log(show);
-            },
-            error: function(jqXHR, status, errorThrown){
-              alert(errorThrown);
-              console.log(errorThrown);
-            }
+        );";
+        
+        echo "$('#adddiscussion').click(
+          function(){
+            var title = $('#discussionTitleInput').val();
+            var details = $('#discussionDetailsInput').val();
+            var initiator = $('#unameDisplay').text();
+            var franchiseID = $('#trigger-new-discussion').attr('franchiseID');
+            $('#discussionTitleInput').val('');
+            $('#discussionDetailsInput').val('');
+    
+            $.ajax(
+              {
+                url: 'addDiscussion.php',
+                type: 'POST',
+                async: true,
+                data: {
+                  title: title,
+                  details: details,
+                  franchiseID: franchiseID,
+                  newDiscussion: true,
+                },
+                success: function(show){
+                  alert(show);
+                  console.log(show);
+                },
+                error: function(jqXHR, status, errorThrown){
+                  alert(errorThrown);
+                  console.log(errorThrown);
+                }
+              }
+            );
           }
-        );
+        );";
       }
-    );
+    ?>
   });
 </script>
 </html>
