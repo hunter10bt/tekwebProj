@@ -18,7 +18,7 @@
         } elseif(isset($_POST["delete"])) {
           $set = " SET readable = 0";
         }
-        $query .= "UPDATE story $set WHERE storyID={$_POST["id"]}";
+        $query = "UPDATE story $set WHERE storyID={$_POST["id"]}";
 
         $result["bool"] = mysqli_query($con, $query);
         if ($result["bool"]) {

@@ -126,11 +126,18 @@
                     </button>
                 </div>
                 <div class='modal-body'>
-                  Body
+                  <div class='form-group'>
+                    <label for='storyTitle'>Story Title</label>
+                    <input type='text' class='form-control' name='storyTitle' id='storyTitle'placeholder='insert title here...' maxlength='32' value='$name'>
+                  </div>
+                  <div class='form-group'>
+                    <label for='storySummary'>Story Summary</label>
+                    <textarea class='form-control' name='storySummary' rows='5' id='storySummary' maxlength='256'>$summary</textarea>
+                  </div>
                 </div>
                 <div class='modal-footer'>
                   <button type='button' class='btn btn-secondary' data-dismiss='modal'> Cancel </button>
-                  <button type='button' class='btn btn-primary' data-dismiss='modal'>Edit Story Info</button>
+                  <button type='button' class='btn btn-primary' id='editStory' data-dismiss='modal'>Edit Story Info</button>
                 </div>
               </div>
             </div>
@@ -138,8 +145,8 @@
 
           <!-- Delete story modal, only for author  -->
           <!-- Button trigger modal -->
-          <button type='button' class='list-group-item list-group-item-warning' data-toggle='modal' data-target='#deleteStoryModal'>
-            Edit Story Info
+          <button type='button' class='list-group-item list-group-item-danger' data-toggle='modal' data-target='#deleteStoryModal'>
+            Delete Story Info
           </button>
           
           <!-- Modal -->
@@ -392,6 +399,44 @@
           }
         }
       ?>
+
+      $('#editStory').click(
+        function(){
+          // var id = $storyID;
+          var id = 13;
+          var title = $('#storyTitle').val();
+          var summary = $('#storySummary').val();
+          $('#storyTitle').val('');
+          $('#storySummary').val('');
+
+          $.ajax(
+            {
+              url: 'editStory.php',
+              type: 'POST',
+              data: {
+                id: id,
+                edit: true,
+                title: title,
+                summary: summary,
+              },
+              dataType: 'html',
+              success: function(result){
+                console.log(result);
+                check = JSON.parse(result);
+                alert(check.message);
+                console.log(check.message);
+                if (check.bool) {
+                  window.location.reload(true);
+                }
+              },
+              error: function(jqXHR, code, errorThrown){
+                alert(errorThrown);
+                console.log(errorThrown);
+              }
+            }
+          );
+        }
+      );
     }
   );
 </script>
