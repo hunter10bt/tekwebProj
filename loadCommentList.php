@@ -83,7 +83,7 @@
   }
 
   function loadCommentFromUsername($username, $con){
-    $query = "SELECT commentID, comment, user, readable FROM comment WHERE user = $username ORDER by commentID DESC";
+    $query = "SELECT commentID, comment, user, readable FROM comment WHERE user = '$username' ORDER by commentID DESC";
     $resultset = mysqli_query($con, $query);
 
     if ($resultset) {
