@@ -46,14 +46,18 @@
         <li class='nav-item'>
           <a href='franchises.php' class='nav-link'>Franchises</a>
         </li>
+        <li class='nav-item'>
+          <a href='users.php' class='nav-link'>Users</a>
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" action="search.php" method="GET">
         <select class="form-control mr-sm-2 custom-select" name="searchType" id="searchType">
-          <option value='story'>Story</option>
-          <option value='franchise'>Franchise</option>
-          <option value='discussion'>Discussion</option>
+          <option value='story'>Story Title</option>
+          <option value='franchise'>Franchise Title</option>
+          <option value='discussion'>Discussion Title</option>
+          <option value='user'>User</option>
         </select>
-        <input type="text" name="searchTitle" id="searchTitle" class="form-control mr-sm-2" placeholder="search by title...">
+        <input type="text" name="searchTitle" id="searchTitle" class="form-control mr-sm-2" placeholder="search...">
         <button class='btn btn-success' type="submit">Search</button>
       </form>
     </div>
