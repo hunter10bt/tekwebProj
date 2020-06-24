@@ -1,8 +1,21 @@
 <?php
   session_start();
+  include "connectdb.php";
   if (!isset($_GET["uname"])) {
     header("location: index.php");
   }
+  $result = mysqli_query($con, "SELECT username FROM user WHERE username = '{$_GET["uname"]}' AND readable = 1");
+  if ($result) {
+    $row = mysqli_fetch_array($result);
+    if (isset($row["username"])) {
+      $uname = $row["username"];
+    } else {
+      header('location: users.php');
+    }
+  } else {
+    header('location: users.php');
+  }
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
