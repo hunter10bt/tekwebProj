@@ -90,6 +90,88 @@
   </nav>
   <div class="container-fluid"id="container">
     <div class="row">
+      <div class="col-xl-2">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About this Story</a>
+          <?php
+            echo "<a class='list-group-item list-group-item-action' id='list-chapters-list' data-toggle='list' href='#list-chapters' role='tab' aria-controls='chapters' storyID='$storyID'>List of Chapters</a>";
+            echo "<a class='list-group-item list-group-item-action' id='list-discussions-list' data-toggle='list' href='#list-discussions' role='tab' aria-controls='discussions' storyID='$storyID'> Discussions </a>";
+          ?>
+          <div class="list-group">
+            <?php
+              if (isset($_SESSION["uname"])) {
+                # code...
+                echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal'>New Discussion</button>";
+                if ($isAuthor) {
+                  # code...
+                  echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addChapterModal'>New Chapter</button>";
+                }
+              }
+            ?>
+          </div>
+          <?php
+            if (isset($_SESSION["uname"])) {
+              echo "<!-- Add discussion modal -->
+              <div class='modal fade' id='addDiscussionModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
+                  <div class='modal-content'>
+                    <div class='modal-header'>
+                      <h5 class='modal-title' id='exampleModalLabel'>Add Discussion</h5>
+                      <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                      </button>
+                    </div>
+                    <div class='modal-body'>
+                      <div class='form-group'>
+                        <label for='discussionTitleInput'>Discussion Title</label>
+                        <input type='text' class='form-control' name='discussionTitleInput' id='discussionTitleInput' aria-describedby='discussionTitleHelp' placeholder='Insert title here...' maxlength='64'>
+                        <small id='discussionTitleHelp' class='form-text text-muted'>Insert discussion title here</small>
+                      </div>
+                      <div class='form-group'>
+                        <label for='discussionDetailsInput'>Details</label>
+                        <textarea class='form-control' name='discussionDetailsInput' id='discussionDetailsInput' rows='5' maxlength='256'></textarea>
+                      </div>
+                    </div>
+                    <div class='modal-footer'>
+                      <button type='button' class='btn btn-danger' data-dismiss='modal'> Cancel </button>
+                      <button type='button' class='btn btn-primary' id='adddiscussion' data-dismiss='modal'> Add Discussion </button>
+                    </div>
+                  </div>
+                </div>
+              </div>";
+              if ($isAuthor) {
+                echo "<!-- New chapter modal -->
+                <div class='modal fade' id='addChapterModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                  <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
+                    <div class='modal-content'>
+                      <div class='modal-header'>
+                        <h5 class='modal-title' id='exampleModalLabel'>Add Chapter</h5>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                          <span aria-hidden='true'>&times;</span>
+                        </button>
+                      </div>
+                      <div class='modal-body'>
+                        <div class='form-group'>
+                          <label for='chapterTitleInput'>Chapter Title</label>
+                          <input type='text' class='form-control' name='chapterTitleInput' id='chapterTitleInput' placeholder='Insert title here...' maxlength='64'>
+                        </div>
+                        <div class='form-group'>
+                          <label for='summaryInput'>Summary</label>
+                          <textarea class='form-control' name='summaryInput' id='summaryInput' rows='5' maxlength='128'></textarea>
+                        </div>
+                      </div>
+                      <div class='modal-footer'>
+                        <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                        <button type='button' class='btn btn-primary' id='addChapter' data-dismiss='modal'>Add Chapter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>";
+              }
+            }
+          ?>
+        </div>
+      </div>
       <div class="col-xl-10" style="padding-left: 2.5%; padding-right: 2.5%;">
         <div class="row">
           <div class="tab-content" id="nav-tabContent">
@@ -108,80 +190,6 @@
             <div class="tab-pane fade" id="list-discussions" role="tabpanel" aria-labelledby="list-discussions-list">
               <h2>List of Discussions</h2>
               <div class="list-group" id="discussion-list">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-2">
-        <div class="list-group" id="list-tab" role="tablist">
-          <a class="list-group-item list-group-item-action active" id="list-about-list" data-toggle="list" href="#list-about" role="tab" aria-controls="about">About this Story</a>
-          <?php
-            echo "<a class='list-group-item list-group-item-action' id='list-chapters-list' data-toggle='list' href='#list-chapters' role='tab' aria-controls='chapters' storyID='$storyID'>List of Chapters</a>";
-            echo "<a class='list-group-item list-group-item-action' id='list-discussions-list' data-toggle='list' href='#list-discussions' role='tab' aria-controls='discussions' storyID='$storyID'> Discussions </a>";
-          ?>
-          <div class="list-group">
-            <?php
-              if (isset($_SESSION["uname"])) {
-                # code...
-                echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal'>New Discussion</button>";
-                if ($_SESSION["uname"] == $authorID) {
-                  # code...
-                  echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addChapterModal'>New Chapter</button>";
-                }
-              }
-            ?>
-          </div>
-          <div class="modal fade" id="addDiscussionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add Discussion</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="discussionTitleInput">Discussion Title</label>
-                    <input type="text" class="form-control" name="discussionTitleInput" id="discussionTitleInput" aria-describedby="discussionTitleHelp" placeholder="Insert title here..." maxlength="64">
-                    <small id="discussionTitleHelp" class="form-text text-muted">Inser discussion title here</small>
-                  </div>
-                  <div class="form-group">
-                    <label for="discussionDetailsInput">Details</label>
-                    <textarea class="form-control" name="discussionDetailsInput" id="discussionDetailsInput" rows="5" maxlength="256"></textarea>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" id="adddiscussion" data-dismiss="modal">Add Discussion</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal fade" id="addChapterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add Chapter</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="chapterTitleInput">Chapter Title</label>
-                    <input type="text" class="form-control" name="chapterTitleInput" id="chapterTitleInput" placeholder="Insert title here..." maxlength="64">
-                  </div>
-                  <div class="form-group">
-                    <label for="summaryInput">Summary</label>
-                    <textarea class="form-control" name="summaryInput" id="summaryInput" rows="5" maxlength="128"></textarea>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary" id="addChapter" data-dismiss="modal">Add Chapter</button>
-                </div>
               </div>
             </div>
           </div>
@@ -252,80 +260,89 @@
         }
       );
 
-      $('#adddiscussion').click(
-        function(){
-          var title = $('#discussionTitleInput').val();
-          var details = $('#discussionDetailsInput').val();
-          var initiator = $('#unameDisplay').text();
-          var storyID = $('#list-discussions-list').attr('storyID');
-          $('#discussionTitleInput').val('');
-          $('#discussionDetailsInput').val('');
-
-          $.ajax(
-            {
-              url: 'addDiscussion.php',
-              type: 'POST',
-              async: true,
-              data: {
-                title: title,
-                details: details,
-                storyID: storyID,
-                newDiscussion: true,
-              },
-              success: function(show){
-                alert(show);
-                console.log(show);
-              },
-              error: function(jqXHR, status, errorThrown){
-                alert(errorThrown);
-                console.log(errorThrown);
-              },
-              complete: function(){
-                loadDiscussions();
-              }
+      <?php
+        if (isset($_SESSION["uname"])) {
+          echo "$('#adddiscussion').click(
+            function(){
+              var title = $('#discussionTitleInput').val();
+              var details = $('#discussionDetailsInput').val();
+              var initiator = $('#unameDisplay').text();
+              var storyID = $('#list-discussions-list').attr('storyID');
+              $('#discussionTitleInput').val('');
+              $('#discussionDetailsInput').val('');
+    
+              $.ajax(
+                {
+                  url: 'addDiscussion.php',
+                  type: 'POST',
+                  async: true,
+                  data: {
+                    title: title,
+                    details: details,
+                    storyID: storyID,
+                    newDiscussion: true,
+                  },
+                  success: function(show){
+                    alert(show);
+                    console.log(show);
+                  },
+                  error: function(jqXHR, status, errorThrown){
+                    alert(errorThrown);
+                    console.log(errorThrown);
+                  },
+                  complete: function(){
+                    loadDiscussions();
+                  }
+                }
+              );
             }
-          );
-        }
-      );
-
-      //Menambahkan chapter - IN PROGRESS
-      $('#addChapter').click(
-        function(){
-          var title = $('#chapterTitleInput').val();
-          $('#chapterTitleInput').val('');
-          var summary = $('#summaryInput').val();
-          $('#summaryInput').val('');
-          var storyID = $('#list-chapters-list').attr('storyID');
-
-          alert('Title: '+title);
-          alert('Summary: '+summary);
-          alert('Story ID: '+storyID);
-
-          $.ajax(
-            {
-              url: 'addChapter.php',
-              type: 'POST',
-              data: {
-                addChapter: true,
-                title: title,
-                storyID: storyID,
-                summary: summary,
-              },
-              success: function(result){
-                alert(result);
-                console.log(result);
-              },
-              error: function(jqXHR, status, errorThrown){
-                alert(errorThrown);
-                console.log(errorThrown);
-              },
-              complete: function(){
-                loadChapters();
+          );";
+          if ($isAuthor) {
+            echo "//Menambahkan chapter - IN PROGRESS
+            $('#addChapter').click(
+              function(){
+                var title = $('#chapterTitleInput').val();
+                $('#chapterTitleInput').val('');
+                var summary = $('#summaryInput').val();
+                $('#summaryInput').val('');
+                var storyID = $('#list-chapters-list').attr('storyID');
+      
+                alert('Title: '+title);
+                alert('Summary: '+summary);
+                alert('Story ID: '+storyID);
+      
+                $.ajax(
+                  {
+                    url: 'addChapter.php',
+                    type: 'POST',
+                    data: {
+                      addChapter: true,
+                      title: title,
+                      storyID: storyID,
+                      summary: summary,
+                    },
+                    success: function(result){
+                      alert(result);
+                      console.log(result);
+                    },
+                    error: function(jqXHR, status, errorThrown){
+                      alert(errorThrown);
+                      console.log(errorThrown);
+                    },
+                    complete: function(){
+                      loadChapters();
+                    }
+                  }
+                );
               }
-            }
-          );
+            );";
+          }
         }
-      );
+      ?>
+
+      
+
+      
     }
   );
 </script>
