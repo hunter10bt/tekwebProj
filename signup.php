@@ -64,7 +64,7 @@
       </form>
     </div>
   </nav>
-  <div class="container-fluid">
+  <div class="container-fluid" id="container">
     <div class="form-group">
       <label for="user">Username</label>
       <input type="text" class="form-control" name="user" id="user" aria-describedby="helpId" placeholder="Username...">
