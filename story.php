@@ -100,74 +100,20 @@
           <div class="list-group">
             <?php
               if (isset($_SESSION["uname"])) {
-                # code...
-                echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal'>New Discussion</button>";
+                echo "<!-- New discussion modal button --><button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addDiscussionModal'>New Discussion</button>";
                 if ($isAuthor) {
-                  # code...
-                  echo "<button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addChapterModal'>New Chapter</button>";
+                  echo "<!-- Button trigger modal -->
+                  <button type='button' class='list-group-item list-group-item-warning' data-toggle='modal' data-target='#editStoryModal'>
+                    Edit Story Info
+                  </button>";
+                  echo "<!-- Delete Button trigger modal -->
+                  <button type='button' class='list-group-item list-group-item-danger' data-toggle='modal' data-target='#deleteStoryModal'>
+                    Delete Story
+                  </button>";
+                  echo "<!-- New chapter modal button --><button type='button' class='list-group-item list-group-item-success' data-toggle='modal' data-target='#addChapterModal'>New Chapter</button>";
                 }
               }
             ?>
-          </div>
-          <!-- Edit story modal, only for author -->
-          <!-- Button trigger modal -->
-          <button type='button' class='list-group-item list-group-item-warning' data-toggle='modal' data-target='#editStoryModal'>
-            Edit Story Info
-          </button>
-          
-          <!-- Modal -->
-          <div class='modal fade' id='editStoryModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
-              <div class='modal-content'>
-                <div class='modal-header'>
-                  <h5 class='modal-title'>Edit Story Info</h5>
-                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                      <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='modal-body'>
-                  <div class='form-group'>
-                    <label for='storyTitle'>Story Title</label>
-                    <input type='text' class='form-control' name='storyTitle' id='storyTitle'placeholder='insert title here...' maxlength='32' value='$name'>
-                  </div>
-                  <div class='form-group'>
-                    <label for='storySummary'>Story Summary</label>
-                    <textarea class='form-control' name='storySummary' rows='5' id='storySummary' maxlength='256'>$summary</textarea>
-                  </div>
-                </div>
-                <div class='modal-footer'>
-                  <button type='button' class='btn btn-secondary' data-dismiss='modal'> Cancel </button>
-                  <button type='button' class='btn btn-primary' id='editStory' data-dismiss='modal'>Edit Story Info</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Delete story modal, only for author  -->
-          <!-- Button trigger modal -->
-          <button type='button' class='list-group-item list-group-item-danger' data-toggle='modal' data-target='#deleteStoryModal'>
-            Delete Story Info
-          </button>
-          
-          <!-- Modal -->
-          <div class='modal fade' id='deleteStoryModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
-              <div class='modal-content'>
-                <div class='modal-header'>
-                  <h5 class='modal-title'>Delete Story</h5>
-                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                      <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='modal-body'>
-                  Do you want to delete this story? This cannot be undone!
-                </div>
-                <div class='modal-footer'>
-                  <button type='button' class='btn btn-secondary' data-dismiss='modal'> Cancel </button>
-                  <button type='button' class='btn btn-danger'  data-dismiss='modal'>Delete Story</button>
-                </div>
-              </div>
-            </div>
           </div>
           <?php
             if (isset($_SESSION["uname"])) {
@@ -200,6 +146,55 @@
                 </div>
               </div>";
               if ($isAuthor) {
+                echo "<!-- Edit Story Modal -->
+                <div class='modal fade' id='editStoryModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+                  <div class='modal-dialog' role='document'>
+                    <div class='modal-content'>
+                      <div class='modal-header'>
+                        <h5 class='modal-title'>Edit Story Info</h5>
+                          <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                          </button>
+                      </div>
+                      <div class='modal-body'>
+                        <div class='form-group'>
+                          <label for='storyTitle'>Story Title</label>
+                          <input type='text' class='form-control' name='storyTitle' id='storyTitle'placeholder='insert title here...' maxlength='32' value='$name'>
+                        </div>
+                        <div class='form-group'>
+                          <label for='storySummary'>Story Summary</label>
+                          <textarea class='form-control' name='storySummary' rows='5' id='storySummary' maxlength='256'>$summary</textarea>
+                        </div>
+                      </div>
+                      <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'> Cancel </button>
+                        <button type='button' class='btn btn-primary' id='editStory' data-dismiss='modal'>Edit Story Info</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>";
+
+                echo "<!-- Delete Story Modal -->
+                <div class='modal fade' id='deleteStoryModal' tabindex='-1' role='dialog' aria-labelledby='modelTitleId' aria-hidden='true'>
+                  <div class='modal-dialog' role='document'>
+                    <div class='modal-content'>
+                      <div class='modal-header'>
+                        <h5 class='modal-title'>Delete Story</h5>
+                          <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                          </button>
+                      </div>
+                      <div class='modal-body'>
+                        Do you want to delete this story? This cannot be undone!
+                      </div>
+                      <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'> Cancel </button>
+                        <button type='button' class='btn btn-danger'  id='deleteStory' data-dismiss='modal'>Delete Story</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>";
+
                 echo "<!-- New chapter modal -->
                 <div class='modal fade' id='addChapterModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                   <div class='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
@@ -396,47 +391,77 @@
                 );
               }
             );";
+            
+            echo "$('#editStory').click(
+              function(){
+                var id = $storyID;
+                var title = $('#storyTitle').val();
+                var summary = $('#storySummary').val();
+                $('#storyTitle').val('');
+                $('#storySummary').val('');
+      
+                $.ajax(
+                  {
+                    url: 'editStory.php',
+                    type: 'POST',
+                    data: {
+                      id: id,
+                      edit: true,
+                      title: title,
+                      summary: summary,
+                    },
+                    dataType: 'html',
+                    success: function(result){
+                      console.log(result);
+                      check = JSON.parse(result);
+                      alert(check.message);
+                      console.log(check.message);
+                      if (check.bool) {
+                        window.location.reload(true);
+                      }
+                    },
+                    error: function(jqXHR, code, errorThrown){
+                      alert(errorThrown);
+                      console.log(errorThrown);
+                    }
+                  }
+                );
+              }
+            );";
+
+            echo "$('#deleteStory').click(
+              function(){
+                var id = $storyID;
+      
+                $.ajax(
+                  {
+                    url: 'editStory.php',
+                    type: 'POST',
+                    data: {
+                      delete: true,
+                      id: id,
+                    },
+                    dataType: 'html',
+                    success: function(result){
+                      console.log(result);
+                      check = JSON.parse(result);
+                      alert(check.message);
+                      console.log(check.message);
+                      if (check.bool) {
+                        window.location.reload(true);
+                      }
+                    },
+                    error: function(jqXHR, code, errorThrown){
+                      alert(errorThrown);
+                      console.log(errorThrown);
+                    }
+                  }
+                );
+              }
+            );";
           }
         }
       ?>
-
-      $('#editStory').click(
-        function(){
-          // var id = $storyID;
-          var id = 13;
-          var title = $('#storyTitle').val();
-          var summary = $('#storySummary').val();
-          $('#storyTitle').val('');
-          $('#storySummary').val('');
-
-          $.ajax(
-            {
-              url: 'editStory.php',
-              type: 'POST',
-              data: {
-                id: id,
-                edit: true,
-                title: title,
-                summary: summary,
-              },
-              dataType: 'html',
-              success: function(result){
-                console.log(result);
-                check = JSON.parse(result);
-                alert(check.message);
-                console.log(check.message);
-                if (check.bool) {
-                  window.location.reload(true);
-                }
-              },
-              error: function(jqXHR, code, errorThrown){
-                alert(errorThrown);
-                console.log(errorThrown);
-              }
-            }
-          );
-        }
-      );
     }
   );
 </script>
