@@ -7,11 +7,13 @@
     if ($_GET['searchType'] == 'story') header("location: stories.php");
     elseif ($_GET['searchType'] == 'discussion') header("location: discussions.php");
     elseif ($_GET['searchType'] == 'franchise') header("location: franchises.php");
+    elseif ($_GET['searchType'] == 'user') header("location: users.php");
   }
   else{
     if ($_GET['searchType'] == 'story') header("location: stories.php?search={$_GET["searchTitle"]}");
     elseif ($_GET['searchType'] == 'discussion') header("location: discussions.php?search={$_GET["searchTitle"]}");
     elseif ($_GET['searchType'] == 'franchise') header("location: franchises.php?search={$_GET["searchTitle"]}");
+    elseif ($_GET['searchType'] == 'user') header("location: users.php?search={$_GET["searchTitle"]}");
   }
 
 ?>
