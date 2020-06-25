@@ -18,7 +18,7 @@
       if (isset($row)){
         $passCheck = $row[0];
 
-        if ($passCheck == $pass){
+        if ($passCheck == md5($pass)){
           $_SESSION["uname"] = $uname;
           $out["success"] = true;
           $out["message"] = "Login successful.";

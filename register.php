@@ -9,7 +9,7 @@
   try {
     if (isset($_POST["signup"])) {
       $query = "INSERT INTO user (username, password) VALUES ('%s','%s')";
-      $result["bool"] = mysqli_query($con, sprintf($query, $_POST["user"], $_POST["pass"]));
+      $result["bool"] = mysqli_query($con, sprintf($query, $_POST["user"], md5($_POST["pass"])));
       $result["message"] = "Sign-up successful";
     } else {
       $result["bool"] = false;
