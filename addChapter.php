@@ -23,7 +23,7 @@
           $id = $row[0];
           $filename = "./chapters/$id.json";
           // $file = fopen();
-          $paragraphs = array(["", ""]);
+          $paragraphs = ["", ""];
           $check = file_put_contents($filename, json_encode ($paragraphs));
           if ($check) {
             $result = "Successfully added chapter.";
