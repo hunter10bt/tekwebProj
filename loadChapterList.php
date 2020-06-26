@@ -5,7 +5,7 @@
 
   try {
     if(isset($_POST["loadChapters"])){
-      $query = "SELECT chapterID,title,summary FROM chapter WHERE readable = 1 AND storyID = $_POST[storyID]";
+      $query = "SELECT chapterID,title,summary FROM chapter WHERE readable = 1 AND storyID = $_POST[storyID] ORDER BY chapterID DESC";
       $chapterRes = mysqli_query($con, $query);
       $result = "";
 

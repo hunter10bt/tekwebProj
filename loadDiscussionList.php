@@ -4,20 +4,20 @@
   
   try {
     if(isset($_POST["updateDiscussionList"])){
-      $query = "SELECT discussionID,title,user FROM discussion WHERE readable = 1";
+      $addFilter = "";
       if(isset($_POST["franchiseID"])){
-        $query .= " AND franchiseID = '{$_POST["franchiseID"]}'";
+        $addFilter = " AND franchiseID = '{$_POST["franchiseID"]}'";
       }
       elseif (isset($_POST["storyID"])) {
-        $query .= " AND storyID = $_POST[storyID]";
+        $addFilter = " AND storyID = $_POST[storyID]";
       }
       elseif (isset($_POST["search"])) {
-        $query .= " AND title LIKE '%{$_POST["search"]}%'";
+        $addFilter = " AND title LIKE '%{$_POST["search"]}%'";
       }
       elseif(isset($_POST["username"])) {
-        $query .= " AND user = '{$_POST["username"]}'";
+        $addFilter = " AND user = '{$_POST["username"]}'";
       }
-      $query .= " ORDER BY discussionID DESC";
+      $query = "SELECT discussionID,title,user FROM discussion WHERE readable = 1{$addFilter} ORDER BY discussionID DESC";
       $discussionRes = mysqli_query($con, $query);
       if ($discussionRes) {
         $count = 0;

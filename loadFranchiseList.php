@@ -5,11 +5,11 @@
 
   try {
     if (isset($_POST["loadFranchiseList"])) {
-      $query = "SELECT franchiseIDName, `Franchise Name` FROM franchise WHERE readable = 1";
+      $addFilter = "";
       if (isset($_POST['searchName'])) {
-        $query .= " AND `Franchise Name` LIKE '%{$_POST['searchName']}%'";
+        $addFilter = " AND `Franchise Name` LIKE '%{$_POST['searchName']}%'";
       }
-      $query .= " ORDER by `Franchise Name` ASC";
+      $query = "SELECT franchiseIDName, `Franchise Name` FROM franchise WHERE readable = 1{$addFilter} ORDER by `Franchise Name` ASC";
 
       $resultset = mysqli_query($con, $query);
 
