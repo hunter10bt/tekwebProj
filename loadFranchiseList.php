@@ -4,7 +4,7 @@
   $result = "";
 
   try {
-    if (isset($_SESSION["adminName"]) and isset($_POST["loadFranchiseList"])) {
+    if (isset($_POST["loadFranchiseList"])) {
       $query = "SELECT franchiseIDName, `Franchise Name` FROM franchise WHERE readable = 1";
       if (isset($_POST['searchName'])) {
         $query .= " AND `Franchise Name` LIKE '%{$_POST['searchName']}%'";
@@ -28,7 +28,6 @@
         $result = "Unable to search at the moment";
       }
     } else {
-      if (!isset($_SESSION["adminName"])) $result .= "Access denied. ";
       if (!isset($_SESSION["loadFranchiseList"])) $result .= "No signal received. ";
     }
   } catch (Throwable $th) {

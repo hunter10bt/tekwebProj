@@ -1,8 +1,5 @@
 <?php
   session_start();
-  if (!isset($_SESSION['adminName'])) {
-    header('location: signin.php');
-  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
