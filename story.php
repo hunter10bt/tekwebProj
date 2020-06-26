@@ -355,7 +355,12 @@
                 }
               );
             }
-          );";
+          );
+          
+          $('#addDiscussionModal').on('hidden.bs.modal', function (e) {
+            $('#discussionTitleInput').val('');
+            $('#discussionDetailsInput').val('');
+          });";
           if ($isAuthor) {
             echo "//Menambahkan chapter - IN PROGRESS
             $('#addChapter').click(
@@ -365,10 +370,6 @@
                 var summary = $('#summaryInput').val();
                 $('#summaryInput').val('');
                 var storyID = $('#list-chapters-list').attr('storyID');
-      
-                alert('Title: '+title);
-                alert('Summary: '+summary);
-                alert('Story ID: '+storyID);
       
                 $.ajax(
                   {
@@ -394,7 +395,12 @@
                   }
                 );
               }
-            );";
+            );
+            
+            $('#addChapterModal').on('hidden.bs.modal', function (e) {
+              $('#chapterTitleInput').val('');
+              $('#summaryInput').val('');
+            });";
             
             echo "$('#editStory').click(
               function(){
@@ -431,7 +437,11 @@
                   }
                 );
               }
-            );";
+            );
+            $('#editStoryModal').on('hidden.bs.modal', function (e) {
+              $('#storyTitle').val('');
+              $('#storySummary').val('');
+            });";
 
             echo "$('#deleteStory').click(
               function(){
