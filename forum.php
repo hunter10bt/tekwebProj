@@ -137,7 +137,7 @@
                       </div>
                     </div>
                     <div class='modal-footer'>
-                      <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                      <button type='button' class='btn btn-danger cancelAddComment' data-dismiss='modal'>Cancel</button>
                       <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalComment'>Add Comment</button>
                     </div>
                   </div>
@@ -168,7 +168,7 @@
                       </div>
                     </div>
                     <div class='modal-footer'>
-                      <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
+                      <button type='button' class='btn btn-danger' data-dismiss='modal' id='cancelReport'>Cancel</button>
                       <button type='button' class='btn btn-primary' data-dismiss='modal' targettype='' targetDiscussionID='' targetcommentid='' id='modalReport'>Report</button>
                     </div>
                   </div>
@@ -311,11 +311,18 @@
           }
         );
       }
+
+      $('#editDiscussionModal').on('hidden.bs.modal', function (e) {
+        $('#discussionTitleInput').val('');
+        $('#discussionDetailInput').val('');
+      });
     
       function editDiscussion(){
         var discussionID = $id;
         var title = $('#discussionTitleInput').val();
         var content = $('#discussionDetailInput').val();
+        $('#discussionTitleInput').val('');
+        $('#discussionDetailInput').val('');
     
         $.ajax(
           {
@@ -364,14 +371,20 @@
             },
             error: function(jqXHR, textStatus, errorThrown){
               alert(errorThrown);
+              console.log(errorThrown);
             }
           }
         );    
       }
+      
+      $('#editCommentModal').on('hidden.bs.modal', function (e) {
+        $('#editCommentInput').val('');
+      });
     
       function editComment() {
         var commentID = $('#modalEditComment').attr('targetcommentid');
         var comment = $('#editCommentInput').val();
+        $('#editCommentInput').val('');
         $.ajax(
           {
             url: 'editComment.php',
@@ -394,6 +407,10 @@
           }
         );
       }
+      
+      $('#addCommentModal').on('hidden.bs.modal', function (e) {
+        $('#commentInput').val('');
+      });
     
       function addComment(){
         var targettype = $('#modalComment').attr('targettype');
@@ -418,12 +435,18 @@
             },
             error: function(jqXHR, textStatus, errorThrown){
               alert(errorThrown);
+              console.log(errorThrown);
             }
           }
         );
         $('#commentInput').val('');
       }
-    
+      
+      $('#reportModal').on('hidden.bs.modal', function (e) {
+        $('#detailInput').val('');
+        $('#reportTitleInput').val('');
+      });
+
       function report(){
         var title=$('#reportTitleInput').val();
         var details=$('#detailInput').val();
@@ -450,6 +473,7 @@
             },
             error: function(jqXHR, textStatus, errorThrown){
               alert(errorThrown);
+              console.log(errorThrown);
             }
           }
         );
@@ -473,6 +497,7 @@
         },
         error: function(jqXHR, textStatus, errorThrown){
           alert(errorThrown);
+          console.log(errorThrown);
         }
       }
     )
@@ -486,11 +511,8 @@
         "click",
         function(){
           $('#modalComment').attr('targettype', $(this).attr('targettype'));
-          alert($('#modalComment').attr('targettype'));
           $('#modalComment').attr('targetcommentid', $(this).attr('targetcommentid'));
-          alert($('#modalComment').attr('targetcommentid'));
-          $('#modalComment').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));  
-          alert($('#modalComment').attr('targetDiscussionID'));
+          $('#modalComment').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));
         }
       );
 
@@ -499,11 +521,8 @@
         "click",
         function(){
           $('#modalReport').attr('targettype', $(this).attr('targettype'));
-          alert($('#modalReport').attr('targettype'));
           $('#modalReport').attr('targetcommentid', $(this).attr('targetcommentid'));
-          alert($('#modalReport').attr('targetcommentid'));
           $('#modalReport').attr('targetDiscussionID', $(this).attr('targetDiscussionID'));  
-          alert($('#modalReport').attr('targetDiscussionID'));
         }
       );
 
