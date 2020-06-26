@@ -289,7 +289,13 @@
               }
             );
           }
-        );";
+        );
+        
+        $('#addStoryModal').on('hidden.bs.modal', function (e) {
+          $('#storyTitleInput').val('');
+          $('#summaryInput').val('');
+        });
+        ";
         
         echo "$('#adddiscussion').click(
           function(){
@@ -322,7 +328,12 @@
               }
             );
           }
-        );";
+        );
+        
+        $('#addDiscussionModal').on('hidden.bs.modal', function (e) {
+          $('#discussionTitleInput').val('');
+          $('#discussionDetailsInput').val('');
+        });";
       }
     ?>
   });
