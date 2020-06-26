@@ -33,7 +33,7 @@
           }
           else {
             echo '<li class="nav-item">';
-            echo "<a class='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>{$_SESSION['uname']}</a>";
+            echo "<a class='nav-link' href='user.php?uname={$_SESSION['uname']}'>{$_SESSION['uname']}</a>";
             echo '</li>';
 
             echo '<li class="nav-item">';
