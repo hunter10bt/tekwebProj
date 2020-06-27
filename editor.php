@@ -9,15 +9,27 @@
     $chapterID = $_GET["id"];
     $query = "SELECT author, storyID, readable FROM story WHERE storyID = ANY(SELECT storyID FROM chapter WHERE chapterID = $chapterID)";
     $authorResult = mysqli_query($con, $query);
-    if($authorResult){
+    $queryChap = "SELECT readable FROM chapter WHERE chapterID = $chapterID";
+    $chapRes = mysqli_query($con, $queryChap);
+    if($authorResult and $chapRes){
       $row = mysqli_fetch_array($authorResult);
+      $rowChap = mysqli_fetch_array($chapRes);
       $authorID = $row[0];
       $storyID = $row[1];
-      $readable = $row['readable'];
+      $readableStory = $row['readable'];
+      $readableChap = $rowChap['readable'];
       $isEditor = false;
 
       if(isset($_SESSION["uname"]) and $_SESSION["uname"] == $authorID){
         $isEditor = true;
+      }
+      if ($readableChap == 0) {
+        $_SESSION['notExist_type'] = 'chapter';
+        header('location: index.php');
+      }
+      if ($readableStory == 0) {
+        $_SESSION['notExist_type'] = 'story';
+        header('location: index.php');
       }
       if(!$isEditor){
         header("location: story.php?id=$storyID");
@@ -101,8 +113,10 @@
       <div class="col-xl-2" id="sidebar">
         <div class="list-group">
           <button type="button" class="list-group-item list-group-item-action list-group-item-success" id="saveButton">Save</button>
-          <button type="button" class="list-group-item list-group-item-action list-group-item-danger" id="loadChapterButton">Reload from Server</button>
-          <a name="return" id="exit" class="list-group-item list-group-item-action list-group-item-primary" href="story.php?id=<?php echo $storyID; ?>" role="button">Back to Story Page</a>
+          <button type="button" class="list-group-item list-group-item-action list-group-item-danger" id="loadChapterButton">Reload from Server <b>(All unsaved changes will be discarded)</b></button>
+          <a name="return" id="exit" class="list-group-item list-group-item-action list-group-item-primary" href="story.php?id=<?php echo $storyID; ?>" role="button">Back to Story Page <b>(All unsaved changes will be discarded)</b></a>
+          <a href="reader.php?id=<?php echo $chapterID; ?>" class="list-group-item list-group-item-action">Back to Reader Page <b>(All unsaved changes will be discarded)</b></a>
+          <button id='deleteChapter' class='list-group-item list-group-item-action list-group-item-danger' idd=<?php echo $chapterID; ?>> Delete this Chapter <b>(This action cannot be undone)</b></button>
         </div>
         <div id="changeCheck"></div>
         <p>Please write at least two (2) paragraphs.</p>
@@ -220,6 +234,37 @@
           onChange();
         }
       );
+
+      $('#deleteChapter').click(
+            function(){
+              if (confirm('Do you want to delete this chapter?')) {
+                $.ajax(
+                  {
+                    url: 'deleteChapter.php',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: {
+                      deleteChapter: true,
+                      id: $(this).attr('idd'),
+                    },
+                    success: function(res){
+                      alert(res);
+                      check = JSON.parse(res);
+                      alert(check.message);
+                      console.log(check.message);
+                      if (check.bool) {
+                        window.location.replace('index.php');
+                      }
+                    },
+                    error: function(jqXHR, code, err){
+                      alert(err);
+                      console.log(err);
+                    }
+                  }
+                );
+              }
+            }
+          );
 
       change = false;
       onChange();
