@@ -110,7 +110,7 @@
       <div class="col-xl-2" id="sidebar">
         <div class="list-group">
           <?php
-            $prevChapQuery = "SELECT MAX(chapterID) FROM chapter WHERE chapterID<$chapterID and storyID = $storyID";
+            $prevChapQuery = "SELECT MAX(chapterID) FROM chapter WHERE chapterID<$chapterID and storyID = $storyID and readable=1";
             $prevChapRes = mysqli_query($con, $prevChapQuery);
             if ($prevChapQuery) {
               $prevChap = mysqli_fetch_array($prevChapRes)[0];
@@ -121,7 +121,7 @@
             }
           ?>
           <?php
-            $nextChapQuery = "SELECT MIN(chapterID) FROM chapter WHERE chapterID>$chapterID and storyID = $storyID";
+            $nextChapQuery = "SELECT MIN(chapterID) FROM chapter WHERE chapterID>$chapterID and storyID = $storyID and readable=1";
             $nextChapRes = mysqli_query($con, $nextChapQuery);
             if ($nextChapQuery) {
               $nextChap = mysqli_fetch_array($nextChapRes)[0];
@@ -136,7 +136,7 @@
           <?php
             if ($isEditor == true){
               echo "<a name='edit' id='edit' class='list-group-item list-group-item-action list-group-item-warning' href='editor.php?id=$chapterID' role='button'>Edit this Chapter</a>";
-              echo "<button id='deleteChapter' class='list-group-item list-group-item-action list-group-item-danger' idd=$chapterID> Delete this Chapter</button>";
+              echo "<button id='deleteChapter' class='list-group-item list-group-item-action list-group-item-danger' idd=$chapterID> Delete this Chapter <b>(This action cannot be undone)</b></button>";
             }
           ?>
         </div>
