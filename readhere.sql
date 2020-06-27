@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2020 at 07:23 AM
+-- Generation Time: Jun 27, 2020 at 05:16 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `adminName` varchar(32) NOT NULL,
-  `adminPass` varchar(32) NOT NULL,
+  `adminPass` varchar(256) NOT NULL,
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -39,8 +39,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`adminName`, `adminPass`, `readable`) VALUES
-('hunter10bt', 'August150800', 1),
-('nichokevin', 'Nick', 1);
+('hunter10bt', '8f936c03ecc21bf2fc039bdb2d85d666', 1),
+('nichokevin', 'fd144f65f19df1c7adaa116c44ce2617', 1);
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,10 @@ CREATE TABLE `chapter` (
 --
 
 INSERT INTO `chapter` (`chapterID`, `title`, `storyID`, `summary`, `category`, `readable`) VALUES
-(6, 'fdsa', 10, 'asdfdfsa', NULL, 1);
+(6, 'fdsa', 10, 'asdfdfsa', NULL, 1),
+(7, 'A beginning', 15, 'this is a prologue.', NULL, 0),
+(8, 'First Chapter', 15, 'This is the First chapter.', NULL, 0),
+(9, 'Beep.', 7, 'This is a chapter. Beep.', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -92,9 +95,13 @@ INSERT INTO `comment` (`commentID`, `comment`, `discussionID`, `targetCommentID`
 (6, 'sdfafdsasdf', NULL, 5, 'hunter10bt', 1),
 (7, 'asdfdsadfsa', NULL, 5, 'hunter10bt', 0),
 (8, 'halo?', 1, NULL, 'hunter10bt', 0),
-(9, 'ddwq', NULL, 8, 'hunter10bt', 1),
+(9, 'ddwq', NULL, 8, 'hunter10bt', 0),
 (10, 'sdfsdfsdfa', 2, NULL, 'hunter10bt', 0),
-(11, 'woohoo', NULL, 9, 'reg', 0);
+(11, 'woohoo', NULL, 9, 'reg', 0),
+(12, 'I edited this comment so the responses will be irrelevant.', 13, NULL, 'bobby', 1),
+(13, 'this is just a response comment.', NULL, 12, 'bobby', 1),
+(14, 'This is another response comment.', NULL, 12, 'bobby', 1),
+(15, 'What is this?', NULL, 14, 'hunter10bt', 0);
 
 -- --------------------------------------------------------
 
@@ -118,7 +125,7 @@ CREATE TABLE `discussion` (
 --
 
 INSERT INTO `discussion` (`discussionID`, `dateCreated`, `title`, `user`, `storyID`, `franchiseID`, `content`, `readable`) VALUES
-(1, '2020-06-10', 'sdfa', 'hunter10bt', 0, 'asdfdasds', 'sdfafdsa', 1),
+(1, '2020-06-10', 'First forum', 'hunter10bt', 0, 'asdfdasds', 'This is the first forum of this website', 1),
 (2, '2020-06-10', 'dsfsafsdafsadfsad', 'hunter10bt', 0, 'asdfdasds', 'afsdfsafsdafdsa', 0),
 (3, '2020-06-11', 'fdsafsda', 'hunter10bt', 0, 'asdfdasds', 'asdfsdafdsds', 0),
 (4, '2020-06-11', 'dfasfds', 'hunter10bt', 0, 'asdfdasds', 'asdfdsafsda', 1),
@@ -126,7 +133,11 @@ INSERT INTO `discussion` (`discussionID`, `dateCreated`, `title`, `user`, `story
 (6, '2020-06-11', 'dfsasdfa', 'hunter10bt', 7, '', 'sdfa', 1),
 (7, '2020-06-16', 'dsa', 'hunter10bt', 10, '', 'adsasdsa', 1),
 (8, '2020-06-21', 'Halo?', 'hunter10bt', 0, 'asdfdasds', 'halo', 0),
-(9, '2020-06-24', 'asd', 'hunter10bt', 0, 'asdfdasds', 'sdafdasfdsa', 1);
+(9, '2020-06-24', 'asd', 'hunter10bt', 0, 'asdfdasds', 'sdafdasfdsa', 1),
+(10, '2020-06-26', 'A story of something', 'hilda', 0, 'test', 'something', 0),
+(11, '2020-06-26', 'First discussion of 15th story', 'hilda', 15, '', 'A discussion', 0),
+(12, '2020-06-26', 'Hahahahaha', 'hilda', 2, '', 'haha', 1),
+(13, '2020-06-27', 'This is a good story', 'hunter10bt', 16, '', 'Good characters, worldbuilding, etc.', 1);
 
 -- --------------------------------------------------------
 
@@ -181,7 +192,8 @@ INSERT INTO `report` (`reportID`, `submitter`, `userTgtID`, `storyID`, `franchis
 (1, 'hunter10bt', NULL, NULL, NULL, NULL, 1, 'dsfafdas', 'asdfas', 0),
 (2, 'hunter10bt', NULL, NULL, NULL, 1, NULL, 'asfddsa', 'afsdfdsafsd', 0),
 (3, 'hunter10bt', NULL, NULL, NULL, NULL, 9, 'sdfa', 'sdaffdsa', 0),
-(4, 'hunter10bt', NULL, NULL, NULL, NULL, 9, 'dsf', 'sdfadfsa', 0);
+(4, 'hunter10bt', NULL, NULL, NULL, NULL, 9, 'dsf', 'sdfadfsa', 0),
+(5, 'bobby', NULL, NULL, NULL, NULL, 12, 'SPAM', 'THIS IS HACCED', 0);
 
 -- --------------------------------------------------------
 
@@ -203,16 +215,18 @@ CREATE TABLE `story` (
 --
 
 INSERT INTO `story` (`storyID`, `title`, `author`, `summary`, `dateAdded`, `readable`) VALUES
-(1, 'Something', 'hunter10bt', 'This is just a story. Beep.', '2020-06-09', 1),
+(1, 'Something', 'hunter10bt', 'This is just a story. Beep.', '2020-06-09', 0),
 (2, 'Ho Ho', 'bob', 'asfddasdfsdfsdfsda', '2020-06-09', 1),
 (3, 'asfdffsda', 'nick', 'asfsdafsdafsdafsad', '2020-06-09', 1),
 (4, 'asdfdsa', 'regan', 'safdsadfsafsdfsa', '2020-06-09', 1),
 (5, 'fsdafasdfsad', 'hunter10bt', 'asdffsafsafsdafas', '2020-06-09', 1),
 (6, 'Hahaha', 'hunter10bt', 'hahahahahahaha', '2020-06-08', 1),
 (7, 'Test', 'hunter10bt', 'tes 1 2 3', '2020-06-11', 1),
-(10, 'Halo', 'hunter10bt', 'saya di sini', '2020-06-11', 1),
+(10, 'Halo', 'hunter10bt', 'saya di sini', '2020-06-11', 0),
 (12, 'asdfdfsadf', 'hunter10bt', 'adsf', '2020-06-22', 0),
-(13, 'Haloo', 'hunter10bt', 'Saya di sinii', '2020-06-24', 0);
+(13, 'Haloo', 'hunter10bt', 'Saya di sinii', '2020-06-24', 0),
+(15, 'A story of something', 'hilda', 'This is a story of something.', '2020-06-26', 1),
+(16, 'Something for franchise 1', 'bobby', 'This is just a story. Beep.', '2020-06-27', 0);
 
 -- --------------------------------------------------------
 
@@ -235,7 +249,9 @@ INSERT INTO `tagdetails` (`franchiseID`, `storyID`) VALUES
 ('asdfdasds', 10),
 ('asdfdasds', 12),
 ('asdfdasds', 13),
-('asfdsa', 1);
+('asdfdasds', 16),
+('asfdsa', 1),
+('test', 15);
 
 -- --------------------------------------------------------
 
@@ -245,7 +261,7 @@ INSERT INTO `tagdetails` (`franchiseID`, `storyID`) VALUES
 
 CREATE TABLE `user` (
   `username` varchar(32) NOT NULL,
-  `password` varchar(25) NOT NULL,
+  `password` varchar(256) NOT NULL,
   `readable` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -254,11 +270,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `readable`) VALUES
-('bob', 'bob', 1),
-('hunter10bt', 'August150800', 1),
-('nick', 'kevin', 1),
-('reg', 'regan', 1),
-('test', 'tester', 1);
+('bob', '9f9d51bc70ef21ca5c14f307980a29d8', 0),
+('bobby', 'a9c4cef5735770e657b7c25b9dcb807b', 1),
+('hilda', 'ad31b478525413f0b1b1d8bf0aebeb7c', 1),
+('hunter10bt', '8f936c03ecc21bf2fc039bdb2d85d666', 1),
+('nick', '9d5e3ecdeb4cdb7acfd63075ae046672', 1),
+('reg', '3df1de355383830cbb7e545df76761c6', 1),
+('reza', 'bb98b1d0b523d5e783f931550d7702b6', 1),
+('test', 'f5d1278e8109edd94e1e4197e04873b9', 1);
 
 --
 -- Indexes for dumped tables
@@ -328,31 +347,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `chapterID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `chapterID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `commentID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `commentID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `discussion`
 --
 ALTER TABLE `discussion`
-  MODIFY `discussionID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `discussionID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `report`
 --
 ALTER TABLE `report`
-  MODIFY `reportID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `reportID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `story`
 --
 ALTER TABLE `story`
-  MODIFY `storyID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `storyID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
