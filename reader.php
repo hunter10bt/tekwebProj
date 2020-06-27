@@ -173,37 +173,37 @@
       );
 
       <?php
-        if ($isEditor) {
-          echo "$('#deleteChapter').click(
-            function(){
-              if (confirm('Do you want to delete this chapter?')) {
-                $.ajax(
-                  {
-                    url: 'deleteChapter.php',
-                    type: 'POST',
-                    dataType: 'html',
-                    data: {
-                      deleteChapter: true,
-                      id: $(this).attr('idd'),
-                    },
-                    success: function(res){
-                      check = JSON.parse(res);
-                      alert(res.message);
-                      console.log(res.message);
-                      if (res.bool) {
-                        window.location.replace('index.php');
-                      }
-                    },
-                    error: function(jqXHR, code, err){
-                      alert(err);
-                      console.log(err);
-                    }
-                  }
-                );
-              }
-            }
-          );";
-        }
+        // if ($isEditor) {
+        //   echo "$('#deleteChapter').click(
+        //     function(){
+        //       if (confirm('Do you want to delete this chapter?')) {
+        //         $.ajax(
+        //           {
+        //             url: 'deleteChapter.php',
+        //             type: 'POST',
+        //             dataType: 'html',
+        //             data: {
+        //               deleteChapter: true,
+        //               id: $(this).attr('idd'),
+        //             },
+        //             success: function(res){
+        //               check = JSON.parse(res);
+        //               alert(res.message);
+        //               console.log(res.message);
+        //               if (res.bool) {
+        //                 window.location.replace('index.php');
+        //               }
+        //             },
+        //             error: function(jqXHR, code, err){
+        //               alert(err);
+        //               console.log(err);
+        //             }
+        //           }
+        //         );
+        //       }
+        //     }
+        //   );";
+        // }
       ?>
     }
   );
