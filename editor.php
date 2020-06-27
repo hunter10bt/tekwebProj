@@ -7,12 +7,13 @@
   }
   else{
     $chapterID = $_GET["id"];
-    $query = "SELECT author, storyID FROM story WHERE storyID = ANY(SELECT storyID FROM chapter WHERE chapterID = $chapterID)";
+    $query = "SELECT author, storyID, readable FROM story WHERE storyID = ANY(SELECT storyID FROM chapter WHERE chapterID = $chapterID)";
     $authorResult = mysqli_query($con, $query);
     if($authorResult){
       $row = mysqli_fetch_array($authorResult);
       $authorID = $row[0];
       $storyID = $row[1];
+      $readable = $row['readable'];
       $isEditor = false;
 
       if(isset($_SESSION["uname"]) and $_SESSION["uname"] == $authorID){

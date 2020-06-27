@@ -10,6 +10,7 @@
 
     $row = mysqli_fetch_array($info);
     if($row == null){
+      $_SESSION['notExist_type'] = 'franchise';
       header("location: index.php");
     }
     else {    

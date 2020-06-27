@@ -108,4 +108,12 @@
     </div>
   </div>
 </body>
+<script>
+  <?php
+    if (isset($_SESSION['notExist_type'])) {
+      echo "alert('This {$_SESSION['notExist_type']} does not exist.');";
+      $_SESSION['notExist_type'] = NULL;
+    }
+  ?>
+</script>
 </html>

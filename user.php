@@ -10,6 +10,7 @@
     if (isset($row["username"])) {
       $uname = $row["username"];
     } else {
+      $_SESSION['notExist_type'] = 'user';
       header('location: users.php');
     }
   } else {

@@ -13,11 +13,17 @@
   else {
     $row = mysqli_fetch_array($result);
 
-    $id=$_GET["id"];
-    $title=$row[0];
-    $user=$row[1];
-    $content=$row[2];
-    $date=$row[3];
+    if (!isset($row)) {
+      $_SESSION['notExist_type'] = 'discussion';
+      header("location: index.php");
+    }
+    else {
+      $id=$_GET["id"];
+      $title=$row[0];
+      $user=$row[1];
+      $content=$row[2];
+      $date=$row[3];
+    }
   }
 ?>
 <!DOCTYPE html>
