@@ -7,19 +7,27 @@
   else{
     $chapterID = $_GET["id"];
     $query = "SELECT author, storyID, readable FROM story WHERE storyID = ANY(SELECT storyID FROM chapter WHERE chapterID = $chapterID)";
+    $queryChap = "SELECT readable FROM chapter WHERE chapterID = $chapterID";
+    $chapRes = mysqli_query($con, $queryChap);
     $authorResult = mysqli_query($con, $query);
-    if($authorResult){
+    if($authorResult and $chapRes){
       $row = mysqli_fetch_array($authorResult);
+      $rowChap = mysqli_fetch_array($chapRes);
       $authorID = $row[0];
       $storyID = $row[1];
-      $readable = $row['readable'];
+      $readableStory = $row['readable'];
+      $readableChap = $rowChap['readable'];
       $isEditor = false;
 
       if(isset($_SESSION["uname"]) and $_SESSION["uname"] == $authorID){
         $isEditor = true;
       }
-      if ($readable == 0) {
+      if ($readableChap == 0) {
         $_SESSION['notExist_type'] = 'chapter';
+        header('location: index.php');
+      }
+      if ($readableStory == 0) {
+        $_SESSION['notExist_type'] = 'story';
         header('location: index.php');
       }
     }
@@ -173,37 +181,38 @@
       );
 
       <?php
-        // if ($isEditor) {
-        //   echo "$('#deleteChapter').click(
-        //     function(){
-        //       if (confirm('Do you want to delete this chapter?')) {
-        //         $.ajax(
-        //           {
-        //             url: 'deleteChapter.php',
-        //             type: 'POST',
-        //             dataType: 'html',
-        //             data: {
-        //               deleteChapter: true,
-        //               id: $(this).attr('idd'),
-        //             },
-        //             success: function(res){
-        //               check = JSON.parse(res);
-        //               alert(res.message);
-        //               console.log(res.message);
-        //               if (res.bool) {
-        //                 window.location.replace('index.php');
-        //               }
-        //             },
-        //             error: function(jqXHR, code, err){
-        //               alert(err);
-        //               console.log(err);
-        //             }
-        //           }
-        //         );
-        //       }
-        //     }
-        //   );";
-        // }
+        if ($isEditor) {
+          echo "$('#deleteChapter').click(
+            function(){
+              if (confirm('Do you want to delete this chapter?')) {
+                $.ajax(
+                  {
+                    url: 'deleteChapter.php',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: {
+                      deleteChapter: true,
+                      id: $(this).attr('idd'),
+                    },
+                    success: function(res){
+                      alert(res);
+                      check = JSON.parse(res);
+                      alert(check.message);
+                      console.log(check.message);
+                      if (check.bool) {
+                        window.location.replace('index.php');
+                      }
+                    },
+                    error: function(jqXHR, code, err){
+                      alert(err);
+                      console.log(err);
+                    }
+                  }
+                );
+              }
+            }
+          );";
+        }
       ?>
     }
   );
